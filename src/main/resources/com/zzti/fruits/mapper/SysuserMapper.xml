@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzti.fruits.mapper.SysuserMapper">
+  <resultMap id="BaseResultMap" type="com.zzti.fruits.pojo.Sysuser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="upass" jdbcType="VARCHAR" property="upass" />
+    <result column="tname" jdbcType="VARCHAR" property="tname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="delstatus" jdbcType="VARCHAR" property="delstatus" />
+    <result column="savetime" jdbcType="VARCHAR" property="savetime" />
+    <result column="utype" jdbcType="VARCHAR" property="utype" />
+    <result column="filename" jdbcType="VARCHAR" property="filename" />
+    <result column="logindate" jdbcType="VARCHAR" property="logindate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uname, upass, tname, sex, tel, addr, email, delstatus, savetime, utype, filename, 
+    logindate
+  </sql>
+  <select id="selectByExample" parameterType="com.zzti.fruits.pojo.SysuserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sysuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysuser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sysuser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zzti.fruits.pojo.SysuserExample">
+    delete from sysuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zzti.fruits.pojo.Sysuser">
+    insert into sysuser (id, uname, upass, 
+      tname, sex, tel, addr, 
+      email, delstatus, savetime, 
+      utype, filename, logindate
+      )
+    values (#{id,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{upass,jdbcType=VARCHAR}, 
+      #{tname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{delstatus,jdbcType=VARCHAR}, #{savetime,jdbcType=VARCHAR}, 
+      #{utype,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{logindate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Sysuser">
+    insert into sysuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="upass != null">
+        upass,
+      </if>
+      <if test="tname != null">
+        tname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="delstatus != null">
+        delstatus,
+      </if>
+      <if test="savetime != null">
+        savetime,
+      </if>
+      <if test="utype != null">
+        utype,
+      </if>
+      <if test="filename != null">
+        filename,
+      </if>
+      <if test="logindate != null">
+        logindate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upass != null">
+        #{upass,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="delstatus != null">
+        #{delstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null">
+        #{savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="utype != null">
+        #{utype,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="logindate != null">
+        #{logindate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zzti.fruits.pojo.SysuserExample" resultType="java.lang.Long">
+    select count(*) from sysuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sysuser
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uname != null">
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upass != null">
+        upass = #{record.upass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tname != null">
+        tname = #{record.tname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null">
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delstatus != null">
+        delstatus = #{record.delstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.savetime != null">
+        savetime = #{record.savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utype != null">
+        utype = #{record.utype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null">
+        filename = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logindate != null">
+        logindate = #{record.logindate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sysuser
+    set id = #{record.id,jdbcType=INTEGER},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      upass = #{record.upass,jdbcType=VARCHAR},
+      tname = #{record.tname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      delstatus = #{record.delstatus,jdbcType=VARCHAR},
+      savetime = #{record.savetime,jdbcType=VARCHAR},
+      utype = #{record.utype,jdbcType=VARCHAR},
+      filename = #{record.filename,jdbcType=VARCHAR},
+      logindate = #{record.logindate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzti.fruits.pojo.Sysuser">
+    update sysuser
+    <set>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upass != null">
+        upass = #{upass,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null">
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="delstatus != null">
+        delstatus = #{delstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null">
+        savetime = #{savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="utype != null">
+        utype = #{utype,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="logindate != null">
+        logindate = #{logindate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.Sysuser">
+    update sysuser
+    set uname = #{uname,jdbcType=VARCHAR},
+      upass = #{upass,jdbcType=VARCHAR},
+      tname = #{tname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      delstatus = #{delstatus,jdbcType=VARCHAR},
+      savetime = #{savetime,jdbcType=VARCHAR},
+      utype = #{utype,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+      logindate = #{logindate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
