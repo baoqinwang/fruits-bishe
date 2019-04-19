@@ -2,6 +2,7 @@ package com.zzti.fruits.service.iml;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zzti.fruits.controller.MenberController;
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.mapper.MemberMapper;
 import com.zzti.fruits.pojo.Member;
@@ -62,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void add(Member member) {
-        System.out.println(snowflakeComponent.getInstance().nextId());
+//        System.out.println(snowflakeComponent.getInstance().nextId());
         member.setId(String.valueOf(snowflakeComponent.getInstance().nextId()));
          member.setSavetime(DateUtils.DT_DAY()+" "+DateUtils.times());
         member.setLoginerronum(0);
@@ -86,5 +87,14 @@ public class MemberServiceImpl implements MemberService {
         for(String id:ids){
             memberMapper.deleteByPrimaryKey(id);
         }
+    }
+
+    @Override
+    public String resetPd(String id) {
+        Member member = new Member();
+        member.setId(id);
+        member.setUserpassword(RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2));
+        memberMapper.updateByPrimaryKeySelective(member);
+        return  member.getUserpassword();
     }
 }

@@ -33,5 +33,8 @@ app.service('memberService',function($http){
 	this.selectOptionList=function(){
 		return $http.get('../member/selectOptionList.do');
 	}
-	
+    //下拉列表数据
+    this.resetPd=function(id){
+        return $http.get('../member/resetPd.do?id='+id);
+    }
 });

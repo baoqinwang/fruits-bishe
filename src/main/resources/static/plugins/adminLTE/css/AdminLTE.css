@@ -4397,7 +4397,7 @@ table.text-center th {
 .modal-info .modal-footer,
 .modal-success .modal-body,
 .modal-success .modal-header,
-.modal-success .modal-footer,
+. .modal-footer,
 .modal-danger .modal-body,
 .modal-danger .modal-header,
 .modal-danger .modal-footer {

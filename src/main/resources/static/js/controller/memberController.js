@@ -81,6 +81,7 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 			}			
 		);
 	}
+	//删除确认
     $scope.checkDel=function () {
         if($scope.selectIds.length<=0) {
             $scope.msg = "请选择删除记录";
@@ -90,5 +91,24 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
         else {
             $('#editModal2').modal();
 		}
+    }
+    //重置密码确认
+    $scope.reset=function(id){
+        $scope.resetId=id;
+        $('#editModal4').modal();
+    }
+   //重置密码
+    $scope.resetPd=function(){
+        //获取选中的复选框
+        memberService.resetPd( $scope.resetId ).success(
+            function(response){
+                if(response.success){
+                    $scope.msg=response.message;
+                    $('#editModal3').modal();
+                    $scope.reloadList();//刷新列表
+                    $scope.resetId=null;
+                }
+            }
+        );
     }
 });	

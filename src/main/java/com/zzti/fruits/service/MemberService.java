@@ -53,4 +53,11 @@ public interface MemberService {
      * @param ids
      */
     public void delete(String [] ids);
+
+    /**
+     * 重置密码
+     * @param id
+     * @return 密码信息
+     */
+    public String resetPd(String id);
 }
