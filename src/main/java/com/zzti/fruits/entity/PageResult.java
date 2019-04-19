@@ -1,33 +1,35 @@
 package com.zzti.fruits.entity;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分页返回的实体类
- * @author wangbaoqin
+ * 分页结果类
+ * @author Administrator
  *
  */
-@Data
-public class PageResult<T>  implements Serializable{
-	private Long total;     // 总条数
-	private Long totalPage; // 总页数
-	private List<T> items;  // 当前页数据
+public class PageResult implements Serializable{
 
-	public PageResult() {
-	}
-
-	public PageResult(Long total, List<T> items) {
+	private long total;//总记录数
+	private List rows;//当前页记录
+		
+	public PageResult(long total, List rows) {
+		super();
 		this.total = total;
-		this.items = items;
+		this.rows = rows;
 	}
-
-	public PageResult(Long total, Long totalPage, List<T> items) {
+	
+	public long getTotal() {
+		return total;
+	}
+	public void setTotal(long total) {
 		this.total = total;
-		this.totalPage = totalPage;
-		this.items = items;
+	}
+	public List getRows() {
+		return rows;
+	}
+	public void setRows(List rows) {
+		this.rows = rows;
 	}
 	
 }

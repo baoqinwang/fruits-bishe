@@ -2,11 +2,12 @@ package com.zzti.fruits.mapper;
 
 import com.zzti.fruits.pojo.Sysuser;
 import com.zzti.fruits.pojo.SysuserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SysuserMapper {
-    long countByExample(SysuserExample example);
+    int countByExample(SysuserExample example);
 
     int deleteByExample(SysuserExample example);
 
