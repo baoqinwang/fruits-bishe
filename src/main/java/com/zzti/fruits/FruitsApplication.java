@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @MapperScan("com.zzti.fruits.mapper")
+@MapperScan("com.zzti.fruits.util")
 @SpringBootApplication
 public class FruitsApplication {
 

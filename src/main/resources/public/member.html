@@ -24,6 +24,30 @@
     <script type="text/javascript" src="../js/controller/baseController.js"></script>
     <script type="text/javascript" src="../js/controller/memberController.js"></script>
 
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="static/js/moment-with-locales.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn')
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm',
+                locale: moment.locale('zh-cn')
+            });
+        });
+
+
+    </script>
+
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="memberController" >
 <!-- .box-body -->
@@ -41,7 +65,7 @@
             <div class="form-group form-inline">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}" ><i class="fa fa-file-o"></i> 新建</button>
-                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o" ></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="checkDel()"  ><i class="fa fa-file-o"></i>删除</button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                 </div>
             </div>
@@ -59,6 +83,9 @@
         <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
             <thead>
             <tr>
+                <th class="" style="padding-right:0px">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                </th>
                 <th class="sorting_uname">用户名</th>
                 <th class="sorting_tname">姓名</th>
                 <th class="sorting">出生日期</th>
@@ -72,6 +99,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="entity in list">
+                <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
                 <td>{{entity.username}}</td>
                 <td>{{entity.realname}}</td>
                 <td>{{entity.brithtime}}</td>
@@ -79,7 +107,8 @@
                 <td>{{entity.email}}</td>
                 <td>{{entity.addr}}</td>
                 <td>{{entity.savetime}}</td>
-                <td>{{entity.isgjhy}}</td>
+                <td><p ng-if="entity.isgjhy=='y'">是</p> <p ng-if="entity.isgjhy=='n'">否</p></td>
+                <!--<td>{{entity.isgjhy}}</td>-->
                 <td class="text-center">
                     <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >修改</button>
                 </td>
@@ -111,22 +140,40 @@
                 <table class="table table-bordered table-striped"  width="800px">
                     <tr>
                         <td>用户名</td>
-                        <td><input  class="form-control" ng-model="entity.name" placeholder="用户名" ></td>
+                        <td><input  class="form-control" ng-model="entity.username" placeholder="用户名" ></td>
                     </tr>
                     <tr><td>姓名</td>
-                        <td><input  class="form-control" ng-model="entity.name" placeholder="姓名" ></td>
+                        <td><input  class="form-control" ng-model="entity.realname" placeholder="姓名" ></td>
+                    </tr>
+                    <tr><td>是否会员</td>
+                        <td>
+                            <select class="form-control" ng-model="entity.isgjhy">
+                                <option value="y">是</option>
+                                <option value="n">否</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr><td>性别</td>
+                        <td>
+                            <select class="form-control" ng-model="entity.sex">
+                                <option >男</option>
+                                <option >女</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr><td>出生日期</td>
-                        <td><input  class="form-control" ng-model="entity.name" placeholder="出生日期" ></td>
+                        <td>
+                            <input type='date' class="form-control" ng-model="entity.brithtime" />
+                        </td>
                     </tr>
                     <tr><td>电话</td>
-                        <td><input  class="form-control" ng-model="entity.name" placeholder="电话" ></td>
+                        <td><input  class="form-control" ng-model="entity.tel" placeholder="电话" ></td>
                     </tr>
                     <tr> <td>邮箱</td>
-                        <td><input  class="form-control" ng-model="entity.name" placeholder="邮箱" ></td>
+                        <td><input  class="form-control" ng-model="entity.email" placeholder="邮箱" ></td>
                     </tr>
                     <tr><td>地址</td>
-                        <td><input  class="form-control" ng-model="entity.name" placeholder="地址" ></td>
+                        <td><input  class="form-control" ng-model="entity.addr" placeholder="地址" ></td>
                     </tr>
 
                 </table>
@@ -138,6 +185,39 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editModal3">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{msg}}</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>
+                <a   class="btn btn-success" data-dismiss="modal">确定</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="editModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                请确认
+            </div>
+            <div class="modal-body">
+                确认删除该记录吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" ng-click="dele()" data-dismiss="modal">删除记录</button>
 
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

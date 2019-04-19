@@ -32,4 +32,25 @@ public interface MemberService {
      * @return
      */
     public PageResult findPage(Member member, int pageNum, int pageSize);
+
+    /**
+     * 新增用户
+     * @param member
+     */
+    public void add(Member member);
+    /**
+     * 修改
+     */
+    public void update(Member member);
+    /**
+     * 根据ID获取实体
+     * @param id
+     * @return
+     */
+    public Member findOne(String id);
+    /**
+     * 批量删除
+     * @param ids
+     */
+    public void delete(String [] ids);
 }

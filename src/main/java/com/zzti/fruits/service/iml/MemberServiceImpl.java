@@ -7,6 +7,9 @@ import com.zzti.fruits.mapper.MemberMapper;
 import com.zzti.fruits.pojo.Member;
 import com.zzti.fruits.pojo.MemberExample;
 import com.zzti.fruits.service.MemberService;
+import com.zzti.fruits.util.DateUtils;
+import com.zzti.fruits.util.RandomCharacterAndNumber;
+import com.zzti.fruits.util.SnowflakeComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,8 @@ version: 1.0
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private SnowflakeComponent snowflakeComponent;
     @Override
     public List<Member> findAll() {
         MemberExample memberExample=new MemberExample();
@@ -53,5 +58,33 @@ public class MemberServiceImpl implements MemberService {
 
         Page<Member> page= (Page<Member>)memberMapper.selectByExample(memberExample);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public void add(Member member) {
+        System.out.println(snowflakeComponent.getInstance().nextId());
+        member.setId(String.valueOf(snowflakeComponent.getInstance().nextId()));
+         member.setSavetime(DateUtils.DT_DAY()+" "+DateUtils.times());
+        member.setLoginerronum(0);
+        member.setLockstatus("n");
+        RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2);
+        memberMapper.insert(member);
+    }
+
+    @Override
+    public void update(Member member) {
+       memberMapper.updateByPrimaryKey(member);
+    }
+
+    @Override
+    public Member findOne(String id) {
+     return   memberMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void delete(String[] ids) {
+        for(String id:ids){
+            memberMapper.deleteByPrimaryKey(id);
+        }
     }
 }

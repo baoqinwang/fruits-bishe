@@ -11,7 +11,7 @@ public interface MemberMapper {
 
     int deleteByExample(MemberExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(Member record);
 
@@ -19,7 +19,7 @@ public interface MemberMapper {
 
     List<Member> selectByExample(MemberExample example);
 
-    Member selectByPrimaryKey(Integer id);
+    Member selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") Member record, @Param("example") MemberExample example);
 

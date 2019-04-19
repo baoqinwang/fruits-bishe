@@ -2,10 +2,10 @@ package com.zzti.fruits.controller;
 
 
 import com.zzti.fruits.entity.PageResult;
-import com.zzti.fruits.pojo.Member;
+import com.zzti.fruits.entity.Result;
 
+import com.zzti.fruits.pojo.Member;
 import com.zzti.fruits.service.MemberService;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,5 +48,59 @@ public class MenberController {
     public PageResult search(@RequestBody Member member, int page, int rows  ){
        return memberService.findPage(member, page, rows);
 //        return null;
+    }
+    /**
+     * 增加
+     * @param member
+     * @return
+     */
+    @RequestMapping("/add")
+    public Result add(@RequestBody Member member){
+        try {
+            memberService.add(member);
+            return new Result(true, "增加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "增加失败");
+        }
+    }
+    /**
+     * 修改
+     * @param member
+     * @return
+     */
+    @RequestMapping("/update")
+    public Result update(@RequestBody Member member){
+        try {
+            memberService.update(member);
+            return new Result(true, "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "修改失败");
+        }
+    }
+    /**
+     * 获取实体
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findOne")
+    public Member findOne(String id){
+        return memberService.findOne(id);
+    }
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/delete")
+    public Result delete(String [] ids){
+        try {
+            memberService.delete(ids);
+            return new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "删除失败");
+        }
     }
 }

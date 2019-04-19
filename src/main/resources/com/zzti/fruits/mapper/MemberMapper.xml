@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zzti.fruits.mapper.MemberMapper" >
   <resultMap id="BaseResultMap" type="com.zzti.fruits.pojo.Member" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="userpassword" property="userpassword" jdbcType="VARCHAR" />
     <result column="realname" property="realname" jdbcType="VARCHAR" />
@@ -96,15 +96,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from member
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from member
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.zzti.fruits.pojo.MemberExample" >
     delete from member
@@ -119,7 +119,7 @@
       savetime, delstatus, filename, 
       loginerronum, lockstatus, isgjhy, 
       sheng, shi)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
       #{realname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{brithtime,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{savetime,jdbcType=VARCHAR}, #{delstatus,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, 
@@ -183,7 +183,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
@@ -245,7 +245,7 @@
     update member
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.username != null" >
         username = #{record.username,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update member
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
       userpassword = #{record.userpassword,jdbcType=VARCHAR},
       realname = #{record.realname,jdbcType=VARCHAR},
@@ -375,7 +375,7 @@
         shi = #{shi,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.Member" >
     update member
@@ -395,6 +395,6 @@
       isgjhy = #{isgjhy,jdbcType=VARCHAR},
       sheng = #{sheng,jdbcType=VARCHAR},
       shi = #{shi,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

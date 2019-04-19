@@ -33,7 +33,7 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 	
 	//保存 
 	$scope.save=function(){				
-		var serviceObject;//服务层对象  				
+		var serviceObject;//服务层对象
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=memberService.update( $scope.entity ); //修改  
 		}else{
@@ -42,7 +42,10 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 		serviceObject.success(
 			function(response){
 				if(response.success){
-					//重新查询 
+					//重新查询
+                    // alert(response.message);
+                    $scope.msg=response.message;
+                    $('#editModal3').modal();
 		        	$scope.reloadList();//重新加载
 				}else{
 					alert(response.message);
@@ -53,11 +56,13 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 	
 	 
 	//批量删除 
-	$scope.dele=function(){			
+	$scope.dele=function(){
 		//获取选中的复选框			
 		memberService.dele( $scope.selectIds ).success(
 			function(response){
 				if(response.success){
+                    $scope.msg=response.message;
+                    $('#editModal3').modal();
 					$scope.reloadList();//刷新列表
 					$scope.selectIds=[];
 				}						
@@ -76,5 +81,14 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 			}			
 		);
 	}
-    
+    $scope.checkDel=function () {
+        if($scope.selectIds.length<=0) {
+            $scope.msg = "请选择删除记录";
+            $('#editModal3').modal();
+            return ;
+        }
+        else {
+            $('#editModal2').modal();
+		}
+    }
 });	

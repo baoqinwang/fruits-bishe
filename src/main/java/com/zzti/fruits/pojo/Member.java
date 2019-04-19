@@ -1,9 +1,7 @@
 package com.zzti.fruits.pojo;
 
-import java.io.Serializable;
-
-public class Member implements Serializable {
-    private Integer id;
+public class Member {
+    private String id;
 
     private String username;
 
@@ -37,12 +35,12 @@ public class Member implements Serializable {
 
     private String shi;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getUsername() {
