@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void update(Member member) {
-       memberMapper.updateByPrimaryKey(member);
+       memberMapper.updateByPrimaryKeySelective(member);
     }
 
     @Override
@@ -85,7 +85,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void delete(String[] ids) {
         for(String id:ids){
-            memberMapper.deleteByPrimaryKey(id);
+            Member member = new Member();
+            member.setId(id);
+            member.setDelstatus("1");
+            memberMapper.updateByPrimaryKeySelective(member);
         }
     }
 

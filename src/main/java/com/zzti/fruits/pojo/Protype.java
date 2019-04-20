@@ -1,6 +1,8 @@
 package com.zzti.fruits.pojo;
 
-public class Protype {
+import java.io.Serializable;
+
+public class Protype implements Serializable {
     private Integer id;
 
     private String typename;

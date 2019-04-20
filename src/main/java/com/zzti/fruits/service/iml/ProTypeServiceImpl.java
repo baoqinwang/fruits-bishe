@@ -60,6 +60,9 @@ public class ProTypeServiceImpl implements ProTypeService {
             //删除下级分类
             ProtypeExample protypeExample=new ProtypeExample();
             protypeExample.createCriteria().andFatheridEqualTo(id);
+
+//            int i=0;
+//            i=i/0;
             protypeMapper.deleteByExample(protypeExample);
             protypeMapper.deleteByPrimaryKey(new Integer(id));
         }

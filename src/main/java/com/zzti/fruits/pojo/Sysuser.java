@@ -1,6 +1,8 @@
 package com.zzti.fruits.pojo;
 
-public class Sysuser {
+import java.io.Serializable;
+
+public class Sysuser implements Serializable {
     private Integer id;
 
     private String uname;
