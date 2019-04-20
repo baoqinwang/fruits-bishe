@@ -48,6 +48,8 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
                     $('#editModal3').modal();
 		        	$scope.reloadList();//重新加载
 				}else{
+                    $scope.msg=response.message;
+                    $('#editModal3').modal();
 					alert(response.message);
 				}
 			}		
