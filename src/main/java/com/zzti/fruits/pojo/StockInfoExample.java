@@ -1,6 +1,7 @@
 package com.zzti.fruits.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StockInfoExample {
@@ -504,62 +505,52 @@ public class StockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmEqualTo(String value) {
+        public Criteria andCrtTmEqualTo(Date value) {
             addCriterion("CRT_TM =", value, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmNotEqualTo(String value) {
+        public Criteria andCrtTmNotEqualTo(Date value) {
             addCriterion("CRT_TM <>", value, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmGreaterThan(String value) {
+        public Criteria andCrtTmGreaterThan(Date value) {
             addCriterion("CRT_TM >", value, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmGreaterThanOrEqualTo(String value) {
+        public Criteria andCrtTmGreaterThanOrEqualTo(Date value) {
             addCriterion("CRT_TM >=", value, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmLessThan(String value) {
+        public Criteria andCrtTmLessThan(Date value) {
             addCriterion("CRT_TM <", value, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmLessThanOrEqualTo(String value) {
+        public Criteria andCrtTmLessThanOrEqualTo(Date value) {
             addCriterion("CRT_TM <=", value, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmLike(String value) {
-            addCriterion("CRT_TM like", value, "crtTm");
-            return (Criteria) this;
-        }
-
-        public Criteria andCrtTmNotLike(String value) {
-            addCriterion("CRT_TM not like", value, "crtTm");
-            return (Criteria) this;
-        }
-
-        public Criteria andCrtTmIn(List<String> values) {
+        public Criteria andCrtTmIn(List<Date> values) {
             addCriterion("CRT_TM in", values, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmNotIn(List<String> values) {
+        public Criteria andCrtTmNotIn(List<Date> values) {
             addCriterion("CRT_TM not in", values, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmBetween(String value1, String value2) {
+        public Criteria andCrtTmBetween(Date value1, Date value2) {
             addCriterion("CRT_TM between", value1, value2, "crtTm");
             return (Criteria) this;
         }
 
-        public Criteria andCrtTmNotBetween(String value1, String value2) {
+        public Criteria andCrtTmNotBetween(Date value1, Date value2) {
             addCriterion("CRT_TM not between", value1, value2, "crtTm");
             return (Criteria) this;
         }
@@ -644,62 +635,52 @@ public class StockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andUpTmEqualTo(String value) {
+        public Criteria andUpTmEqualTo(Date value) {
             addCriterion("UP_TM =", value, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmNotEqualTo(String value) {
+        public Criteria andUpTmNotEqualTo(Date value) {
             addCriterion("UP_TM <>", value, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmGreaterThan(String value) {
+        public Criteria andUpTmGreaterThan(Date value) {
             addCriterion("UP_TM >", value, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmGreaterThanOrEqualTo(String value) {
+        public Criteria andUpTmGreaterThanOrEqualTo(Date value) {
             addCriterion("UP_TM >=", value, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmLessThan(String value) {
+        public Criteria andUpTmLessThan(Date value) {
             addCriterion("UP_TM <", value, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmLessThanOrEqualTo(String value) {
+        public Criteria andUpTmLessThanOrEqualTo(Date value) {
             addCriterion("UP_TM <=", value, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmLike(String value) {
-            addCriterion("UP_TM like", value, "upTm");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpTmNotLike(String value) {
-            addCriterion("UP_TM not like", value, "upTm");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpTmIn(List<String> values) {
+        public Criteria andUpTmIn(List<Date> values) {
             addCriterion("UP_TM in", values, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmNotIn(List<String> values) {
+        public Criteria andUpTmNotIn(List<Date> values) {
             addCriterion("UP_TM not in", values, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmBetween(String value1, String value2) {
+        public Criteria andUpTmBetween(Date value1, Date value2) {
             addCriterion("UP_TM between", value1, value2, "upTm");
             return (Criteria) this;
         }
 
-        public Criteria andUpTmNotBetween(String value1, String value2) {
+        public Criteria andUpTmNotBetween(Date value1, Date value2) {
             addCriterion("UP_TM not between", value1, value2, "upTm");
             return (Criteria) this;
         }

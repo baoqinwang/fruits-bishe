@@ -9,8 +9,10 @@ import com.github.pagehelper.PageHelper;
 
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.mapper.GoodsMapper;
+import com.zzti.fruits.mapper.StockInfoMapper;
 import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.GoodsExample;
+import com.zzti.fruits.pojo.StockInfo;
 import com.zzti.fruits.service.GoodsService;
 import com.zzti.fruits.util.DateUtils;
 import com.zzti.fruits.util.SnowflakeComponent;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,6 +38,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper goodsMapper;
 	@Autowired
 	private SnowflakeComponent snowflakeComponent;
+	@Autowired
+	private StockInfoMapper stockInfoMapper;
 	
 	/**
 	 * 查询全部
@@ -59,6 +64,7 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 增加
 	 */
 	@Override
+	@Transactional
 	public void add(Goods goods) {
        goods.setGoodno(String.valueOf(snowflakeComponent.getInstance().nextId()));
       goods.setDelstatus("0");
@@ -69,6 +75,15 @@ public class GoodsServiceImpl implements GoodsService {
 			goods.setFilename1(((JSONObject)json.get(0)).getString("url"));
 		}
        goodsMapper.insert(goods);
+       //像库存插入记录
+		StockInfo stockInfo=new StockInfo();
+		stockInfo.setGoodsId(goods.getId().toString());
+		stockInfo.setStockCount(0);
+		stockInfo.setHoldCount(0);
+		stockInfo.setMinStockCount(0);
+		stockInfo.setCrtTlr("admin");
+		stockInfo.setCrtTm(new Date());
+		stockInfoMapper.insert(stockInfo);
 
 
 	}
@@ -144,6 +159,7 @@ public class GoodsServiceImpl implements GoodsService {
 			}
 		}
 		criteria.andDelstatusEqualTo("0");
+		example.setOrderByClause("savetime DESC");
 		Page<Goods> page= (Page<Goods>)goodsMapper.selectByExample(example);
 		return new PageResult(page.getTotal(), page.getResult());
 	}

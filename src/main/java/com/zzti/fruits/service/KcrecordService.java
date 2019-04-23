@@ -2,22 +2,20 @@ package com.zzti.fruits.service;
 import java.util.List;
 
 import com.zzti.fruits.entity.PageResult;
-import com.zzti.fruits.pojo.Goods;
-import com.zzti.fruits.pojo.StockInfo;
-import com.zzti.fruits.pojogroup.GroupStockInfo;
+import com.zzti.fruits.pojo.Kcrecord;
 
 /**
  * 服务层接口
  * @author Administrator
  *
  */
-public interface StockInfoService {
+public interface KcrecordService {
 
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
-	public List<StockInfo> findAll();
+	public List<Kcrecord> findAll();
 	
 	
 	/**
@@ -30,13 +28,13 @@ public interface StockInfoService {
 	/**
 	 * 增加
 	*/
-	public void add(StockInfo stockinfo);
+	public void add(Kcrecord kcrecord);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(StockInfo stockinfo);
+	public void update(Kcrecord kcrecord);
 	
 
 	/**
@@ -44,7 +42,7 @@ public interface StockInfoService {
 	 * @param id
 	 * @return
 	 */
-	public StockInfo findOne(Long id);
+	public Kcrecord findOne(Long id);
 	
 	
 	/**
@@ -59,6 +57,6 @@ public interface StockInfoService {
 	 * @param pageSize 每页记录数
 	 * @return
 	 */
-	public PageResult findPage(Goods goods, int pageNum, int pageSize);
+	public PageResult findPage(Kcrecord kcrecord, int pageNum, int pageSize);
 	
 }

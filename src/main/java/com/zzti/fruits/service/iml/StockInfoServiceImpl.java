@@ -1,10 +1,14 @@
 package com.zzti.fruits.service.iml;
+import java.util.Date;
 import java.util.List;
 
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.mapper.StockInfoMapper;
+import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.StockInfo;
 import com.zzti.fruits.pojo.StockInfoExample;
+import com.zzti.fruits.pojogroup.GroupStockInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.Page;
@@ -58,6 +62,8 @@ public class StockInfoServiceImpl implements StockInfoService {
 	 */
 	@Override
 	public void update(StockInfo stockinfo){
+		stockinfo.setUpTlr("admin");
+		stockinfo.setUpTm(new Date());
 		stockInfoMapper.updateByPrimaryKey(stockinfo);
 	}
 
@@ -83,36 +89,13 @@ public class StockInfoServiceImpl implements StockInfoService {
 
 
 		@Override
-	public PageResult findPage(StockInfo stockinfo, int pageNum, int pageSize) {
+	public PageResult findPage(Goods goods, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 
-		StockInfoExample example=new StockInfoExample();
-		StockInfoExample.Criteria criteria = example.createCriteria();
-
-		if(stockinfo!=null){
-						if(stockinfo.getGoodsId()!=null && stockinfo.getGoodsId().length()>0){
-				criteria.andGoodsIdLike("%"+stockinfo.getGoodsId()+"%");
-			}
-			if(stockinfo.getStorageLocation()!=null && stockinfo.getStorageLocation().length()>0){
-				criteria.andStorageLocationLike("%"+stockinfo.getStorageLocation()+"%");
-			}
-			if(stockinfo.getCrtTlr()!=null && stockinfo.getCrtTlr().length()>0){
-				criteria.andCrtTlrLike("%"+stockinfo.getCrtTlr()+"%");
-			}
-			if(stockinfo.getCrtTm()!=null && stockinfo.getCrtTm().length()>0){
-				criteria.andCrtTmLike("%"+stockinfo.getCrtTm()+"%");
-			}
-			if(stockinfo.getUpTlr()!=null && stockinfo.getUpTlr().length()>0){
-				criteria.andUpTlrLike("%"+stockinfo.getUpTlr()+"%");
-			}
-			if(stockinfo.getUpTm()!=null && stockinfo.getUpTm().length()>0){
-				criteria.andUpTmLike("%"+stockinfo.getUpTm()+"%");
-			}
-
-		}
-
-		Page<StockInfo> page= (Page<StockInfo>)stockInfoMapper.selectByExample(example);
-		return new PageResult(page.getTotal(), page.getResult());
+             if(StringUtils.isNotBlank(goods.getGoodname()))
+             	goods.setGoodname("%"+goods.getGoodname()+"%");
+			Page<GroupStockInfo> page= (Page<GroupStockInfo>) stockInfoMapper.Search(goods.getGoodname(), goods.getFid(), goods.getSid());
+			return new PageResult(page.getTotal(), page.getResult());
 	}
 	
 }

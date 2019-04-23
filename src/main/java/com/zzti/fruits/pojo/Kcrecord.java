@@ -1,6 +1,8 @@
 package com.zzti.fruits.pojo;
 
-public class Kcrecord {
+import java.io.Serializable;
+
+public class Kcrecord implements Serializable {
     private Integer id;
 
     private String gid;

@@ -8,9 +8,9 @@
     <result column="MIN_STOCK_COUNT" property="minStockCount" jdbcType="INTEGER" />
     <result column="STORAGE_LOCATION" property="storageLocation" jdbcType="VARCHAR" />
     <result column="CRT_TLR" property="crtTlr" jdbcType="VARCHAR" />
-    <result column="CRT_TM" property="crtTm" jdbcType="CHAR" />
+    <result column="CRT_TM" property="crtTm" jdbcType="TIMESTAMP" />
     <result column="UP_TLR" property="upTlr" jdbcType="VARCHAR" />
-    <result column="UP_TM" property="upTm" jdbcType="CHAR" />
+    <result column="UP_TM" property="upTm" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,13 +74,61 @@
     GOODS_ID, STOCK_COUNT, HOLD_COUNT, MIN_STOCK_COUNT, STORAGE_LOCATION, CRT_TLR, CRT_TM, 
     UP_TLR, UP_TM
   </sql>
+
+
+
+    <!--按照条件查询-->
+    <resultMap id="SearchResultMap" type="com.zzti.fruits.pojogroup.GroupStockInfo">
+        <result property="id" column="id"></result>
+        <result property="goodName" column="goodname"></result>
+        <result property="fname" column="fname"></result>
+        <result property="sname" column="sname"></result>
+        <result property="stockCount" column="STOCK_COUNT"></result>
+        <result property="holdCount" column="HOLD_COUNT"></result>
+        <result property="minStockCount" column="MIN_STOCK_COUNT"></result>
+        <result property="storageLocation" column="STORAGE_LOCATION"></result>
+    </resultMap>
+    <select id="Search" parameterType="java.lang.String" resultMap="SearchResultMap">
+        SELECT
+        a.id,
+        a.goodname goodname,
+        (SELECT
+        c.typename
+        FROM protype c
+        WHERE c.id=a.fid
+        ) fname,
+        (SELECT
+        c.typename
+        FROM protype c
+        WHERE c.id=a.sid
+        ) sname,
+        b.STOCK_COUNT,
+        b.HOLD_COUNT,
+        b.MIN_STOCK_COUNT,
+        b.STORAGE_LOCATION
+        FROM goods a INNER JOIN stockinfo b ON a.id=b.GOODS_ID
+        WHERE 1=1
+        <if test="goodname!=null and goodname!=''">
+            AND a.goodname like #{goodname}
+        </if>
+        <if test="fid!=null and fid!=''">
+            AND a.fid=#{fid}
+        </if>
+        <if test="sid!=null and sid!=''">
+            AND a.sid=#{sid}
+        </if>
+      ORDER BY a.savetime
+    </select>
+
+
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zzti.fruits.pojo.StockInfoExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from stock_info
+    from stockinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,29 +139,31 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from stock_info
+    from stockinfo
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from stock_info
+    delete from stockinfo
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.zzti.fruits.pojo.StockInfoExample" >
-    delete from stock_info
+    delete from stockinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.zzti.fruits.pojo.StockInfo" >
-    insert into stock_info (GOODS_ID, STOCK_COUNT, HOLD_COUNT, 
+    insert into stockinfo (GOODS_ID, STOCK_COUNT, HOLD_COUNT, 
       MIN_STOCK_COUNT, STORAGE_LOCATION, CRT_TLR, 
-      CRT_TM, UP_TLR, UP_TM)
+      CRT_TM, UP_TLR, UP_TM
+      )
     values (#{goodsId,jdbcType=VARCHAR}, #{stockCount,jdbcType=INTEGER}, #{holdCount,jdbcType=INTEGER}, 
       #{minStockCount,jdbcType=INTEGER}, #{storageLocation,jdbcType=VARCHAR}, #{crtTlr,jdbcType=VARCHAR}, 
-      #{crtTm,jdbcType=CHAR}, #{upTlr,jdbcType=VARCHAR}, #{upTm,jdbcType=CHAR})
+      #{crtTm,jdbcType=TIMESTAMP}, #{upTlr,jdbcType=VARCHAR}, #{upTm,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.StockInfo" >
-    insert into stock_info
+    insert into stockinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="goodsId != null" >
         GOODS_ID,
@@ -163,24 +213,24 @@
         #{crtTlr,jdbcType=VARCHAR},
       </if>
       <if test="crtTm != null" >
-        #{crtTm,jdbcType=CHAR},
+        #{crtTm,jdbcType=TIMESTAMP},
       </if>
       <if test="upTlr != null" >
         #{upTlr,jdbcType=VARCHAR},
       </if>
       <if test="upTm != null" >
-        #{upTm,jdbcType=CHAR},
+        #{upTm,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zzti.fruits.pojo.StockInfoExample" resultType="java.lang.Integer" >
-    select count(*) from stock_info
+    select count(*) from stockinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update stock_info
+    update stockinfo
     <set >
       <if test="record.goodsId != null" >
         GOODS_ID = #{record.goodsId,jdbcType=VARCHAR},
@@ -201,13 +251,13 @@
         CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
       </if>
       <if test="record.crtTm != null" >
-        CRT_TM = #{record.crtTm,jdbcType=CHAR},
+        CRT_TM = #{record.crtTm,jdbcType=TIMESTAMP},
       </if>
       <if test="record.upTlr != null" >
         UP_TLR = #{record.upTlr,jdbcType=VARCHAR},
       </if>
       <if test="record.upTm != null" >
-        UP_TM = #{record.upTm,jdbcType=CHAR},
+        UP_TM = #{record.upTm,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -215,22 +265,22 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update stock_info
+    update stockinfo
     set GOODS_ID = #{record.goodsId,jdbcType=VARCHAR},
       STOCK_COUNT = #{record.stockCount,jdbcType=INTEGER},
       HOLD_COUNT = #{record.holdCount,jdbcType=INTEGER},
       MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=INTEGER},
       STORAGE_LOCATION = #{record.storageLocation,jdbcType=VARCHAR},
       CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
-      CRT_TM = #{record.crtTm,jdbcType=CHAR},
+      CRT_TM = #{record.crtTm,jdbcType=TIMESTAMP},
       UP_TLR = #{record.upTlr,jdbcType=VARCHAR},
-      UP_TM = #{record.upTm,jdbcType=CHAR}
+      UP_TM = #{record.upTm,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.zzti.fruits.pojo.StockInfo" >
-    update stock_info
+    update stockinfo
     <set >
       <if test="stockCount != null" >
         STOCK_COUNT = #{stockCount,jdbcType=INTEGER},
@@ -248,27 +298,27 @@
         CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
       </if>
       <if test="crtTm != null" >
-        CRT_TM = #{crtTm,jdbcType=CHAR},
+        CRT_TM = #{crtTm,jdbcType=TIMESTAMP},
       </if>
       <if test="upTlr != null" >
         UP_TLR = #{upTlr,jdbcType=VARCHAR},
       </if>
       <if test="upTm != null" >
-        UP_TM = #{upTm,jdbcType=CHAR},
+        UP_TM = #{upTm,jdbcType=TIMESTAMP},
       </if>
     </set>
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.StockInfo" >
-    update stock_info
+    update stockinfo
     set STOCK_COUNT = #{stockCount,jdbcType=INTEGER},
       HOLD_COUNT = #{holdCount,jdbcType=INTEGER},
       MIN_STOCK_COUNT = #{minStockCount,jdbcType=INTEGER},
       STORAGE_LOCATION = #{storageLocation,jdbcType=VARCHAR},
       CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
-      CRT_TM = #{crtTm,jdbcType=CHAR},
+      CRT_TM = #{crtTm,jdbcType=TIMESTAMP},
       UP_TLR = #{upTlr,jdbcType=VARCHAR},
-      UP_TM = #{upTm,jdbcType=CHAR}
+      UP_TM = #{upTm,jdbcType=TIMESTAMP}
     where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
   </update>
 </mapper>

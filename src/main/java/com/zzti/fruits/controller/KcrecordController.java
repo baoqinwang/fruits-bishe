@@ -3,15 +3,14 @@ import java.util.List;
 
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.entity.Result;
-import com.zzti.fruits.pojo.Goods;
-import com.zzti.fruits.pojo.StockInfo;
-import com.zzti.fruits.pojogroup.GroupStockInfo;
+import com.zzti.fruits.pojo.Kcrecord;
+import jdk.nashorn.internal.ir.annotations.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zzti.fruits.service.StockInfoService;
+import com.zzti.fruits.service.KcrecordService;
 
 
 /**
@@ -20,19 +19,19 @@ import com.zzti.fruits.service.StockInfoService;
  *
  */
 @RestController
-@RequestMapping("/stockinfo")
-public class StockinfoController {
+@RequestMapping("/kcrecord")
+public class KcrecordController {
 
-      @Autowired
-	private StockInfoService stockInfoService;
+	@Autowired
+	private KcrecordService kcrecordService;
 	
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
 	@RequestMapping("/findAll")
-	public List<StockInfo> findAll(){
-		return stockInfoService.findAll();
+	public List<Kcrecord> findAll(){
+		return kcrecordService.findAll();
 	}
 	
 	
@@ -42,34 +41,37 @@ public class StockinfoController {
 	 */
 	@RequestMapping("/findPage")
 	public PageResult findPage(int page, int rows){
-		return stockInfoService.findPage(page, rows);
+		return kcrecordService.findPage(page, rows);
 	}
 	
 	/**
 	 * 增加
-	 * @param stockinfo
-	 * @returnStockInfo
+	 * @param kcrecord
+	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody StockInfo stockinfo){
+	public Result add(@RequestBody Kcrecord kcrecord){
 		try {
-			stockInfoService.add(stockinfo);
-			return new Result(true, "增加成功");
+			kcrecordService.add(kcrecord);
+			if("in".equals(kcrecord.getType()))
+			  return new Result(true, "入库成功");
+			else
+				return new Result(true, "出库成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(false, "增加失败");
+			return new Result(false, "操作失败");
 		}
 	}
 	
 	/**
 	 * 修改
-	 * @param stockinfo
+	 * @param kcrecord
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody StockInfo stockinfo){
+	public Result update(@RequestBody Kcrecord kcrecord){
 		try {
-			stockInfoService.update(stockinfo);
+			kcrecordService.update(kcrecord);
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,8 +85,8 @@ public class StockinfoController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public StockInfo findOne(Long id){
-		return stockInfoService.findOne(id);
+	public Kcrecord findOne(Long id){
+		return kcrecordService.findOne(id);		
 	}
 	
 	/**
@@ -95,7 +97,7 @@ public class StockinfoController {
 	@RequestMapping("/delete")
 	public Result delete(Long [] ids){
 		try {
-			stockInfoService.delete(ids);
+			kcrecordService.delete(ids);
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,14 +107,14 @@ public class StockinfoController {
 	
 		/**
 	 * 查询+分页
-	 * @param goods
+	 * @param kcrecord
 	 * @param page
 	 * @param rows
 	 * @return
 	 */
 	@RequestMapping("/search")
-	public PageResult search(@RequestBody Goods goods, int page, int rows  ){
-		return stockInfoService.findPage(goods, page, rows);
+	public PageResult search(@RequestBody Kcrecord kcrecord, int page, int rows  ){
+		return kcrecordService.findPage(kcrecord, page, rows);
 	}
 	
 }

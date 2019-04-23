@@ -2,6 +2,7 @@ package com.zzti.fruits.mapper;
 
 import com.zzti.fruits.pojo.StockInfo;
 import com.zzti.fruits.pojo.StockInfoExample;
+import com.zzti.fruits.pojogroup.GroupStockInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,5 @@ public interface StockInfoMapper {
     int updateByPrimaryKeySelective(StockInfo record);
 
     int updateByPrimaryKey(StockInfo record);
+    List<GroupStockInfo> Search(@Param("goodname")String goodname, @Param("fid")String fid, @Param("sid")String sid);
 }

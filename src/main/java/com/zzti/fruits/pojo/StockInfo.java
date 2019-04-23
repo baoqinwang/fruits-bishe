@@ -1,5 +1,7 @@
 package com.zzti.fruits.pojo;
 
+import java.util.Date;
+
 public class StockInfo {
     private String goodsId;
 
@@ -13,11 +15,11 @@ public class StockInfo {
 
     private String crtTlr;
 
-    private String crtTm;
+    private Date crtTm;
 
     private String upTlr;
 
-    private String upTm;
+    private Date upTm;
 
     public String getGoodsId() {
         return goodsId;
@@ -67,12 +69,12 @@ public class StockInfo {
         this.crtTlr = crtTlr == null ? null : crtTlr.trim();
     }
 
-    public String getCrtTm() {
+    public Date getCrtTm() {
         return crtTm;
     }
 
-    public void setCrtTm(String crtTm) {
-        this.crtTm = crtTm == null ? null : crtTm.trim();
+    public void setCrtTm(Date crtTm) {
+        this.crtTm = crtTm;
     }
 
     public String getUpTlr() {
@@ -83,11 +85,11 @@ public class StockInfo {
         this.upTlr = upTlr == null ? null : upTlr.trim();
     }
 
-    public String getUpTm() {
+    public Date getUpTm() {
         return upTm;
     }
 
-    public void setUpTm(String upTm) {
-        this.upTm = upTm == null ? null : upTm.trim();
+    public void setUpTm(Date upTm) {
+        this.upTm = upTm;
     }
 }
