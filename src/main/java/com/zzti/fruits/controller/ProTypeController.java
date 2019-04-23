@@ -92,4 +92,13 @@ public class ProTypeController {
             return new Result(false, "删除失败");
         }
     }
+
+    /**
+     * 查询所有分类
+     * @return
+     */
+    @RequestMapping("/findAll")
+    public List<Protype> findAll(){
+       return proTypeService.findAll();
+    }
 }

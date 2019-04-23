@@ -1,7 +1,9 @@
 package com.zzti.fruits.service.iml;
 
 
+import com.zzti.fruits.mapper.GoodsMapper;
 import com.zzti.fruits.mapper.ProtypeMapper;
+import com.zzti.fruits.pojo.GoodsExample;
 import com.zzti.fruits.pojo.Protype;
 import com.zzti.fruits.pojo.ProtypeExample;
 import com.zzti.fruits.service.ProTypeService;
@@ -26,7 +28,8 @@ version: 1.0
 public class ProTypeServiceImpl implements ProTypeService {
     @Autowired
     private ProtypeMapper protypeMapper;
-
+    @Autowired
+    private GoodsMapper goodsMapper;
     @Override
     public List<Protype> findPage(String parentId) {
         ProtypeExample example = new ProtypeExample();
@@ -60,11 +63,15 @@ public class ProTypeServiceImpl implements ProTypeService {
             //删除下级分类
             ProtypeExample protypeExample=new ProtypeExample();
             protypeExample.createCriteria().andFatheridEqualTo(id);
-
-//            int i=0;
-//            i=i/0;
+            List<Protype> protypes = protypeMapper.selectByExample(protypeExample);
+            //判断值改分类下是否有商品，若有抛出异常
             protypeMapper.deleteByExample(protypeExample);
             protypeMapper.deleteByPrimaryKey(new Integer(id));
         }
+    }
+
+    @Override
+    public List<Protype> findAll() {
+        return  protypeMapper.selectByExample(null);
     }
 }

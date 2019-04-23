@@ -1284,73 +1284,143 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andSelfendIsNull() {
-            addCriterion("selfend is null");
+        public Criteria andShelfendIsNull() {
+            addCriterion("shelfend is null");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendIsNotNull() {
-            addCriterion("selfend is not null");
+        public Criteria andShelfendIsNotNull() {
+            addCriterion("shelfend is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendEqualTo(String value) {
-            addCriterion("selfend =", value, "selfend");
+        public Criteria andShelfendEqualTo(String value) {
+            addCriterion("shelfend =", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendNotEqualTo(String value) {
-            addCriterion("selfend <>", value, "selfend");
+        public Criteria andShelfendNotEqualTo(String value) {
+            addCriterion("shelfend <>", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendGreaterThan(String value) {
-            addCriterion("selfend >", value, "selfend");
+        public Criteria andShelfendGreaterThan(String value) {
+            addCriterion("shelfend >", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendGreaterThanOrEqualTo(String value) {
-            addCriterion("selfend >=", value, "selfend");
+        public Criteria andShelfendGreaterThanOrEqualTo(String value) {
+            addCriterion("shelfend >=", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendLessThan(String value) {
-            addCriterion("selfend <", value, "selfend");
+        public Criteria andShelfendLessThan(String value) {
+            addCriterion("shelfend <", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendLessThanOrEqualTo(String value) {
-            addCriterion("selfend <=", value, "selfend");
+        public Criteria andShelfendLessThanOrEqualTo(String value) {
+            addCriterion("shelfend <=", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendLike(String value) {
-            addCriterion("selfend like", value, "selfend");
+        public Criteria andShelfendLike(String value) {
+            addCriterion("shelfend like", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendNotLike(String value) {
-            addCriterion("selfend not like", value, "selfend");
+        public Criteria andShelfendNotLike(String value) {
+            addCriterion("shelfend not like", value, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendIn(List<String> values) {
-            addCriterion("selfend in", values, "selfend");
+        public Criteria andShelfendIn(List<String> values) {
+            addCriterion("shelfend in", values, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendNotIn(List<String> values) {
-            addCriterion("selfend not in", values, "selfend");
+        public Criteria andShelfendNotIn(List<String> values) {
+            addCriterion("shelfend not in", values, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendBetween(String value1, String value2) {
-            addCriterion("selfend between", value1, value2, "selfend");
+        public Criteria andShelfendBetween(String value1, String value2) {
+            addCriterion("shelfend between", value1, value2, "shelfend");
             return (Criteria) this;
         }
 
-        public Criteria andSelfendNotBetween(String value1, String value2) {
-            addCriterion("selfend not between", value1, value2, "selfend");
+        public Criteria andShelfendNotBetween(String value1, String value2) {
+            addCriterion("shelfend not between", value1, value2, "shelfend");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlIsNull() {
+            addCriterion("imgurl is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlIsNotNull() {
+            addCriterion("imgurl is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlEqualTo(String value) {
+            addCriterion("imgurl =", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlNotEqualTo(String value) {
+            addCriterion("imgurl <>", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlGreaterThan(String value) {
+            addCriterion("imgurl >", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlGreaterThanOrEqualTo(String value) {
+            addCriterion("imgurl >=", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlLessThan(String value) {
+            addCriterion("imgurl <", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlLessThanOrEqualTo(String value) {
+            addCriterion("imgurl <=", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlLike(String value) {
+            addCriterion("imgurl like", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlNotLike(String value) {
+            addCriterion("imgurl not like", value, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlIn(List<String> values) {
+            addCriterion("imgurl in", values, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlNotIn(List<String> values) {
+            addCriterion("imgurl not in", values, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlBetween(String value1, String value2) {
+            addCriterion("imgurl between", value1, value2, "imgurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgurlNotBetween(String value1, String value2) {
+            addCriterion("imgurl not between", value1, value2, "imgurl");
             return (Criteria) this;
         }
     }

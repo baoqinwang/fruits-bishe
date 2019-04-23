@@ -37,7 +37,9 @@ public class Goods implements Serializable {
 
     private String shelfbegin;
 
-    private String selfend;
+    private String shelfend;
+
+    private String imgurl;
 
     private String content;
 
@@ -177,12 +179,20 @@ public class Goods implements Serializable {
         this.shelfbegin = shelfbegin == null ? null : shelfbegin.trim();
     }
 
-    public String getSelfend() {
-        return selfend;
+    public String getShelfend() {
+        return shelfend;
     }
 
-    public void setSelfend(String selfend) {
-        this.selfend = selfend == null ? null : selfend.trim();
+    public void setShelfend(String shelfend) {
+        this.shelfend = shelfend == null ? null : shelfend.trim();
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl == null ? null : imgurl.trim();
     }
 
     public String getContent() {

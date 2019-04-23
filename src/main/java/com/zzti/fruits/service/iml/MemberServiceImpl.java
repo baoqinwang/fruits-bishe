@@ -56,7 +56,8 @@ public class MemberServiceImpl implements MemberService {
             }
 
         }
-
+        criteria.andDelstatusEqualTo("0");
+        memberExample.setOrderByClause("savetime DESC");
         Page<Member> page= (Page<Member>)memberMapper.selectByExample(memberExample);
         return new PageResult(page.getTotal(), page.getResult());
     }
@@ -69,6 +70,7 @@ public class MemberServiceImpl implements MemberService {
         member.setLoginerronum(0);
         member.setLockstatus("n");
         RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2);
+        member.setDelstatus("0");
         memberMapper.insert(member);
     }
 

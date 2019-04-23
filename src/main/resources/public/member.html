@@ -28,25 +28,18 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!--<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">-->
 
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="static/js/moment-with-locales.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script>
-
-        $(function () {
-            $('#datetimepicker1').datetimepicker({
-                format: 'YYYY-MM-DD',
-                locale: moment.locale('zh-cn')
-            });
-            $('#datetimepicker2').datetimepicker({
-                format: 'YYYY-MM-DD hh:mm',
-                locale: moment.locale('zh-cn')
-            });
-        });
-
-
-    </script>
+    <!--<script>-->
+        <!--$(function () {-->
+            <!--$('#datetimepicker1').datetimepicker({-->
+                <!--format: 'YYYY-MM-DD',-->
+                <!--locale: moment.locale('zh-cn')-->
+            <!--});-->
+            <!--$('#datetimepicker2').datetimepicker({-->
+                <!--format: 'YYYY-MM-DD hh:mm',-->
+                <!--locale: moment.locale('zh-cn')-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
 
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="memberController" >
@@ -110,8 +103,8 @@
                 <td><p ng-if="entity.isgjhy=='y'">是</p> <p ng-if="entity.isgjhy=='n'">否</p></td>
                 <!--<td>{{entity.isgjhy}}</td>-->
                 <td class="text-center">
-                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >修改</button>
-                    <button type="button" class="btn bg-olive btn-xs"  ng-click="reset(entity.id)" >重置密码</button>
+                    <button type="button" class="btn bg-olive btn-success btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >修改</button>
+                    <button type="button" class="btn bg-olive btn-success btn-xs"  ng-click="reset(entity.id)" >重置密码</button>
                 </td>
             </tr>
 

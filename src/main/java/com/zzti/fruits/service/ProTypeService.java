@@ -48,4 +48,10 @@ public interface ProTypeService {
      * @param ids
      */
     void delete(String[] ids);
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Protype> findAll();
 }

@@ -19,7 +19,8 @@
     <result column="filename4" property="filename4" jdbcType="VARCHAR" />
     <result column="isshelf" property="isshelf" jdbcType="VARCHAR" />
     <result column="shelfbegin" property="shelfbegin" jdbcType="VARCHAR" />
-    <result column="selfend" property="selfend" jdbcType="VARCHAR" />
+    <result column="shelfend" property="shelfend" jdbcType="VARCHAR" />
+    <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.zzti.fruits.pojo.Goods" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -84,7 +85,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, goodno, goodname, fid, sid, goodpp, price, tprice, istj, delstatus, savetime, 
-    filename1, filename2, filename3, filename4, isshelf, shelfbegin, selfend
+    filename1, filename2, filename3, filename4, isshelf, shelfbegin, shelfend, imgurl
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -143,15 +144,15 @@
       tprice, istj, delstatus, 
       savetime, filename1, filename2, 
       filename3, filename4, isshelf, 
-      shelfbegin, selfend, content
-      )
+      shelfbegin, shelfend, imgurl, 
+      content)
     values (#{id,jdbcType=INTEGER}, #{goodno,jdbcType=VARCHAR}, #{goodname,jdbcType=VARCHAR}, 
       #{fid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, #{goodpp,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
       #{tprice,jdbcType=VARCHAR}, #{istj,jdbcType=VARCHAR}, #{delstatus,jdbcType=VARCHAR}, 
       #{savetime,jdbcType=VARCHAR}, #{filename1,jdbcType=VARCHAR}, #{filename2,jdbcType=VARCHAR}, 
       #{filename3,jdbcType=VARCHAR}, #{filename4,jdbcType=VARCHAR}, #{isshelf,jdbcType=VARCHAR}, 
-      #{shelfbegin,jdbcType=VARCHAR}, #{selfend,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
-      )
+      #{shelfbegin,jdbcType=VARCHAR}, #{shelfend,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Goods" >
     insert into goods
@@ -207,8 +208,11 @@
       <if test="shelfbegin != null" >
         shelfbegin,
       </if>
-      <if test="selfend != null" >
-        selfend,
+      <if test="shelfend != null" >
+        shelfend,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
       </if>
       <if test="content != null" >
         content,
@@ -266,8 +270,11 @@
       <if test="shelfbegin != null" >
         #{shelfbegin,jdbcType=VARCHAR},
       </if>
-      <if test="selfend != null" >
-        #{selfend,jdbcType=VARCHAR},
+      <if test="shelfend != null" >
+        #{shelfend,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -334,8 +341,11 @@
       <if test="record.shelfbegin != null" >
         shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
       </if>
-      <if test="record.selfend != null" >
-        selfend = #{record.selfend,jdbcType=VARCHAR},
+      <if test="record.shelfend != null" >
+        shelfend = #{record.shelfend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgurl != null" >
+        imgurl = #{record.imgurl,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -364,7 +374,8 @@
       filename4 = #{record.filename4,jdbcType=VARCHAR},
       isshelf = #{record.isshelf,jdbcType=VARCHAR},
       shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
-      selfend = #{record.selfend,jdbcType=VARCHAR},
+      shelfend = #{record.shelfend,jdbcType=VARCHAR},
+      imgurl = #{record.imgurl,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -389,7 +400,8 @@
       filename4 = #{record.filename4,jdbcType=VARCHAR},
       isshelf = #{record.isshelf,jdbcType=VARCHAR},
       shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
-      selfend = #{record.selfend,jdbcType=VARCHAR}
+      shelfend = #{record.shelfend,jdbcType=VARCHAR},
+      imgurl = #{record.imgurl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -445,8 +457,11 @@
       <if test="shelfbegin != null" >
         shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
       </if>
-      <if test="selfend != null" >
-        selfend = #{selfend,jdbcType=VARCHAR},
+      <if test="shelfend != null" >
+        shelfend = #{shelfend,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        imgurl = #{imgurl,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
@@ -472,7 +487,8 @@
       filename4 = #{filename4,jdbcType=VARCHAR},
       isshelf = #{isshelf,jdbcType=VARCHAR},
       shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
-      selfend = #{selfend,jdbcType=VARCHAR},
+      shelfend = #{shelfend,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -494,7 +510,8 @@
       filename4 = #{filename4,jdbcType=VARCHAR},
       isshelf = #{isshelf,jdbcType=VARCHAR},
       shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
-      selfend = #{selfend,jdbcType=VARCHAR}
+      shelfend = #{shelfend,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

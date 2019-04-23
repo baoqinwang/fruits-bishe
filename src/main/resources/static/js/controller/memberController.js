@@ -50,7 +50,7 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 				}else{
                     $scope.msg=response.message;
                     $('#editModal3').modal();
-					alert(response.message);
+
 				}
 			}		
 		);				

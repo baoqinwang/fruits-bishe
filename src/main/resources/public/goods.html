@@ -25,13 +25,13 @@
     <script type="text/javascript" src="../js/controller/baseController.js"></script>
     <script type="text/javascript" src="../js/controller/goodsController.js"></script>
     <script type="text/javascript" src="../js/service/goodsService.js"></script>
-    <script type="text/javascript" src="../js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="../js/service/protypeService.js"></script>
     <script type="text/javascript" src="../js/service/uploadService.js"></script>  
-    <script type="text/javascript" src="../js/service/typeTemplateService.js"></script>  
+
  
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="findItemCatList()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="goodsController" ng-init="findprotypeList()">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -48,23 +48,22 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <a href="goods_edit.html"  class="btn btn-default">新建</a>
-                                        <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
-                                        <button type="button" class="btn btn-default" title="提交审核" ><i class="fa fa-check"></i> 提交审核</button>
-                                        <button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽</button>
+                                        <button type="button" class="btn btn-default" ng-click="checkDel()" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                  		状态：<select ng-model="searchEntity.auditStatus">
-                                         	<option value="">全部</option>      
-                                         	<option value="0">未申请</option>    
-                                         	<option value="1">审核通过</option>    
-                                         	<option value="2">审核未通过</option>    
-                                         	<option value="3">关闭</option>                                     
-                                        </select>
-							                  商品名称：<input type="text" ng-model="searchEntity.goodsName">									
+
+							                  商品名称：<input type="text" ng-model="searchEntity.goodname">
+                                              一级分类：
+                                    <select  ng-model="searchEntity.fid"  ng-init="selectProTypeList3()" >
+                                        <option ng-repeat="a in proTypeList3"  value="{{a.id}}" >{{a.typename}}</option>
+                                    </select>
+                                              二级分类：<select  ng-model="searchEntity.sid" >
+                                    <option ng-repeat="a in proTypeList4"  value="{{a.id}}" >{{a.typename}}</option>
+                                </select>
 									<button class="btn btn-default" ng-click="reloadList()">查询</button>                                    
                                 </div>
                             </div>
@@ -76,34 +75,48 @@
 			                          <tr>
 			                              <th class="" style="padding-right:0px">
 			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
-			                              </th> 
-										  <th class="sorting_asc">商品ID</th>
+			                              </th>
 									      <th class="sorting">商品名称</th>
 									      <th class="sorting">商品价格</th>
+                                          <th class="sorting">会员价格</th>
 									      <th class="sorting">一级分类</th>
 									      <th class="sorting">二级分类</th>
-									      <th class="sorting">三级分类</th>
-									      <th class="sorting">状态</th>									     						
+									      <th class="sorting">是否推荐</th>
+                                          <th class="sorting">上架/下架</th>
 					                      <th class="text-center">操作</th>
 			                          </tr>
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox"></td>			                              
-				                          <td>{{entity.id}}</td>
-									      <td>{{entity.goodsName}}</td>
+			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
+									      <td>{{entity.goodname}}</td>
 									      <td>{{entity.price}}</td>
-									      <td>{{itemCatList[entity.category1Id]}}</td>
-									      <td>{{itemCatList[entity.category2Id]}}</td>
-									      <td>{{itemCatList[entity.category3Id]}}</td>
+                                          <td>{{entity.tprice}}</td>
+									      <td>{{proType1List[entity.fid]}}</td>
+									      <td>{{proType1List[entity.sid]}}</td>
 		                                  <td>
-		                                  	<span>
-		                                  		{{status[entity.auditStatus]}}
+		                                  	<span ng-if="entity.istj=='yes'">
+		                                  		是
 		                                  	</span>
-		                                  </td>		                                  
-		                                  <td class="text-center">
-		                                  	  <a class="btn bg-olive btn-xs" href="goods_edit.html#?id={{entity.id}}">修改</a>                                
+                                              <span ng-if="entity.istj=='no'">
+		                                  		否
+		                                  	</span>
 		                                  </td>
+                                          <td>
+		                                  	<span ng-if="entity.isshelf=='00'">
+		                                  		上架
+		                                  	</span>
+                                              <span ng-if="entity.isshelf=='01'">
+		                                  		下架
+		                                  	</span>
+                                              <span ng-if="entity.isshelf=='02'">
+		                                  		待上架
+		                                  	</span>
+                                          </td>
+		                                  <td class="text-center">
+		                                  	  <a class="btn bg-olive btn-success btn-xs" href="goods_edit.html#?id={{entity.id}}">修改</a>
+                                              <button type="button" class="btn bg-olive btn-success btn-xs" data-toggle="modal" data-target="#editModal" ng-click="shelfcheck(entity.id,entity.isshelf)" ><span ng-if="entity.isshelf=='00'">下架</span><span ng-if="entity.isshelf=='02'||entity.isshelf=='01'">上架</span></button>
+                                          </td>
 			                          </tr>
 			                      </tbody>
 			                  </table>
@@ -117,7 +130,73 @@
                         
                      </div>
                     <!-- /.box-body -->
-		
-</body>
+
+  <div class="modal fade" id="editModal3">
+      <div class="modal-dialog">
+          <div class="modal-content message_align">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">提示信息</h4>
+              </div>
+              <div class="modal-body">
+                  <p>{{msg}}</p>
+              </div>
+              <div class="modal-footer">
+                  <input type="hidden" id="url"/>
+                  <a   class="btn btn-success" data-dismiss="modal">确定</a>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <div class="modal fade" id="editModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  请确认
+              </div>
+              <div class="modal-body">
+                  确认删除该记录吗？
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-danger" ng-click="dele()" data-dismiss="modal">删除记录</button>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+  <!--&lt;!&ndash; 编辑窗口 &ndash;&gt;-->
+  <!--<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+      <!--<div class="modal-dialog" >-->
+          <!--<div class="modal-content">-->
+              <!--<div class="modal-header">-->
+                  <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+                  <!--<h3 id="myModalLabel">编辑</h3>-->
+              <!--</div>-->
+              <!--<div class="modal-body">-->
+                  <!--<table class="table table-bordered table-striped"  width="800px">-->
+                      <!--<tr><td>上架/下架</td>-->
+                          <!--<td>-->
+                              <!--<select class="form-control" ng-model="entity.isshelf">-->
+                                  <!--<option value="00">上架</option>-->
+                                  <!--<option value="01">下架</option>-->
+                                  <!--<option value="02">待上架</option>-->
+                              <!--</select>-->
+                          <!--</td>-->
+                      <!--</tr>-->
+
+                  <!--</table>-->
+              <!--</div>-->
+              <!--<div class="modal-footer">-->
+                  <!--<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="updateShelf()">保存</button>-->
+                  <!--<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>-->
+              <!--</div>-->
+          <!--</div>-->
+      <!--</div>-->
+  <!--</div>-->
+<!--</body>-->
 
 </html>

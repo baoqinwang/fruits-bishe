@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzti.fruits.mapper.StockInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zzti.fruits.pojo.StockInfo" >
+    <id column="GOODS_ID" property="goodsId" jdbcType="VARCHAR" />
+    <result column="STOCK_COUNT" property="stockCount" jdbcType="INTEGER" />
+    <result column="HOLD_COUNT" property="holdCount" jdbcType="INTEGER" />
+    <result column="MIN_STOCK_COUNT" property="minStockCount" jdbcType="INTEGER" />
+    <result column="STORAGE_LOCATION" property="storageLocation" jdbcType="VARCHAR" />
+    <result column="CRT_TLR" property="crtTlr" jdbcType="VARCHAR" />
+    <result column="CRT_TM" property="crtTm" jdbcType="CHAR" />
+    <result column="UP_TLR" property="upTlr" jdbcType="VARCHAR" />
+    <result column="UP_TM" property="upTm" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    GOODS_ID, STOCK_COUNT, HOLD_COUNT, MIN_STOCK_COUNT, STORAGE_LOCATION, CRT_TLR, CRT_TM, 
+    UP_TLR, UP_TM
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zzti.fruits.pojo.StockInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stock_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_info
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stock_info
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zzti.fruits.pojo.StockInfoExample" >
+    delete from stock_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zzti.fruits.pojo.StockInfo" >
+    insert into stock_info (GOODS_ID, STOCK_COUNT, HOLD_COUNT, 
+      MIN_STOCK_COUNT, STORAGE_LOCATION, CRT_TLR, 
+      CRT_TM, UP_TLR, UP_TM)
+    values (#{goodsId,jdbcType=VARCHAR}, #{stockCount,jdbcType=INTEGER}, #{holdCount,jdbcType=INTEGER}, 
+      #{minStockCount,jdbcType=INTEGER}, #{storageLocation,jdbcType=VARCHAR}, #{crtTlr,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=CHAR}, #{upTlr,jdbcType=VARCHAR}, #{upTm,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.StockInfo" >
+    insert into stock_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        GOODS_ID,
+      </if>
+      <if test="stockCount != null" >
+        STOCK_COUNT,
+      </if>
+      <if test="holdCount != null" >
+        HOLD_COUNT,
+      </if>
+      <if test="minStockCount != null" >
+        MIN_STOCK_COUNT,
+      </if>
+      <if test="storageLocation != null" >
+        STORAGE_LOCATION,
+      </if>
+      <if test="crtTlr != null" >
+        CRT_TLR,
+      </if>
+      <if test="crtTm != null" >
+        CRT_TM,
+      </if>
+      <if test="upTlr != null" >
+        UP_TLR,
+      </if>
+      <if test="upTm != null" >
+        UP_TM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCount != null" >
+        #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="holdCount != null" >
+        #{holdCount,jdbcType=INTEGER},
+      </if>
+      <if test="minStockCount != null" >
+        #{minStockCount,jdbcType=INTEGER},
+      </if>
+      <if test="storageLocation != null" >
+        #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTlr != null" >
+        #{crtTlr,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null" >
+        #{crtTm,jdbcType=CHAR},
+      </if>
+      <if test="upTlr != null" >
+        #{upTlr,jdbcType=VARCHAR},
+      </if>
+      <if test="upTm != null" >
+        #{upTm,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zzti.fruits.pojo.StockInfoExample" resultType="java.lang.Integer" >
+    select count(*) from stock_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stock_info
+    <set >
+      <if test="record.goodsId != null" >
+        GOODS_ID = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockCount != null" >
+        STOCK_COUNT = #{record.stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.holdCount != null" >
+        HOLD_COUNT = #{record.holdCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.minStockCount != null" >
+        MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.storageLocation != null" >
+        STORAGE_LOCATION = #{record.storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTlr != null" >
+        CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null" >
+        CRT_TM = #{record.crtTm,jdbcType=CHAR},
+      </if>
+      <if test="record.upTlr != null" >
+        UP_TLR = #{record.upTlr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upTm != null" >
+        UP_TM = #{record.upTm,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stock_info
+    set GOODS_ID = #{record.goodsId,jdbcType=VARCHAR},
+      STOCK_COUNT = #{record.stockCount,jdbcType=INTEGER},
+      HOLD_COUNT = #{record.holdCount,jdbcType=INTEGER},
+      MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=INTEGER},
+      STORAGE_LOCATION = #{record.storageLocation,jdbcType=VARCHAR},
+      CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
+      CRT_TM = #{record.crtTm,jdbcType=CHAR},
+      UP_TLR = #{record.upTlr,jdbcType=VARCHAR},
+      UP_TM = #{record.upTm,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzti.fruits.pojo.StockInfo" >
+    update stock_info
+    <set >
+      <if test="stockCount != null" >
+        STOCK_COUNT = #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="holdCount != null" >
+        HOLD_COUNT = #{holdCount,jdbcType=INTEGER},
+      </if>
+      <if test="minStockCount != null" >
+        MIN_STOCK_COUNT = #{minStockCount,jdbcType=INTEGER},
+      </if>
+      <if test="storageLocation != null" >
+        STORAGE_LOCATION = #{storageLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTlr != null" >
+        CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null" >
+        CRT_TM = #{crtTm,jdbcType=CHAR},
+      </if>
+      <if test="upTlr != null" >
+        UP_TLR = #{upTlr,jdbcType=VARCHAR},
+      </if>
+      <if test="upTm != null" >
+        UP_TM = #{upTm,jdbcType=CHAR},
+      </if>
+    </set>
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.StockInfo" >
+    update stock_info
+    set STOCK_COUNT = #{stockCount,jdbcType=INTEGER},
+      HOLD_COUNT = #{holdCount,jdbcType=INTEGER},
+      MIN_STOCK_COUNT = #{minStockCount,jdbcType=INTEGER},
+      STORAGE_LOCATION = #{storageLocation,jdbcType=VARCHAR},
+      CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
+      CRT_TM = #{crtTm,jdbcType=CHAR},
+      UP_TLR = #{upTlr,jdbcType=VARCHAR},
+      UP_TM = #{upTm,jdbcType=CHAR}
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </update>
+</mapper>
