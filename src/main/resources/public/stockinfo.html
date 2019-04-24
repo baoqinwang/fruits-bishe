@@ -22,6 +22,8 @@
     <script type="text/javascript" src="../js/base_pagination.js">  </script>
     <script type="text/javascript" src="../js/service/stockinfoService.js">  </script>
     <script type="text/javascript" src="../js/service/protypeService.js">  </script>
+
+    <script type="text/javascript" src="../js/service/kcrecordService.js">  </script>
     <script type="text/javascript" src="../js/controller/baseController.js">  </script>
     <script type="text/javascript" src="../js/controller/stockinfoController.js">  </script>
     
@@ -81,7 +83,7 @@
 		                                  <td class="text-center">                                           
 		                                 	  <button type="button" class="btn bg-olive btn-success btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id,entity.goodName,entity.fname,entity.sname)" >修改</button>
                                               <button type="button" class="btn bg-olive btn-success btn-xs" data-toggle="modal" data-target="#editModal2" ng-click="findOne(entity.id,entity.goodName,entity.fname,entity.sname)" >出库/入库</button>
-                                              <a class="btn bg-olive btn-success btn-xs"  href="kcrecord.html#?id={{entity.id}}&goodName={{entity.goodName}}&fname={{entity.fname}}&sname={{entity.sname}}&stockCount={{entity.stockCount}}" >详情</a>
+                                              <a class="btn bg-olive btn-success btn-xs"  href="kcrecord.html#?id={{entity.id}}&goodName={{entity.goodName}}&fname={{entity.fname}}&sname={{entity.sname}}&stockCount={{entity.stockCount}}" >明细</a>
                                           </td>
 			                          </tr>									 
 			                      </tbody>
