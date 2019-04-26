@@ -30,4 +30,15 @@ public class jsonTest {
 //        }
 
     }
+    @Test
+    public void contextLoads2() {
+        String a="{\"status\":\"0\",\"msg\":\"ok\",\"result\":{\"number\":\"3834246118530\",\"type\":\"YUNDA\",\"list\":[{\"time\":\"2019-04-25 15:15:53\",\"status\":\"【泉州市】已离开 福建晋江市公司；发往 福建晋江市公司新塘便利店分部\"},{\"time\":\"2019-04-25 11:53:19\",\"status\":\"【泉州市】已离开 福建晋江分拨中心；发往 福建晋江市公司\"},{\"time\":\"2019-04-25 08:44:02\",\"status\":\"【泉州市】已到达 福建晋江分拨中心\"},{\"time\":\"2019-04-24 00:33:49\",\"status\":\"【郑州市】已离开 河南郑州分拨中心；发往 福建晋江分拨中心\"},{\"time\":\"2019-04-24 00:32:36\",\"status\":\"【郑州市】已到达 河南郑州分拨中心\"},{\"time\":\"2019-04-23 18:23:17\",\"status\":\"【洛阳市】已离开 河南洛阳公司；发往 福建晋江分拨中心\"},{\"time\":\"2019-04-23 16:38:34\",\"status\":\"【洛阳市】河南洛阳公司 已揽收\"}],\"deliverystatus\":\"1\",\"issign\":\"0\",\"expName\":\"韵达快递\",\"expSite\":\"www.yundaex.com\",\"expPhone\":\"95546\",\"logo\":\"http:\\/\\/img3.fegine.com\\/express\\/yd.jpg\",\"courier\":\"\",\"courierPhone\":\"\"}}";
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(a);
+        String msg = jsonObject.getString("msg");
+        System.out.println(msg);
+        JSONArray jsonArray = jsonObject.getJSONObject("result").getJSONArray("list");
+        String s = jsonArray.toJSONString();
+        System.out.println(s);
+
+    }
 }

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/wlinfo.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js">  </script>
+    <!-- 分页组件开始 -->
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<!-- 分页组件结束 -->
+    
+    
+    <script type="text/javascript" src="../js/base_pagination.js">  </script>
+    <script type="text/javascript" src="../js/service/ddinfoService.js">  </script>
+    <script type="text/javascript" src="../js/service/dddetailService.js">  </script>
+    <script type="text/javascript" src="../js/controller/baseController.js">  </script>
+    <script type="text/javascript" src="../js/controller/ddinfoController.js">  </script>
+
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="ddinfoController" >
+  <!-- .box-body -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">订单管理</h3>
+                    </div>
+
+  <!-- 数据表格 -->
+  <div class="table-box">
+
+      <div class="box-tools pull-right">
+          <div class="has-feedback">
+
+              订单编号：<input type="text" ng-model="searchEntity.ddno">
+              用户姓名：
+              <input type="text" ng-model="searchEntity.memberid">
+              发货状态：<select  ng-model="searchEntity.fhstatus" >
+              <option value="">-- 请选择 --</option>
+              <option >已发货</option>
+              <option >待发货</option>
+          </select>
+              订单状态：<select  ng-model="searchEntity.ddstate" >
+              <option value="">-- 请选择 --</option>
+              <option value="00">交易成功</option>
+              <option value="01">待付款</option>
+              <option value="02">已付款</option>
+              <option value="03">运输中</option>
+              <option value="04">退货申请中</option>
+              <option value="05">退货中</option>
+              <option value="06">退货成功</option>
+          </select>
+              <button class="btn btn-default" ng-click="reloadList()">查询</button>
+              <button class="btn btn-default" ng-click="searchEntity={};reloadList()">重置</button>
+          </div>
+
+      </div>
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+
+                             <th class="sorting">订单编号</th>
+                             <th class="sorting">用户</th>
+                             <th class="sorting">交易金额</th>
+                             <th class="sorting">订单地址</th>
+                             <th class="sorting">发货状态</th>
+                             <th class="sorting">物流编号</th>
+                             <th class="sorting">订单状态</th>
+								     				
+					                      <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="entity in list">
+
+                                          <td><a href="dddetail.html#?ddno={{entity.ddno}}&total={{entity.ddtotal}}">{{entity.ddno}}</a></td>
+                             <td>{{entity.memberid}}</td>			
+                             <td>{{entity.ddtotal}}</td>
+                                          <td><ol  ng-if="entity.newadd==null">{{entity.lxfs}}</ol>
+                                              <ol ng-if="!entity.newadd==''">{{entity.newadd}}</ol>
+                                          <ol> <button type="button" class="btn success btn-xs" data-toggle="modal" data-target="#editModal" ng-click="openEdit(entity.id,entity.ddno,entity.memberid,entity.lxfs,entity.newadd)" >修改地址</button> </ol></td>
+                             <td>{{entity.fhstatus}}</td>
+                                          <td>
+                                              <ol>{{entity.wlinfo}}</ol>
+                                              <ol> <button type="button" class="btn success btn-xs" ng-if="entity.wlinfo!=null&&entity.wlinfo!=''"   ng-click="searchwl(entity.wltype,entity.wlinfo)" >查看物流</button> </ol>
+                                              <!--<a data-toggle="modal"  ng-click="searchwl(entity.wltype,entity.wlinfo)" >{{entity.wlinfo}}</a></td>-->
+                             <td>
+                                 <span ng-if="entity.ddstate=='00'">交易成功</span>
+                                 <span ng-if="entity.ddstate=='01'">待付款</span>
+                                 <span ng-if="entity.ddstate=='02'">已付款</span>
+                                 <span ng-if="entity.ddstate=='03'">运输中</span>
+                                 <span ng-if="entity.ddstate=='04'">退货申请中</span>
+                                 <span ng-if="entity.ddstate=='05'">退货中</span>
+                                 <span ng-if="entity.ddstate=='06'">退货成功</span>
+                                 </td>
+		                                 
+		                                  <td class="text-center">                                           
+		                                 	  <button ng-if="entity.ddstate=='02'&&entity.wlinfo==''" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#editModal2" ng-click="openEdit(entity.id,entity.ddno,entity.memberid,entity.lxfs,entity.newadd)" >填写物流单号</button>
+                                              <button ng-if="entity.ddstate=='04'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'同意退货','05')" >同意退款</button>
+                                              <button ng-if="entity.ddstate=='05'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'确认退货','06')" >确认退货</button>
+                                              <button  type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#editModal4" ng-click="findOne(entity.id,entity.memberid,entity.lxfs);searchDet(entity.ddno)" >订单详情</button>
+		                                  </td>
+			                          </tr>									 
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                        
+                        </div>
+                        <!-- 数据表格 /-->
+                        <!-- 分页 -->
+						<tm-pagination conf="paginationConf"></tm-pagination>
+                     </div>
+                    <!-- /.box-body -->
+         
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">编辑</h3>
+		</div>
+		<div class="modal-body">
+			 <table class="table table-bordered table-striped"  width="800px">
+		      	  		      	<tr>
+
+<td>订单编号</td>
+
+                             <td>{{entity.ddno}} </td>
+
+                        </tr>
+		      	<tr>
+
+<td>用户名</td>
+
+                             <td>{{entity.memberid1}}</td>
+
+                        </tr>
+		      	<tr>
+
+<td>收获地址</td>
+
+                             <td><input  class="form-control" ng-model="entity.newadd" placeholder="" ></td>
+
+                        </tr>
+
+		  		      	
+			 </table>				
+		</div>
+		<div class="modal-footer">						
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="updateaddr()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>
+	  </div>
+	</div>
+</div>
+
+
+  <div class="modal fade" id="editModal1">
+      <div class="modal-dialog">
+          <div class="modal-content message_align">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">提示信息</h4>
+              </div>
+              <div class="modal-body">
+                  <p>{{msg}}</p>
+              </div>
+              <div class="modal-footer">
+                  <input type="hidden" id="url1"/>
+                  <a   class="btn btn-success" data-dismiss="modal">确定</a>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <!-- 编辑窗口 -->
+  <div class="modal fade" id="editModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" >
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h3 id="myModalLabe2">物流单号</h3>
+              </div>
+              <div class="modal-body">
+                  <table class="table table-bordered table-striped"  width="800px">
+                      <tr>
+
+                          <td>订单编号</td>
+
+                          <td>{{entity.ddno}} </td>
+
+                      </tr>
+                      <tr>
+
+                          <td>用户名</td>
+
+                          <td>{{entity.memberid1}}</td>
+
+                      </tr>
+                      <tr>
+
+                          <td>快递公司</td>
+
+                          <td>
+
+                              </select>
+                              <select  ng-model="entity.wltype" >
+                              <option value="">-- 请选择 --</option>
+                              <option value="SFEXPRESS">顺丰快递</option>
+                              <option value="YTO">圆通快递</option>
+                              <option value="STO">申通快递</option>
+                              <option value="YUNDA">韵达快递</option>
+                              <option value="HTKY">百事快递</option>
+                              <option value="CHINAPOST">中国邮政</option>
+                              <option value="others">其他</option>
+                          </select>
+
+                          </td>
+
+                      </tr>
+                      <tr>
+
+                          <td>物流单号</td>
+
+                          <td><input  class="form-control" ng-model="entity.wlinfo" placeholder="" ></td>
+
+                      </tr>
+
+                  </table>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="updatwl()">保存</button>
+                  <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <!-- 编辑窗口 -->
+  <div class="modal fade" id="editModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" >
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h3 id="myModalLabe3">物流详情</h3>
+              </div>
+              <div class="modal-body">
+
+                  <div class="hovertree-trackrcol">
+                      <div ng-if="state==false">暂无物流信息</div>
+                      <div class="hovertree-tracklist" >
+
+                          <ul ng-repeat="entity in wlList">
+
+                              <li ng-class="{first:0===$index}">
+                                  <i class="node-icon"></i>
+                                  <span class="time">{{entity.time}}</span>
+                                  <span class="txt">{{entity.status}}</span>
+                              </li>
+
+                          </ul>
+                      </div>
+                  </div>
+
+
+              </div>
+
+              <div class="modal-footer">
+
+                  <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+  <!-- 订单详情 -->
+  <div class="modal fade" id="editModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" >
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h3 id="myModalLabel4">订单详情</h3>
+              </div>
+              <div class="modal-body">
+
+                  <ul class="nav nav-tabs">
+                      <li class="active"><a href="#home" data-toggle="tab">基本信息</a></li>
+                      <li><a href="#linkman" ng-click="searchDet(entity.ddno)" data-toggle="tab">商品明细</a></li>
+                      <li><a href="#certificate" data-toggle="tab">物流信息</a></li>
+
+                  </ul>
+
+                  <!-- 选项卡开始 -->
+                  <div id="myTabContent" class="tab-content">
+                      <div class="tab-pane active in" id="home">
+                          <br>
+                          <table class="table table-bordered table-striped"  width="800px">
+                              <tr>
+                                  <td>订单编号</td>
+                                  <td>{{entity.ddno}}</td>
+                              </tr>
+                              <tr>
+                                  <td>用户</td>
+                                  <td>{{entity.memberid}}</td>
+                              </tr>
+                              <tr>
+                                  <td>总金额</td>
+                                  <td>{{entity.ddtotal}}</td>
+                              </tr>
+                              <tr>
+                                  <td>支付状态</td>
+                                  <td>{{entity.fkstatus}}</td>
+                              </tr>
+                              <tr>
+                                  <td>订单状态</td>
+                                  <td>{{entity.ddstate}}</td>
+                              </tr>
+                              <tr>
+                                  <td>收货地址</td>
+                                  <td>{{entity.lxfs}}</td>
+                              </tr>
+                              <tr>
+                                  <td>修改地址</td>
+                                  <td>
+                                      <span ng-if="entity.ddstate=='00'">交易成功</span>
+                                      <span ng-if="entity.ddstate=='01'">待付款</span>
+                                      <span ng-if="entity.ddstate=='02'">已付款</span>
+                                      <span ng-if="entity.ddstate=='03'">运输中</span>
+                                      <span ng-if="entity.ddstate=='04'">退货申请中</span>
+                                      <span ng-if="entity.ddstate=='05'">退货中</span>
+                                      <span ng-if="entity.ddstate=='06'">退货成功</span>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>备注</td>
+                                  <td>{{entity.remark}}</td>
+                              </tr>
+                              <tr>
+                                  <td>创建时间</td>
+                                  <td>{{entity.savetime}}</td>
+                              </tr>
+                          </table>
+                      </div>
+                      <div class="tab-pane fade" id="linkman">
+                          <br>
+                          <!--数据列表-->
+                          <!--数据列表-->
+                          <table id="detList" class="table table-bordered table-striped table-hover dataTable">
+                              <thead>
+                              <tr>
+
+                                  <th class="sorting">商品快照</th>
+                                  <th class="sorting">商品名称</th>
+                                  <th class="sorting">商品单价</th>
+                                  <th class="sorting">购买数量</th>
+                                  <th class="sorting">应付金额</th>
+
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr ng-repeat="detEntity in detList">
+
+                                  <td><img src="{{detEntity.imgurl}}" height="70px"></td>
+                                  <td>{{detEntity.goodname}}</td>
+                                  <td>{{detEntity.price}}</td>
+                                  <td>{{detEntity.num}}</td>
+                                  <td>{{detEntity.totalMoney}}</td>
+
+
+                              </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="tab-pane fade" id="certificate">
+                          <br>
+                          <table class="table table-bordered table-striped" >
+                              <tr>
+                                  <td>发货状态</td>
+                                  <td>{{entity.fhstatus}}</td>
+                              </tr>
+                              <tr>
+                                  <td>快递公司</td>
+                                  <td>
+                                      <span ng-if="entity.wltype=='SFEXPRESS'">顺丰快递</span>
+                                      <span ng-if="entity.wltype=='YTO'">圆通快递</span>
+                                      <span ng-if="entity.wltype=='STO'">申通快递</span>
+                                      <span ng-if="entity.wltype=='YUNDA'">韵达快递</span>
+                                      <span ng-if="entity.wltype=='HTKY'">百事快递</span>
+                                      <span ng-if="entity.wltype=='CHINAPOST'">中国邮政</span>
+                                      <span ng-if="entity.wltype=='others'">其他</span>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>物流单号</td>
+                                  <td>{{entity.wlinfo}}
+                                      <button  type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#editModal4" ng-if="entity.wlinfo!=null&&entity.wlinfo!=''"  ng-click="searchwl(entity.wltype,entity.wlinfo)" >物流详情</button>
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+
+                  </div>
+                  <!-- 选项卡结束 -->
+
+
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!--删除信息确认-->
+  <div class="modal fade" id="editModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  请确认
+              </div>
+              <div class="modal-body">
+                  是否{{msg}}？
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" ng-click="updateState()" data-dismiss="modal">是</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="editModal6">
+      <div class="modal-dialog">
+          <div class="modal-content message_align">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">提示信息</h4>
+              </div>
+              <div class="modal-body">
+                  <p>{{msg}}</p>
+              </div>
+              <div class="modal-footer">
+                  <input type="hidden" id="url2"/>
+                  <a   class="btn btn-success" data-dismiss="modal">确定</a>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+</body>
+</html>

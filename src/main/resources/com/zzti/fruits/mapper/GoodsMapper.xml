@@ -128,6 +128,11 @@
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="queryMaxId" resultType="Integer">
+
+  select Max(id) as id from goods
+
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from goods
     where id = #{id,jdbcType=INTEGER}
@@ -154,7 +159,10 @@
       #{shelfbegin,jdbcType=VARCHAR}, #{shelfend,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Goods" >
+  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Goods"  >
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

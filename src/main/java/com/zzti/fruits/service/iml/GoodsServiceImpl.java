@@ -70,10 +70,12 @@ public class GoodsServiceImpl implements GoodsService {
       goods.setDelstatus("0");
 		goods.setSavetime(DateUtils.DT_DAY()+" "+DateUtils.times());
 		updateShelfTime(goods);
-		if(!"[]".equals(goods.getImgurl())) {
-			JSONArray json = (JSONArray) JSONArray.parse(goods.getImgurl());
-			goods.setFilename1(((JSONObject)json.get(0)).getString("url"));
+		if(!"[]".equals(goods.getImgurl())&&StringUtils.isNotBlank(goods.getImgurl())) {
+			JSONArray dataJson = (JSONArray) JSONArray.parse(goods.getImgurl());
+			if(!(dataJson == null || dataJson.isEmpty()  || "null".equals(dataJson)))
+			goods.setFilename1(((JSONObject)dataJson.get(0)).getString("url"));
 		}
+		goods.setId(goodsMapper.queryMaxId()+1);
        goodsMapper.insert(goods);
        //像库存插入记录
 		StockInfo stockInfo=new StockInfo();

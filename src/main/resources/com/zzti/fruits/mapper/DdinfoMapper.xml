@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzti.fruits.mapper.DdinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zzti.fruits.pojo.Ddinfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ddno" property="ddno" jdbcType="VARCHAR" />
+    <result column="memberid" property="memberid" jdbcType="VARCHAR" />
+    <result column="ddtotal" property="ddtotal" jdbcType="VARCHAR" />
+    <result column="fkstatus" property="fkstatus" jdbcType="VARCHAR" />
+    <result column="shstatus" property="shstatus" jdbcType="VARCHAR" />
+    <result column="savetime" property="savetime" jdbcType="VARCHAR" />
+    <result column="lxfs" property="lxfs" jdbcType="VARCHAR" />
+    <result column="fhstatus" property="fhstatus" jdbcType="VARCHAR" />
+    <result column="wlinfo" property="wlinfo" jdbcType="VARCHAR" />
+    <result column="ddstate" property="ddstate" jdbcType="CHAR" />
+    <result column="wltype" property="wltype" jdbcType="VARCHAR" />
+    <result column="newadd" property="newadd" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zzti.fruits.pojo.Ddinfo" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ddno, memberid, ddtotal, fkstatus, shstatus, savetime, lxfs, fhstatus, wlinfo, 
+    ddstate, wltype, newadd
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zzti.fruits.pojo.DdinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ddinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zzti.fruits.pojo.DdinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ddinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+
+  <!--查询所有的订单-->
+  <select id="Search" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    SELECT
+    a.id id,
+    a.ddno ddno,
+    a.newadd newadd,
+    a.ddtotal ddtotal,
+    (
+    SELECT
+    b.realname
+    FROM member b
+    WHERE b.id=a.memberid
+    ) memberid,
+    (
+    SELECT
+    CONCAT(c.addr," ",c.name," ",c.tel)
+    FROM address c
+    WHERE c.id=a.lxfs
+    ) lxfs,
+    a.fhstatus,
+    a.wlinfo,
+    a.wltype,
+    a.ddstate
+    FROM ddinfo a
+    WHERE 1=1
+    <if test="ddno!=null and ddno!=''">
+      AND a.ddno like  CONCAT(CONCAT('%',#{ddno},'%'))
+    </if>
+    <if test="memberid!=null and memberid!=''">
+      AND a.memberid in (
+      SELECT d.id
+      FROM member d
+      WHERE d.realname LIKE CONCAT(CONCAT('%',#{memberid},'%'))
+      )
+    </if>
+    <if test="fhstatus!=null and fhstatus!=''">
+      AND a.fhstatus=#{fhstatus}
+    </if>
+    <if test="ddstate!=null and ddstate!=''">
+      AND a.ddstate=#{ddstate}
+    </if>
+    ORDER BY a.savetime
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ddinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ddinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zzti.fruits.pojo.DdinfoExample" >
+    delete from ddinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zzti.fruits.pojo.Ddinfo" >
+    insert into ddinfo (id, ddno, memberid, 
+      ddtotal, fkstatus, shstatus, 
+      savetime, lxfs, fhstatus, 
+      wlinfo, ddstate, wltype, 
+      newadd, remark)
+    values (#{id,jdbcType=INTEGER}, #{ddno,jdbcType=VARCHAR}, #{memberid,jdbcType=VARCHAR}, 
+      #{ddtotal,jdbcType=VARCHAR}, #{fkstatus,jdbcType=VARCHAR}, #{shstatus,jdbcType=VARCHAR}, 
+      #{savetime,jdbcType=VARCHAR}, #{lxfs,jdbcType=VARCHAR}, #{fhstatus,jdbcType=VARCHAR}, 
+      #{wlinfo,jdbcType=VARCHAR}, #{ddstate,jdbcType=CHAR}, #{wltype,jdbcType=VARCHAR}, 
+      #{newadd,jdbcType=VARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Ddinfo" >
+    insert into ddinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ddno != null" >
+        ddno,
+      </if>
+      <if test="memberid != null" >
+        memberid,
+      </if>
+      <if test="ddtotal != null" >
+        ddtotal,
+      </if>
+      <if test="fkstatus != null" >
+        fkstatus,
+      </if>
+      <if test="shstatus != null" >
+        shstatus,
+      </if>
+      <if test="savetime != null" >
+        savetime,
+      </if>
+      <if test="lxfs != null" >
+        lxfs,
+      </if>
+      <if test="fhstatus != null" >
+        fhstatus,
+      </if>
+      <if test="wlinfo != null" >
+        wlinfo,
+      </if>
+      <if test="ddstate != null" >
+        ddstate,
+      </if>
+      <if test="wltype != null" >
+        wltype,
+      </if>
+      <if test="newadd != null" >
+        newadd,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ddno != null" >
+        #{ddno,jdbcType=VARCHAR},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddtotal != null" >
+        #{ddtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="fkstatus != null" >
+        #{fkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shstatus != null" >
+        #{shstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null" >
+        #{savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="lxfs != null" >
+        #{lxfs,jdbcType=VARCHAR},
+      </if>
+      <if test="fhstatus != null" >
+        #{fhstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="wlinfo != null" >
+        #{wlinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="ddstate != null" >
+        #{ddstate,jdbcType=CHAR},
+      </if>
+      <if test="wltype != null" >
+        #{wltype,jdbcType=VARCHAR},
+      </if>
+      <if test="newadd != null" >
+        #{newadd,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zzti.fruits.pojo.DdinfoExample" resultType="java.lang.Integer" >
+    select count(*) from ddinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ddinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ddno != null" >
+        ddno = #{record.ddno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberid != null" >
+        memberid = #{record.memberid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ddtotal != null" >
+        ddtotal = #{record.ddtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkstatus != null" >
+        fkstatus = #{record.fkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shstatus != null" >
+        shstatus = #{record.shstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.savetime != null" >
+        savetime = #{record.savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lxfs != null" >
+        lxfs = #{record.lxfs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fhstatus != null" >
+        fhstatus = #{record.fhstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wlinfo != null" >
+        wlinfo = #{record.wlinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ddstate != null" >
+        ddstate = #{record.ddstate,jdbcType=CHAR},
+      </if>
+      <if test="record.wltype != null" >
+        wltype = #{record.wltype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newadd != null" >
+        newadd = #{record.newadd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update ddinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      ddno = #{record.ddno,jdbcType=VARCHAR},
+      memberid = #{record.memberid,jdbcType=VARCHAR},
+      ddtotal = #{record.ddtotal,jdbcType=VARCHAR},
+      fkstatus = #{record.fkstatus,jdbcType=VARCHAR},
+      shstatus = #{record.shstatus,jdbcType=VARCHAR},
+      savetime = #{record.savetime,jdbcType=VARCHAR},
+      lxfs = #{record.lxfs,jdbcType=VARCHAR},
+      fhstatus = #{record.fhstatus,jdbcType=VARCHAR},
+      wlinfo = #{record.wlinfo,jdbcType=VARCHAR},
+      ddstate = #{record.ddstate,jdbcType=CHAR},
+      wltype = #{record.wltype,jdbcType=VARCHAR},
+      newadd = #{record.newadd,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ddinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      ddno = #{record.ddno,jdbcType=VARCHAR},
+      memberid = #{record.memberid,jdbcType=VARCHAR},
+      ddtotal = #{record.ddtotal,jdbcType=VARCHAR},
+      fkstatus = #{record.fkstatus,jdbcType=VARCHAR},
+      shstatus = #{record.shstatus,jdbcType=VARCHAR},
+      savetime = #{record.savetime,jdbcType=VARCHAR},
+      lxfs = #{record.lxfs,jdbcType=VARCHAR},
+      fhstatus = #{record.fhstatus,jdbcType=VARCHAR},
+      wlinfo = #{record.wlinfo,jdbcType=VARCHAR},
+      ddstate = #{record.ddstate,jdbcType=CHAR},
+      wltype = #{record.wltype,jdbcType=VARCHAR},
+      newadd = #{record.newadd,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzti.fruits.pojo.Ddinfo" >
+    update ddinfo
+    <set >
+      <if test="ddno != null" >
+        ddno = #{ddno,jdbcType=VARCHAR},
+      </if>
+      <if test="memberid != null" >
+        memberid = #{memberid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddtotal != null" >
+        ddtotal = #{ddtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="fkstatus != null" >
+        fkstatus = #{fkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shstatus != null" >
+        shstatus = #{shstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null" >
+        savetime = #{savetime,jdbcType=VARCHAR},
+      </if>
+      <if test="lxfs != null" >
+        lxfs = #{lxfs,jdbcType=VARCHAR},
+      </if>
+      <if test="fhstatus != null" >
+        fhstatus = #{fhstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="wlinfo != null" >
+        wlinfo = #{wlinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="ddstate != null" >
+        ddstate = #{ddstate,jdbcType=CHAR},
+      </if>
+      <if test="wltype != null" >
+        wltype = #{wltype,jdbcType=VARCHAR},
+      </if>
+      <if test="newadd != null" >
+        newadd = #{newadd,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zzti.fruits.pojo.Ddinfo" >
+    update ddinfo
+    set ddno = #{ddno,jdbcType=VARCHAR},
+      memberid = #{memberid,jdbcType=VARCHAR},
+      ddtotal = #{ddtotal,jdbcType=VARCHAR},
+      fkstatus = #{fkstatus,jdbcType=VARCHAR},
+      shstatus = #{shstatus,jdbcType=VARCHAR},
+      savetime = #{savetime,jdbcType=VARCHAR},
+      lxfs = #{lxfs,jdbcType=VARCHAR},
+      fhstatus = #{fhstatus,jdbcType=VARCHAR},
+      wlinfo = #{wlinfo,jdbcType=VARCHAR},
+      ddstate = #{ddstate,jdbcType=CHAR},
+      wltype = #{wltype,jdbcType=VARCHAR},
+      newadd = #{newadd,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.Ddinfo" >
+    update ddinfo
+    set ddno = #{ddno,jdbcType=VARCHAR},
+      memberid = #{memberid,jdbcType=VARCHAR},
+      ddtotal = #{ddtotal,jdbcType=VARCHAR},
+      fkstatus = #{fkstatus,jdbcType=VARCHAR},
+      shstatus = #{shstatus,jdbcType=VARCHAR},
+      savetime = #{savetime,jdbcType=VARCHAR},
+      lxfs = #{lxfs,jdbcType=VARCHAR},
+      fhstatus = #{fhstatus,jdbcType=VARCHAR},
+      wlinfo = #{wlinfo,jdbcType=VARCHAR},
+      ddstate = #{ddstate,jdbcType=CHAR},
+      wltype = #{wltype,jdbcType=VARCHAR},
+      newadd = #{newadd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

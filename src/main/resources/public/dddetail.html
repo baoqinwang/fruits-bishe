@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单信息</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js">  </script>
+    <!-- 分页组件开始 -->
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<!-- 分页组件结束 -->
+    
+    
+    <script type="text/javascript" src="../js/base_pagination.js">  </script>
+    <script type="text/javascript" src="../js/service/dddetailService.js">  </script>
+    <script type="text/javascript" src="../js/controller/baseController.js">  </script>
+    <script type="text/javascript" src="../js/controller/dddetailController.js">  </script>
+    
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="dddetailController" >
+  <!-- .box-body -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title" align="center">订单信息</h3>
+                    </div>
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+
+                             <th class="sorting">商品快照</th>
+                             <th class="sorting">商品名称</th>
+                             <th class="sorting">商品单价</th>
+                             <th class="sorting">购买数量</th>
+                             <th class="sorting">应付金额</th>
+
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="entity in list">
+
+                             <td><img src="{{entity.imgurl}}" height="70px"></td>
+                             <td>{{entity.goodname}}</td>
+                              <td>{{entity.price}}</td>
+                             <td>{{entity.num}}</td>
+                             <td>{{entity.totalMoney}}</td>
+		                                 
+
+			                          </tr>									 
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                        
+                        </div>
+                    <div>
+                        <h5 align="right">合计：{{total}}</h5>
+                    </div>
+                        <!-- 数据表格 /-->
+                        <!-- 分页 -->
+						<tm-pagination conf="paginationConf"></tm-pagination>
+                     </div>
+                    <!-- /.box-body -->
+   
+   
+</body>
+</html>

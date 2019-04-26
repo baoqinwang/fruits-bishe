@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzti.fruits.mapper.DddetailMapper" >
+  <resultMap id="BaseResultMap" type="com.zzti.fruits.pojo.Dddetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ddno" property="ddno" jdbcType="VARCHAR" />
+    <result column="goodsid" property="goodsid" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="VARCHAR" />
+    <result column="memberid" property="memberid" jdbcType="VARCHAR" />
+    <result column="fkstatus" property="fkstatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ddno, goodsid, num, memberid, fkstatus
+  </sql>
+  <!--按照条件查询-->
+  <resultMap id="SearchResultMap" type="com.zzti.fruits.pojogroup.GroupDdDet">
+    <result property="id" column="id"></result>
+    <result property="ddno" column="ddno"></result>
+    <result property="imgurl" column="imgurl"></result>
+    <result property="goodname" column="goodname"></result>
+    <result property="price" column="price"></result>
+    <result property="num" column="num"></result>
+    <result property="totalMoney" column="totalMoney"></result>
+  </resultMap>
+  <select id="Search" parameterType="java.lang.String" resultMap="SearchResultMap">
+ SELECT
+ a.id,
+a.ddno,
+b.imgurl,
+b.goodname,
+b.price,
+a.num,
+0 as totalMoney
+FROM
+dddetail a,goods b
+WHERE  a.goodsid=b.id
+AND a.ddno=#{ddno}
+
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zzti.fruits.pojo.DddetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dddetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dddetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dddetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zzti.fruits.pojo.DddetailExample" >
+    delete from dddetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zzti.fruits.pojo.Dddetail" >
+    insert into dddetail (id, ddno, goodsid, 
+      num, memberid, fkstatus
+      )
+    values (#{id,jdbcType=INTEGER}, #{ddno,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR}, 
+      #{num,jdbcType=VARCHAR}, #{memberid,jdbcType=VARCHAR}, #{fkstatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Dddetail" >
+    insert into dddetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ddno != null" >
+        ddno,
+      </if>
+      <if test="goodsid != null" >
+        goodsid,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="memberid != null" >
+        memberid,
+      </if>
+      <if test="fkstatus != null" >
+        fkstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ddno != null" >
+        #{ddno,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=VARCHAR},
+      </if>
+      <if test="fkstatus != null" >
+        #{fkstatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zzti.fruits.pojo.DddetailExample" resultType="java.lang.Integer" >
+    select count(*) from dddetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dddetail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ddno != null" >
+        ddno = #{record.ddno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null" >
+        goodsid = #{record.goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberid != null" >
+        memberid = #{record.memberid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkstatus != null" >
+        fkstatus = #{record.fkstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dddetail
+    set id = #{record.id,jdbcType=INTEGER},
+      ddno = #{record.ddno,jdbcType=VARCHAR},
+      goodsid = #{record.goodsid,jdbcType=VARCHAR},
+      num = #{record.num,jdbcType=VARCHAR},
+      memberid = #{record.memberid,jdbcType=VARCHAR},
+      fkstatus = #{record.fkstatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzti.fruits.pojo.Dddetail" >
+    update dddetail
+    <set >
+      <if test="ddno != null" >
+        ddno = #{ddno,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        goodsid = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="memberid != null" >
+        memberid = #{memberid,jdbcType=VARCHAR},
+      </if>
+      <if test="fkstatus != null" >
+        fkstatus = #{fkstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.Dddetail" >
+    update dddetail
+    set ddno = #{ddno,jdbcType=VARCHAR},
+      goodsid = #{goodsid,jdbcType=VARCHAR},
+      num = #{num,jdbcType=VARCHAR},
+      memberid = #{memberid,jdbcType=VARCHAR},
+      fkstatus = #{fkstatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

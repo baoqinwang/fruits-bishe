@@ -1,0 +1,68 @@
+package com.zzti.fruits.util;
+
+import jdk.nashorn.internal.ir.ReturnNode;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/*=========================================================================
+Copyright (C), 2015-2019, 中原工学院
+description: 物流快递查询接口
+author: wangbaoqin
+Date:2019/4/24  11:15 
+updateAuthor:  wangbaoqin
+updateDescription: 
+updateDate: 2019/4/24 
+encoding: UTF-8
+version: 1.0
+=========================================================================*/
+public class ApiKdwlUtils {
+
+
+    public static String   getKdwl(String type,String no){
+        String host = "https://kdwlcxf.market.alicloudapi.com";
+        String path = "/kdwlcx";
+        String method = "GET";
+        String appCode="####################";//换成你自己的appcode
+        Map<String, String> headers = new HashMap<String, String>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        headers.put("Authorization", "APPCODE " + appCode);
+        Map<String, String> querys = new HashMap<String, String>();
+        querys.put("no", no);
+        if(!type.equals("others"))
+           querys.put("type", type);
+        //JDK 1.8示例代码请在这里下载：  http://code.fegine.com/Tools.zip
+
+        try {
+            /**
+             * 重要提示如下:
+             * HttpUtils请从
+             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java
+             * 下载
+             *
+             * 相应的依赖请参照
+             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
+             */
+            HttpResponse response = HttpUtils.doGet(host, path, method, headers, querys);
+            //System.out.println(response.toString());如不输出json, 请打开这行代码，打印调试头部状态码。
+            //状态码: 200 正常；400 URL无效；401 appCode错误； 403 次数用完； 500 API网管错误
+            //获取response的body
+            String s = EntityUtils.toString(response.getEntity());
+            return s;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        String yunda = ApiKdwlUtils.getKdwl("YUNDA", "3834246118530");
+        System.out.println(yunda
+        );
+    }
+}
