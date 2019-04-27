@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>留言管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js">  </script>
+    <!-- 分页组件开始 -->
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<!-- 分页组件结束 -->
+    
+    
+    <script type="text/javascript" src="../js/base_pagination.js">  </script>
+    <script type="text/javascript" src="../js/service/chatService.js">  </script>
+    <script type="text/javascript" src="../js/controller/baseController.js">  </script>
+    <script type="text/javascript" src="../js/controller/chatController.js">  </script>
+    
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="chatController" >
+  <!-- .box-body -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">留言管理</h3>
+                    </div>
+
+                    <div class="box-body">
+
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+                            <!--工具栏-->
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" title="删除" ng-click="checkDel()"><i class="fa fa-trash-o"></i> 删除</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-tools pull-right">
+                                <div class="has-feedback">
+                                    用户姓名：
+                                    <input type="text" ng-model="searchEntity.memberid">
+                                    回复状态：<select  ng-model="searchEntity.hfstate" >
+                                    <option value="">-- 请选择 --</option>
+                                    <option value="0">未回复</option>
+                                    <option value="1">已回复</option>
+                                </select>
+                                    <button class="btn btn-default" ng-click="reloadList()">查询</button>
+                                    <button class="btn btn-default" ng-click="searchEntity={};reloadList()">重置</button>
+                                </div>
+
+                            </div>
+
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+			                              <th class="" style="padding-right:0px">
+			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
+			                              </th> 
+
+                             <th class="sorting">用户</th>
+                             <th class="sorting">留言内容</th>
+                             <th class="sorting">留言时间</th>
+                             <th class="sorting">回复状态</th>
+                              <th class="sorting">回复内容</th>
+                                   <th class="sorting">回复时间</th>
+								     				
+					                      <th class="text-center">操作</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="entity in list">
+			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>			                              
+
+                             <td>{{entity.memberid}}</td>			
+                             <td>{{entity.content}}</td>
+                             <td>{{entity.savetime}}</td>
+                              <td>
+                                  <span ng-if="entity.hfstate=='1'">
+                                      已回复
+                                  </span>
+                                  <span ng-if="entity.hfstate=='0'">
+                                      未回复
+                                  </span>
+                              </td>
+                             <td>{{entity.hfcontent}}</td>
+                             <td>{{entity.hfsavetime}}</td>			
+		                                 
+		                                  <td class="text-center">
+		                                 	  <button ng-if="entity.hfstate=='0'" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#editModal" ng-click="openEdit(entity.id,entity.memberid,entity.content,entity.hfsavetime)" >回复</button>
+		                                  </td>
+			                          </tr>									 
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                        
+                        </div>
+                        <!-- 数据表格 /-->
+                        <!-- 分页 -->
+						<tm-pagination conf="paginationConf"></tm-pagination>
+                     </div>
+                    <!-- /.box-body -->
+         
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">回复信息</h3>
+		</div>
+		<div class="modal-body">	
+			 <table class="table table-bordered table-striped"  width="800px">			
+		      	  		      	<tr>
+                             
+<td>用户</td>
+
+                             <td>{{entity.memberid1}}</td>
+
+                        </tr>		
+		      	<tr rowspan="2">
+                             
+<td>留言内容</td>
+
+                             <td>
+
+                                 <textarea  rows="3" readonly="true" class="form-control" ng-model="entity.content" placeholder="" >
+                                 </textarea>
+
+                             </td>
+
+                        </tr>		
+		      	<tr>
+                             
+<td>创建时间</td>
+
+                             <td>{{entity.hfsavetime}}</td>
+
+                        </tr>		
+		      	<tr>
+                             
+<td>回复信息</td>
+
+                             <td> <textarea  rows="3"  class="form-control" ng-model="entity.hfcontent" placeholder="" >
+                                 </textarea></td>
+
+                        </tr>		
+
+		  		      	
+			 </table>				
+		</div>
+		<div class="modal-footer">						
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+		</div>
+	  </div>
+	</div>
+</div>
+
+  <!--提示信息-->
+  <div class="modal fade" id="editModal1">
+      <div class="modal-dialog">
+          <div class="modal-content message_align">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="modal-title">提示信息</h4>
+              </div>
+              <div class="modal-body">
+                  <p>{{msg}}</p>
+              </div>
+              <div class="modal-footer">
+                  <input type="hidden" id="url1"/>
+                  <a   class="btn btn-success" data-dismiss="modal">确定</a>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <div class="modal fade" id="editModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  请确认
+              </div>
+              <div class="modal-body">
+                  确认删除该记录吗？
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-danger" ng-click="dele()" data-dismiss="modal">删除记录</button>
+
+              </div>
+          </div>
+      </div>
+  </div>
+   
+</body>
+</html>

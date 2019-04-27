@@ -65,6 +65,7 @@ app.controller('goodsController' ,function($scope,$controller ,$location  ,goods
 				$scope.entity= response;
 				
 				editor.html($scope.entity.content );//商品介绍
+                sellMsgEditor.html($scope.entity.sellmsg); //商家留言
 				//商品图片
 				$scope.entity.imgurl=JSON.parse($scope.entity.imgurl);
 				// //扩展属性
@@ -86,6 +87,7 @@ app.controller('goodsController' ,function($scope,$controller ,$location  ,goods
         $scope.entity.shelfbegin=$("#test1").val();
         $scope.entity.shelfend=$("#test2").val();
 		$scope.entity.content=editor.html();
+        $scope.entity.sellmsg=sellMsgEditor.html();
 		  if($scope.entity.imgurl!=null)
         $scope.entity.imgurl=JSON.stringify($scope.entity.imgurl);
 		var serviceObject;//服务层对象  				

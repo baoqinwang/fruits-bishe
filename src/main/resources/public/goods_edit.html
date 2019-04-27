@@ -63,6 +63,9 @@
 				<li >
 					<a href="#spec" data-toggle="tab" >上架设置</a>
 				</li>
+				<li >
+					<a href="#sellerMsg" data-toggle="tab" >商家留言</a>
+				</li>
 			</ul>
 			<!--tab头/-->
 
@@ -204,6 +207,21 @@
 
 
 
+				<!--规格-->
+				<div class="tab-pane" id="sellerMsg">
+					<div class="row data-type">
+						<div class="col-md-2 title editer">商家留言</div>
+						<div class="col-md-10 data editer">
+							<textarea name="sellerMsg" style="width:800px;height:400px;visibility:hidden;" ></textarea>
+						</div>
+
+					</div>
+					<!--tab内容/-->
+					<!--表单内容/-->
+
+				</div>
+
+
 
 			</div>
 			<div class="btn-toolbar list-toolbar">
@@ -212,7 +230,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 </section>
 
 <!-- 上传窗口 -->
@@ -265,8 +283,12 @@
 <script type="text/javascript">
 
     var editor;
+    var sellMsgEditor;
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
+            allowFileManager : true
+        });
+        sellMsgEditor = K.create('textarea[name="sellerMsg"]', {
             allowFileManager : true
         });
     });

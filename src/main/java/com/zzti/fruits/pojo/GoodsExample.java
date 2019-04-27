@@ -1423,6 +1423,76 @@ public class GoodsExample {
             addCriterion("imgurl not between", value1, value2, "imgurl");
             return (Criteria) this;
         }
+
+        public Criteria andSellmsgIsNull() {
+            addCriterion("sellmsg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgIsNotNull() {
+            addCriterion("sellmsg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgEqualTo(String value) {
+            addCriterion("sellmsg =", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgNotEqualTo(String value) {
+            addCriterion("sellmsg <>", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgGreaterThan(String value) {
+            addCriterion("sellmsg >", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgGreaterThanOrEqualTo(String value) {
+            addCriterion("sellmsg >=", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgLessThan(String value) {
+            addCriterion("sellmsg <", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgLessThanOrEqualTo(String value) {
+            addCriterion("sellmsg <=", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgLike(String value) {
+            addCriterion("sellmsg like", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgNotLike(String value) {
+            addCriterion("sellmsg not like", value, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgIn(List<String> values) {
+            addCriterion("sellmsg in", values, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgNotIn(List<String> values) {
+            addCriterion("sellmsg not in", values, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgBetween(String value1, String value2) {
+            addCriterion("sellmsg between", value1, value2, "sellmsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellmsgNotBetween(String value1, String value2) {
+            addCriterion("sellmsg not between", value1, value2, "sellmsg");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

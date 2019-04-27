@@ -21,6 +21,7 @@
     <result column="shelfbegin" property="shelfbegin" jdbcType="VARCHAR" />
     <result column="shelfend" property="shelfend" jdbcType="VARCHAR" />
     <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="sellmsg" property="sellmsg" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.zzti.fruits.pojo.Goods" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -85,11 +86,21 @@
   </sql>
   <sql id="Base_Column_List" >
     id, goodno, goodname, fid, sid, goodpp, price, tprice, istj, delstatus, savetime, 
-    filename1, filename2, filename3, filename4, isshelf, shelfbegin, shelfend, imgurl
+    filename1, filename2, filename3, filename4, isshelf, shelfbegin, shelfend, imgurl, 
+    sellmsg
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
+
+
+  <select id="queryMaxId" resultType="Integer">
+
+select Max(id) as id from goods
+
+</select>
+
+
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zzti.fruits.pojo.GoodsExample" >
     select
     <if test="distinct" >
@@ -128,11 +139,6 @@
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="queryMaxId" resultType="Integer">
-
-  select Max(id) as id from goods
-
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from goods
     where id = #{id,jdbcType=INTEGER}
@@ -150,19 +156,16 @@
       savetime, filename1, filename2, 
       filename3, filename4, isshelf, 
       shelfbegin, shelfend, imgurl, 
-      content)
+      sellmsg, content)
     values (#{id,jdbcType=INTEGER}, #{goodno,jdbcType=VARCHAR}, #{goodname,jdbcType=VARCHAR}, 
       #{fid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, #{goodpp,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
       #{tprice,jdbcType=VARCHAR}, #{istj,jdbcType=VARCHAR}, #{delstatus,jdbcType=VARCHAR}, 
       #{savetime,jdbcType=VARCHAR}, #{filename1,jdbcType=VARCHAR}, #{filename2,jdbcType=VARCHAR}, 
       #{filename3,jdbcType=VARCHAR}, #{filename4,jdbcType=VARCHAR}, #{isshelf,jdbcType=VARCHAR}, 
       #{shelfbegin,jdbcType=VARCHAR}, #{shelfend,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{sellmsg,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Goods"  >
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Goods" >
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -221,6 +224,9 @@
       </if>
       <if test="imgurl != null" >
         imgurl,
+      </if>
+      <if test="sellmsg != null" >
+        sellmsg,
       </if>
       <if test="content != null" >
         content,
@@ -283,6 +289,9 @@
       </if>
       <if test="imgurl != null" >
         #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sellmsg != null" >
+        #{sellmsg,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -355,6 +364,9 @@
       <if test="record.imgurl != null" >
         imgurl = #{record.imgurl,jdbcType=VARCHAR},
       </if>
+      <if test="record.sellmsg != null" >
+        sellmsg = #{record.sellmsg,jdbcType=VARCHAR},
+      </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -384,6 +396,7 @@
       shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
       shelfend = #{record.shelfend,jdbcType=VARCHAR},
       imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      sellmsg = #{record.sellmsg,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -409,7 +422,8 @@
       isshelf = #{record.isshelf,jdbcType=VARCHAR},
       shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
       shelfend = #{record.shelfend,jdbcType=VARCHAR},
-      imgurl = #{record.imgurl,jdbcType=VARCHAR}
+      imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      sellmsg = #{record.sellmsg,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -471,6 +485,9 @@
       <if test="imgurl != null" >
         imgurl = #{imgurl,jdbcType=VARCHAR},
       </if>
+      <if test="sellmsg != null" >
+        sellmsg = #{sellmsg,jdbcType=VARCHAR},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -497,6 +514,7 @@
       shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
       shelfend = #{shelfend,jdbcType=VARCHAR},
       imgurl = #{imgurl,jdbcType=VARCHAR},
+      sellmsg = #{sellmsg,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -519,7 +537,8 @@
       isshelf = #{isshelf,jdbcType=VARCHAR},
       shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
       shelfend = #{shelfend,jdbcType=VARCHAR},
-      imgurl = #{imgurl,jdbcType=VARCHAR}
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      sellmsg = #{sellmsg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

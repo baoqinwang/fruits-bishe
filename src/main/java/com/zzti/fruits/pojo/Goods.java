@@ -1,8 +1,6 @@
 package com.zzti.fruits.pojo;
 
-import java.io.Serializable;
-
-public class Goods implements Serializable {
+public class Goods {
     private Integer id;
 
     private String goodno;
@@ -40,6 +38,8 @@ public class Goods implements Serializable {
     private String shelfend;
 
     private String imgurl;
+
+    private String sellmsg;
 
     private String content;
 
@@ -193,6 +193,14 @@ public class Goods implements Serializable {
 
     public void setImgurl(String imgurl) {
         this.imgurl = imgurl == null ? null : imgurl.trim();
+    }
+
+    public String getSellmsg() {
+        return sellmsg;
+    }
+
+    public void setSellmsg(String sellmsg) {
+        this.sellmsg = sellmsg == null ? null : sellmsg.trim();
     }
 
     public String getContent() {
