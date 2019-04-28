@@ -5,14 +5,24 @@ import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.entity.Result;
 
 import com.zzti.fruits.pojo.Member;
+import com.zzti.fruits.pojogroup.memberReduction;
 import com.zzti.fruits.service.MemberService;
+import com.zzti.fruits.util.DateUtils;
+import com.zzti.fruits.util.FileUtil;
 import com.zzti.fruits.util.RandomCharacterAndNumber;
-import com.zzti.fruits.util.SnowflakeComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 /*=========================================================================
@@ -29,8 +39,11 @@ version: 1.0
 @RestController
 @RequestMapping("/member")
 public class MenberController {
+    private static final Logger logger = LoggerFactory.getLogger(MenberController .class);
    @Autowired
     private MemberService memberService;
+    @Value("${back.path}")
+    private String backPath;
     /**
      * 返回全部列表
      * @return
@@ -121,4 +134,68 @@ public class MenberController {
             return new Result(false, "重置密码失败");
         }
     }
+    /**
+     * 用户信息备份
+     * @return
+     */
+    @RequestMapping("/back")
+    public Result back()
+    {
+       logger.info("开始数据备份");
+        String dbName = "fruitsshop_db";
+        try {
+            Process process = Runtime.getRuntime().exec(
+                    "cmd  /c mysqldump -h127.0.0.1 -P3306 -u root -proot " + dbName + " member > "
+                            + backPath + "/" + "user" + DateUtils.getCurTimestampStryyyyMMddHHmmss()
+                            + ".sql");
+            //备份的数据库名字为teacher，数据库连接和密码均为root
+            logger.info("数据备份结束");
+            return  new Result(true, "备份成功");
+        }catch (IOException e) {
+            e.printStackTrace();
+            return new Result(false, "备份失败");
+        }
+    }
+    /**
+     * 用户信息备份查找
+     * @return
+     */
+    @RequestMapping("/backList")
+    public List<memberReduction> backList()
+    {
+        ArrayList<memberReduction> list =new ArrayList<memberReduction>();
+        FileUtil.getFieList(backPath,list);
+        return  list;
+
+    }
+    /**
+     * 用户信息还原
+     * @return
+     */
+    @RequestMapping("/reduction")
+    public Result reduction(String fileName)
+    {
+        logger.info("开始用户信息还原");
+        String command="mysql -h127.0.0.1 -uroot -proot fruitsshop_db <D:\\fruitsshop_db\\"+fileName+".sql";
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process process = runtime.exec("cmd /c"+command);
+            InputStream is = process.getInputStream();
+            BufferedReader bf = new BufferedReader(new InputStreamReader(is,"utf8"));
+            String line = null;
+            while ((line=bf.readLine())!=null){
+                System.out.println(line);
+            }
+            is.close();
+            bf.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.info("还原失败！");
+            return  new Result(false, "还原失败！");
+        }
+        logger.info("还原成功！");
+        return  new Result(true, "还原成功！");
+    }
+
 }

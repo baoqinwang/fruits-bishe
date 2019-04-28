@@ -7,11 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @MapperScan("com.zzti.fruits.mapper")
 @MapperScan("com.zzti.fruits.util")
 @SpringBootApplication
+@EnableScheduling
 public class FruitsApplication {
 
 	public static void main(String[] args) {

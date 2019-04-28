@@ -170,11 +170,17 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public void updateShelf(Goods goods) {
-         if("00".equals(goods.getIsshelf()))
-         	  goods.setShelfbegin(DateUtils.DT_DAY()+" "+DateUtils.times());
-         else if("01".equals(goods.getIsshelf()))
-         	goods.setShelfend(DateUtils.DT_DAY()+" "+DateUtils.times());
-         goodsMapper.updateByPrimaryKeySelective(goods);
+		Goods goods1 = goodsMapper.selectByPrimaryKey(goods.getId());
+		goods1.setIsshelf(goods.getIsshelf());
+		//设置空无法修改成功
+         if("00".equals(goods.getIsshelf())) {
+			 goods1.setShelfbegin(DateUtils.DT_DAY() + " " + DateUtils.times());
+			 goods1.setShelfend(null);
+		 }
+         else if("01".equals(goods.getIsshelf())) {
+			 goods1.setShelfend(DateUtils.DT_DAY() + " " + DateUtils.times());
+		 }
+         goodsMapper.updateByPrimaryKey(goods1);
 	}
 
 }

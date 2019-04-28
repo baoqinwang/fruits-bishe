@@ -113,4 +113,38 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
             }
         );
     }
+
+    //用户信息备份
+    $scope.back=function(){
+        memberService.back().success(
+            function(response){
+                if(response.success) {
+                    $scope.msg = response.message;
+                    $('#editModal3').modal();
+                }
+            }
+        );
+    }
+
+   //查询所有备份的文件
+    $scope.backList=function(){
+        memberService.backList().success(
+            function(response){
+                $scope.backList=response;
+            }
+        );
+    }
+    //设置还原的文件名
+    $scope.setFileName=function(filename){
+        $scope.fileName=filename;
+    }
+    //查询还原
+    $scope.reduction=function(){
+        memberService.reduction($scope.fileName).success(
+            function(response){
+                $scope.msg = response.message;
+                $('#editModal3').modal();
+            }
+        );
+    }
 });	

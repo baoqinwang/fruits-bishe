@@ -37,4 +37,16 @@ app.service('memberService',function($http){
     this.resetPd=function(id){
         return $http.get('../member/resetPd.do?id='+id);
     }
+    //下拉列表数据
+    this.back=function(){
+        return $http.get('../member/back.do');
+    }
+    //下拉列表数据
+    this.backList=function(){
+        return $http.get('../member/backList.do');
+    }
+    //下拉列表数据
+    this.reduction=function(fileName){
+        return $http.get('../member/reduction.do?fileName='+fileName);
+    }
 });
