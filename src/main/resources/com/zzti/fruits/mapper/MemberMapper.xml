@@ -96,6 +96,17 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <!--按照地区报表统计-->
+  <select id="regionReport" resultType="java.util.HashMap" >
+SELECT
+a.sheng,
+a.shi,
+COUNT(id) num
+FROM member a
+GROUP BY a.sheng,a.shi
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

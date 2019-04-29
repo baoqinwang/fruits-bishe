@@ -4,6 +4,7 @@ import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.pojo.Member;
 
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /*=========================================================================
@@ -60,4 +61,25 @@ public interface MemberService {
      * @return 密码信息
      */
     public String resetPd(String id);
+
+    /**
+     * 报表分页查询
+     * @param member
+     * @param page
+     * @param rows
+     * @return
+     */
+    PageResult findPoiPage(Member member, int page, int rows);
+
+    /**
+     * 按照查询条件进行报表下载
+     * @param member
+     * @return
+     */
+    void excelPoiSearch(String sheng,String shi, String isgjhy,HttpServletResponse response);
+
+    /**
+     * 地区用户报表查找
+     */
+    public void regionReport(HttpServletResponse response);
 }

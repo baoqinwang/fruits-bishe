@@ -10,6 +10,7 @@ import com.zzti.fruits.service.MemberService;
 import com.zzti.fruits.util.DateUtils;
 import com.zzti.fruits.util.FileUtil;
 import com.zzti.fruits.util.RandomCharacterAndNumber;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +29,7 @@ import java.util.List;
 
 /*=========================================================================
 Copyright (C), 2015-2019, 中原工学院
-description: 
+description: 用户控制层
 author: wangbaoqin
 Date:2019/4/1  20:00
 updateAuthor:  wangbaoqin
@@ -197,5 +199,37 @@ public class MenberController {
         logger.info("还原成功！");
         return  new Result(true, "还原成功！");
     }
+    /**
+     * 查询报表+分页
+     * @param member
+     * @param page
+     * @param rows
+     * @return
+     */
+    @RequestMapping("/findPoiPage")
+    public PageResult findPoiPage(@RequestBody Member member, int page, int rows  ){
+        return memberService.findPoiPage(member, page, rows);
+//        return null;
+    }
 
+    /**
+     * 查询报表下载
+     * @param sheng
+     * @param shi
+     * @param isgjhy
+     * @param response
+     */
+    @RequestMapping("/excelPoiSearch")
+    public void excelPoiSearch(String sheng,String shi, String isgjhy, HttpServletResponse response){
+       memberService.excelPoiSearch(sheng,shi,isgjhy,response);
+    }
+
+    /**
+     * 区域报表统计
+     * @param response
+     */
+    @RequestMapping("/regionReport")
+    public void regionReport(HttpServletResponse response){
+        memberService.regionReport(response);
+    }
 }

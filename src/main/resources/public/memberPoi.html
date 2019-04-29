@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>用户管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <!-- 分页组件开始 -->
+    <script src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/distpicker/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="../js/distpicker/bootstrap-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/distpicker/distpicker.data.js"></script>
+    <script type="text/javascript" src="../js/distpicker/distpicker.js"></script>
+    <script type="text/javascript" src="../js/distpicker/main.js"></script>
+
+
+    <!-- 分页组件结束 -->
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/service/memberPoiService.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/memberPoiController.js"></script>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="memberPoiController" >
+<!-- .box-body -->
+<div class="box-header with-border">
+    <h3 class="box-title">用户统计</h3>
+</div>
+
+<div class="box-body">
+
+    <!-- 数据表格 -->
+    <div class="table-box">
+
+        <!--工具栏-->
+        <div class="pull-left">
+            <div class="form-group form-inline">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="http://localhost:8080/member/regionReport.do" title="地区统计">地区统计</a>
+                    <!--<button type="button" class="btn btn-default" title="时间统计"  ><i class="fa fa-file-o"></i>时间统计</button>-->
+
+                </div>
+            </div>
+        </div>
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+                <div style="float:left;">
+                    <div style="float:left; width: 73px;
+    border: 1px;
+    padding: 3px;
+    margin: 1px;">是否会员</div>
+                    <div style="float:left;">
+                    <select class="form-control" id="isgjhy" ng-model="searchEntity.isgjhy">
+                        <option value="">-- 请选择 --</option>
+                        <option value="y">是</option>
+                        <option value="n">否</option>
+                    </select>
+                    </div>
+                </div>
+                <div data-toggle="distpicker" style="float:left;" id="distpicker1" >
+                    <div  style="float:left;    width: 43px;
+    border: 1px;
+    padding: 3px;
+    margin: 1px;">
+                        地区
+                    </div>
+                    <div  style="float:left;">
+                    <select class="form-control" ng-model="searchEntity.sheng"   name="sheng" id="province2" data-province="---- 选择省 ----"></select>
+                    </div>
+                <div  style="float:left;">
+                        <select class="form-control" ng-model="searchEntity.shi" id="city2" name="shi"  data-city="---- 选择市 ----"></select>
+
+                </div>
+            </div>
+              <div style="float:left;">
+                <button class="btn btn-default" ng-click="reloadList()">查询</button>
+                  <button class="btn btn-default" ng-click="searchEntity={};reloadSearch()">重置</button>
+                  <a id="exdDown" onclick="document.getElementById('exdDown').href='http://localhost:8080/member/excelPoiSearch.do?sheng='+document.getElementById('province2').value+'&shi='+document.getElementById('city2').value+'&isgjhy='+document.getElementById('isgjhy').value"  href="#"  class="btn btn-default" >导出</a>
+            </div>
+            </div>
+        </div>
+        <!--工具栏/-->
+
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+            <thead>
+            <tr>
+
+                <th class="sorting_uname">用户名</th>
+                <th class="sorting_tname">姓名</th>
+                <th class="sorting">出生日期</th>
+                <th class="sorting">电话</th>
+                <th class="sorting">邮箱</th>
+                <th class="sorting">地址</th>
+                <th class="sorting">省</th>
+                <th class="sorting">市</th>
+                <th class="sorting">是否会员</th>
+                <th class="sorting">注册日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entity in list">
+                <td>{{entity.username}}</td>
+                <td>{{entity.realname}}</td>
+                <td>{{entity.brithtime}}</td>
+                <td>{{entity.tel}}</td>
+                <td>{{entity.email}}</td>
+                <td>{{entity.addr}}</td>
+                <td>{{entity.sheng}}</td>
+                <td>{{entity.shi}}</td>
+                <td><p ng-if="entity.isgjhy=='y'">是</p> <p ng-if="entity.isgjhy=='n'">否</p></td>
+                <td>{{entity.savetime}}</td>
+                <!--<td>{{entity.isgjhy}}</td>-->
+            </tr>
+
+            </tbody>
+        </table>
+        <!--数据列表/-->
+        <tm-pagination conf="paginationConf"></tm-pagination>
+
+    </div>
+    <!-- 数据表格 /-->
+
+
+
+
+</div>
+
+<script type="text/javascript">
+    $('#distpicker1').distpicker({
+        autoSelect: false
+    });
+    $("#distpicker").distpicker({
+        autoSelect: false
+    });
+
+</script>
+
+</body>
+</html>

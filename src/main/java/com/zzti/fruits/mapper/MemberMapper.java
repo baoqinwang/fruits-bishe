@@ -4,6 +4,7 @@ import com.zzti.fruits.pojo.Member;
 import com.zzti.fruits.pojo.MemberExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MemberMapper {
@@ -28,4 +29,5 @@ public interface MemberMapper {
     int updateByPrimaryKeySelective(Member record);
 
     int updateByPrimaryKey(Member record);
+    List<HashMap<String,Object>> regionReport();
 }

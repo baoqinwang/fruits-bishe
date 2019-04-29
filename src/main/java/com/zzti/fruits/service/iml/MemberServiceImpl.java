@@ -9,12 +9,16 @@ import com.zzti.fruits.pojo.Member;
 import com.zzti.fruits.pojo.MemberExample;
 import com.zzti.fruits.service.MemberService;
 import com.zzti.fruits.util.DateUtils;
+import com.zzti.fruits.util.ExcelUtils;
 import com.zzti.fruits.util.RandomCharacterAndNumber;
 import com.zzti.fruits.util.SnowflakeComponent;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 /*=========================================================================
 Copyright (C), 2015-2019, 中原工学院
@@ -101,5 +105,125 @@ public class MemberServiceImpl implements MemberService {
         member.setUserpassword(RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2));
         memberMapper.updateByPrimaryKeySelective(member);
         return  member.getUserpassword();
+    }
+
+    @Override
+    public PageResult findPoiPage(Member member, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+
+        MemberExample memberExample = new MemberExample();
+        MemberExample.Criteria criteria = memberExample.createCriteria();
+
+        if(member!=null){
+            if(member.getSheng()!=null && member.getSheng().length()>0){
+                criteria.andShengEqualTo(member.getSheng());
+            }
+            if(StringUtils.isNotBlank(member.getShi())){
+                criteria.andShiEqualTo(member.getShi());
+            }
+            if (StringUtils.isNotBlank(member.getIsgjhy())) {
+                criteria.andIsgjhyEqualTo(member.getIsgjhy());
+            }
+
+        }
+        criteria.andDelstatusEqualTo("0");
+        memberExample.setOrderByClause("savetime DESC");
+        Page<Member> page= (Page<Member>)memberMapper.selectByExample(memberExample);
+        return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public void excelPoiSearch(String sheng,String shi, String isgjhy,HttpServletResponse response) {
+        //查询出符合条件的结果集
+        MemberExample memberExample=new MemberExample();
+        MemberExample.Criteria criteria = memberExample.createCriteria();
+            if(StringUtils.isNotBlank(sheng)){
+                criteria.andShengEqualTo(sheng);
+            }
+            if (StringUtils.isNotBlank(isgjhy)){
+                criteria.andIsgjhyEqualTo(isgjhy);
+            }
+        if(StringUtils.isNotBlank(shi)){
+            criteria.andShiEqualTo(shi);
+        }
+        List<Member> members = memberMapper.selectByExample(memberExample);
+        List<String> head = new ArrayList<>();
+        head.add("序号");
+        head.add("用户名");
+        head.add("姓名");
+        head.add("性别");
+        head.add("电话号码");
+        head.add("出生日期");
+        head.add("地址");
+        head.add("所在省");
+        head.add("所在市");
+        head.add("是否会员");
+        head.add("注册时间");
+        List<List<String>> body = new ArrayList<>();
+        int i=0;
+        for (Member mem : members) {
+            //新增人数
+            i++;
+            List<String> bodyValue = new ArrayList<>();
+            bodyValue.add(String.valueOf(i+""));
+            bodyValue.add(mem.getUsername());
+            bodyValue.add(mem.getRealname());
+            bodyValue.add(mem.getSex());
+            bodyValue.add(mem.getTel());
+            bodyValue.add(mem.getBrithtime());
+            bodyValue.add(mem.getAddr());
+            bodyValue.add(mem.getSheng());
+            bodyValue.add(mem.getShi());
+            if(StringUtils.isNotBlank(mem.getIsgjhy()))
+            {
+                if(mem.getIsgjhy().equals("y"))
+                    bodyValue.add("是");
+                else
+                    bodyValue.add("否");
+            }
+            bodyValue.add(mem.getSavetime());
+            //将数据添加到报表体中
+            body.add(bodyValue);
+        }
+        ArrayList<String> last = new ArrayList<>();
+        last.add("合计："+i+"人");
+        body.add(last);
+        String fileName = "用户信息统计.xls";
+        HSSFWorkbook excel = ExcelUtils.expExcel(head,body);
+        ExcelUtils.outFile(excel,"./"+fileName,response);
+
+    }
+    @Override
+    public void regionReport(HttpServletResponse response){
+
+        //设置表头
+        List<String> head = new ArrayList<>();
+        head.add("序号");
+        head.add("省份");
+        head.add("城市");
+        head.add("数量");
+        int i=0;
+        List<List<String>> body = new ArrayList<>();
+        List<HashMap<String, Object>> hashMaps = memberMapper.regionReport();
+        for (HashMap<String,Object> map:
+             hashMaps) {
+
+           if(map.size()<3||!StringUtils.isNotBlank(String.valueOf(map.get("sheng")))||!StringUtils.isNotBlank(String.valueOf(map.get("shi"))))
+               continue;
+           i++;
+            List<String> bodyValue = new ArrayList<>();
+            bodyValue.add(String.valueOf(i+""));
+            bodyValue.add((String)map.get("sheng"));
+            bodyValue.add((String)map.get("shi"));
+            Object num = map.get("num");
+            String s = String.valueOf(num);
+
+            bodyValue.add(s);
+            body.add(bodyValue);
+        }
+
+        String fileName = "区域用户统计.xls";
+        HSSFWorkbook excel = ExcelUtils.expExcel(head,body);
+        ExcelUtils.outFile(excel,"./"+fileName,response);
     }
 }
