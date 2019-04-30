@@ -10,8 +10,10 @@ app.controller('goodsController' ,function($scope,$controller ,$location  ,goods
 				$scope.list=response;
 			}			
 		);
-	}    
-	
+	}
+    $scope.remove_iamge_entity = function(index){
+        $scope.entity.imgurl.splice(index,1);
+    }
 	//分页
 	$scope.findPage=function(page,rows){			
 		goodsService.findPage(page,rows).success(

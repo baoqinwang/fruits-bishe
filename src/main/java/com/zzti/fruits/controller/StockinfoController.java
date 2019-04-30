@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zzti.fruits.service.StockInfoService;
 
+import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * controller
@@ -114,5 +116,27 @@ public class StockinfoController {
 	public PageResult search(@RequestBody Goods goods, int page, int rows  ){
 		return stockInfoService.findPage(goods, page, rows);
 	}
-	
+
+	/**
+	 *
+	 * 	 * 报表查询+分页
+	 * @param page
+	 * @param rows
+	 * @param stockCount
+	 * @param fid
+	 * @param sid
+	 * @return
+	 */
+	@RequestMapping("/searchPoi")
+	public PageResult search(int page, int rows,String stockCount,String fid,String sid  ){
+		return stockInfoService.searchPoi( page, rows,stockCount,fid,sid);
+	}
+	/**
+	 * 库存报表统计
+	 * @param response
+	 */
+	@RequestMapping("/stockInfoReport")
+	public void stockInfoReport(HttpServletResponse response,String stockCount,String fid,String sid ){
+		stockInfoService.stockInfoReport(response,stockCount,fid,sid);
+	}
 }

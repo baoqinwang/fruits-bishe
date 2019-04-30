@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>库存统计</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js">  </script>
+    <!-- 分页组件开始 -->
+	<script src="../plugins/angularjs/pagination.js"></script>
+	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<!-- 分页组件结束 -->
+    
+    
+    <script type="text/javascript" src="../js/base_pagination.js">  </script>
+    <script type="text/javascript" src="../js/service/stockinfoPoiService.js">  </script>
+    <script type="text/javascript" src="../js/service/protypeService.js">  </script>
+
+    <script type="text/javascript" src="../js/service/kcrecordService.js">  </script>
+    <script type="text/javascript" src="../js/controller/baseController.js">  </script>
+    <script type="text/javascript" src="../js/controller/stockinfoPoiController.js">  </script>
+    
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="stockinfoPoiController" >
+  <!-- .box-body -->
+                    <div class="box-header with-border">
+                        <h3 class="box-title">库存管理</h3>
+                    </div>
+
+                    <div class="box-body">
+
+                        <!-- 数据表格 -->
+                        <div class="table-box">
+
+                            <div class="box-tools pull-right">
+                                <div class="has-feedback">
+
+                                    库存数量： <select id="stockCount" ng-model="searchEntity.stockCount" id="stockCount"  >
+                                    <option value="">-- 请选择 --</option>
+                                    <option    >5</option>
+                                    <option    >10</option>
+                                    <option    >15</option>
+                                    <option    >20</option>
+                                </select>
+                                    一级分类：
+                                    <select  ng-model="searchEntity.fid" id="fid" ng-init="selectProTypeList3()" >
+                                        <option value="">-- 请选择 --</option>
+                                        <option ng-repeat="a in proTypeList3"  value="{{a.id}}" >{{a.typename}}</option>
+                                    </select>
+                                    二级分类：<select  ng-model="searchEntity.sid" id="sid">
+                                    <option value="">-- 请选择 --</option>
+                                    <option ng-repeat="a in proTypeList4"  value="{{a.id}}" >{{a.typename}}</option>
+                                </select>
+                                    <button class="btn btn-default" ng-click="reloadList()">查询</button>
+                                    <button class="btn btn-default" ng-click="searchEntity={};reloadList()">重置</button>
+                                    <a id="exdDown"   href="#"  onclick="document.getElementById('exdDown').href='http://localhost:8080/stockinfo/stockInfoReport.do?stockCount='+document.getElementById('stockCount').value+'&fid='+document.getElementById('fid').value+'&sid='+document.getElementById('sid').value" class="btn btn-default" >导出</a>
+                                </div>
+
+                            </div>
+			                  <!--数据列表-->
+			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+			                      <thead>
+			                          <tr>
+                              <th class="sorting">商品名称</th>
+                             <th class="sorting">一级分类</th>
+                            <th class="sorting">二级分类</th>
+                          <th class="sorting">库存数量</th>
+                             <th class="sorting">保留数量</th>			
+                             <th class="sorting">最小库存量</th>			
+                             <th class="sorting">存储地点</th>
+			                          </tr>
+			                      </thead>
+			                      <tbody>
+			                          <tr ng-repeat="entity in list">
+                       <td>{{entity.goodName}}</td>
+                        <td>{{entity.fname}}</td>
+                            <td>{{entity.sname}}</td>
+                           <td>{{entity.stockCount}}</td>
+                             <td>{{entity.holdCount}}</td>			
+                             <td>{{entity.minStockCount}}</td>			
+                             <td>{{entity.storageLocation}}</td>			
+
+
+			                          </tr>									 
+			                      </tbody>
+			                  </table>
+			                  <!--数据列表/-->                        
+                        </div>
+                        <!-- 数据表格 /-->
+                        <!-- 分页 -->
+						<tm-pagination conf="paginationConf"></tm-pagination>
+                     </div>
+                    <!-- /.box-body -->
+
+
+
+
+</body>
+</html>

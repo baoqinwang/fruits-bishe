@@ -30,4 +30,6 @@ public interface StockInfoMapper {
 
     int updateByPrimaryKey(StockInfo record);
     List<GroupStockInfo> Search(@Param("goodname")String goodname, @Param("fid")String fid, @Param("sid")String sid);
+
+    List<GroupStockInfo>  searchPoi(@Param("stockCount")String stockCount, @Param("fid")String fid, @Param("sid")String sid);
 }

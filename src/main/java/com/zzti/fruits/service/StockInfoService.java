@@ -6,6 +6,8 @@ import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.StockInfo;
 import com.zzti.fruits.pojogroup.GroupStockInfo;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 服务层接口
  * @author Administrator
@@ -60,5 +62,8 @@ public interface StockInfoService {
 	 * @return
 	 */
 	public PageResult findPage(Goods goods, int pageNum, int pageSize);
-	
+
+    PageResult searchPoi(int page, int rows, String stockCount, String fid, String sid);
+
+	void stockInfoReport(HttpServletResponse response,String stockCount,String fid,String sid);
 }
