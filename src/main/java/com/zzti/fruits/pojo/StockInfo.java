@@ -7,8 +7,6 @@ public class StockInfo {
 
     private Integer stockCount;
 
-    private Integer holdCount;
-
     private Integer minStockCount;
 
     private String storageLocation;
@@ -35,14 +33,6 @@ public class StockInfo {
 
     public void setStockCount(Integer stockCount) {
         this.stockCount = stockCount;
-    }
-
-    public Integer getHoldCount() {
-        return holdCount;
-    }
-
-    public void setHoldCount(Integer holdCount) {
-        this.holdCount = holdCount;
     }
 
     public Integer getMinStockCount() {

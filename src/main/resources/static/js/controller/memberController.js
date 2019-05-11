@@ -34,6 +34,8 @@ app.controller('memberController' ,function($scope,$controller   ,memberService)
 	//保存 
 	$scope.save=function(){				
 		var serviceObject;//服务层对象
+        $scope.entity.sheng=document.getElementById('province2').value;
+        $scope.entity.shi=document.getElementById('city2').value;
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=memberService.update( $scope.entity ); //修改  
 		}else{

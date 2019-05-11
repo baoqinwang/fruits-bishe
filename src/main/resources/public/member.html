@@ -14,6 +14,14 @@
 
     <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
 
+
+    <!--省市区插件-->
+    <script type="text/javascript" src="../js/distpicker/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="../js/distpicker/bootstrap-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/distpicker/distpicker.data.js"></script>
+    <script type="text/javascript" src="../js/distpicker/distpicker.js"></script>
+    <script type="text/javascript" src="../js/distpicker/main.js"></script>
+
     <!-- 分页组件开始 -->
     <script src="../plugins/angularjs/pagination.js"></script>
     <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
@@ -167,6 +175,20 @@
                     <tr> <td>邮箱</td>
                         <td><input  class="form-control" ng-model="entity.email" placeholder="邮箱" ></td>
                     </tr>
+                    <tr>
+ <td>省市</td>
+                        <td>
+
+                            <div data-toggle="distpicker" id="distpicker1" >
+
+
+                                    <select class="form-control" ng-model="entity.sheng"   name="sheng" id="province2" data-province="---- 选择省 ----"></select>
+
+                                    <select class="form-control" ng-model="entity.shi" id="city2" name="shi"  data-city="---- 选择市 ----"></select>
+
+                            </div>
+                        </td>
+                    </tr>
                     <tr><td>地址</td>
                         <td><input  class="form-control" ng-model="entity.addr" placeholder="地址" ></td>
                     </tr>
@@ -233,4 +255,5 @@
     </div>
 </div>
 </body>
+
 </html>

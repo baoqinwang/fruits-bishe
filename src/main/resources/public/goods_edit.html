@@ -286,6 +286,7 @@
     var sellMsgEditor;
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
+            uploadJson : '/upload_json.jsp',
             allowFileManager : true
         });
         sellMsgEditor = K.create('textarea[name="sellerMsg"]', {

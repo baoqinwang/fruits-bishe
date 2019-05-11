@@ -8,6 +8,7 @@
     <result column="num" property="num" jdbcType="VARCHAR" />
     <result column="memberid" property="memberid" jdbcType="VARCHAR" />
     <result column="fkstatus" property="fkstatus" jdbcType="VARCHAR" />
+    <result column="savetime" property="savetime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, ddno, goodsid, num, memberid, fkstatus
+    id, ddno, goodsid, num, memberid, fkstatus, savetime
   </sql>
   <!--按照条件查询-->
   <resultMap id="SearchResultMap" type="com.zzti.fruits.pojogroup.GroupDdDet">
@@ -127,11 +128,11 @@ AND a.ddno=#{ddno}
   </delete>
   <insert id="insert" parameterType="com.zzti.fruits.pojo.Dddetail" >
     insert into dddetail (id, ddno, goodsid, 
-      num, memberid, fkstatus
-      )
+      num, memberid, fkstatus, 
+      savetime)
     values (#{id,jdbcType=INTEGER}, #{ddno,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR}, 
-      #{num,jdbcType=VARCHAR}, #{memberid,jdbcType=VARCHAR}, #{fkstatus,jdbcType=VARCHAR}
-      )
+      #{num,jdbcType=VARCHAR}, #{memberid,jdbcType=VARCHAR}, #{fkstatus,jdbcType=VARCHAR}, 
+      #{savetime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Dddetail" >
     insert into dddetail
@@ -154,6 +155,9 @@ AND a.ddno=#{ddno}
       <if test="fkstatus != null" >
         fkstatus,
       </if>
+      <if test="savetime != null" >
+        savetime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -173,6 +177,9 @@ AND a.ddno=#{ddno}
       </if>
       <if test="fkstatus != null" >
         #{fkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="savetime != null" >
+        #{savetime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -203,6 +210,9 @@ AND a.ddno=#{ddno}
       <if test="record.fkstatus != null" >
         fkstatus = #{record.fkstatus,jdbcType=VARCHAR},
       </if>
+      <if test="record.savetime != null" >
+        savetime = #{record.savetime,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -215,7 +225,8 @@ AND a.ddno=#{ddno}
       goodsid = #{record.goodsid,jdbcType=VARCHAR},
       num = #{record.num,jdbcType=VARCHAR},
       memberid = #{record.memberid,jdbcType=VARCHAR},
-      fkstatus = #{record.fkstatus,jdbcType=VARCHAR}
+      fkstatus = #{record.fkstatus,jdbcType=VARCHAR},
+      savetime = #{record.savetime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -238,6 +249,9 @@ AND a.ddno=#{ddno}
       <if test="fkstatus != null" >
         fkstatus = #{fkstatus,jdbcType=VARCHAR},
       </if>
+      <if test="savetime != null" >
+        savetime = #{savetime,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -247,7 +261,8 @@ AND a.ddno=#{ddno}
       goodsid = #{goodsid,jdbcType=VARCHAR},
       num = #{num,jdbcType=VARCHAR},
       memberid = #{memberid,jdbcType=VARCHAR},
-      fkstatus = #{fkstatus,jdbcType=VARCHAR}
+      fkstatus = #{fkstatus,jdbcType=VARCHAR},
+      savetime = #{savetime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

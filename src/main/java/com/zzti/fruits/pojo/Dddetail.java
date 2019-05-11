@@ -13,6 +13,8 @@ public class Dddetail {
 
     private String fkstatus;
 
+    private String savetime;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class Dddetail {
 
     public void setFkstatus(String fkstatus) {
         this.fkstatus = fkstatus == null ? null : fkstatus.trim();
+    }
+
+    public String getSavetime() {
+        return savetime;
+    }
+
+    public void setSavetime(String savetime) {
+        this.savetime = savetime == null ? null : savetime.trim();
     }
 }

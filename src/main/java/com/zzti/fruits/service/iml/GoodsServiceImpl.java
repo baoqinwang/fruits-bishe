@@ -81,7 +81,6 @@ public class GoodsServiceImpl implements GoodsService {
 		StockInfo stockInfo=new StockInfo();
 		stockInfo.setGoodsId(goods.getId().toString());
 		stockInfo.setStockCount(0);
-		stockInfo.setHoldCount(0);
 		stockInfo.setMinStockCount(0);
 		stockInfo.setCrtTlr("admin");
 		stockInfo.setCrtTm(new Date());

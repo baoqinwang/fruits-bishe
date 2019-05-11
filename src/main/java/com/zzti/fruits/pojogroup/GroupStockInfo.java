@@ -22,7 +22,7 @@ public class GroupStockInfo implements Serializable
     private String sname;
     private Integer stockCount;
 
-    private Integer holdCount;
+
 
     private Integer minStockCount;
 
@@ -66,14 +66,6 @@ public class GroupStockInfo implements Serializable
 
     public void setStockCount(Integer stockCount) {
         this.stockCount = stockCount;
-    }
-
-    public Integer getHoldCount() {
-        return holdCount;
-    }
-
-    public void setHoldCount(Integer holdCount) {
-        this.holdCount = holdCount;
     }
 
     public Integer getMinStockCount() {

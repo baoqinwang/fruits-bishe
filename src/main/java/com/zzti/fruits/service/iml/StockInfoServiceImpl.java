@@ -127,7 +127,6 @@ public class StockInfoServiceImpl implements StockInfoService {
 		head.add("一级分类");
 		head.add("二级分类");
 		head.add("库存数量");
-		head.add("保留数量");
 		head.add("最小库存量");
 		head.add("存储地点");
 
@@ -144,7 +143,6 @@ public class StockInfoServiceImpl implements StockInfoService {
 			bodyValue.add(item.getFname());
 			bodyValue.add(item.getSname());
 			bodyValue.add(item.getStockCount()+"");
-			bodyValue.add(item.getHoldCount()+"");
 			bodyValue.add(item.getMinStockCount()+"");
 			bodyValue.add(item.getStorageLocation());
 

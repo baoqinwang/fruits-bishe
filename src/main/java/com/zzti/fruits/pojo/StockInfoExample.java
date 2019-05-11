@@ -235,66 +235,6 @@ public class StockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andHoldCountIsNull() {
-            addCriterion("HOLD_COUNT is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountIsNotNull() {
-            addCriterion("HOLD_COUNT is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountEqualTo(Integer value) {
-            addCriterion("HOLD_COUNT =", value, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountNotEqualTo(Integer value) {
-            addCriterion("HOLD_COUNT <>", value, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountGreaterThan(Integer value) {
-            addCriterion("HOLD_COUNT >", value, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("HOLD_COUNT >=", value, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountLessThan(Integer value) {
-            addCriterion("HOLD_COUNT <", value, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountLessThanOrEqualTo(Integer value) {
-            addCriterion("HOLD_COUNT <=", value, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountIn(List<Integer> values) {
-            addCriterion("HOLD_COUNT in", values, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountNotIn(List<Integer> values) {
-            addCriterion("HOLD_COUNT not in", values, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountBetween(Integer value1, Integer value2) {
-            addCriterion("HOLD_COUNT between", value1, value2, "holdCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andHoldCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("HOLD_COUNT not between", value1, value2, "holdCount");
-            return (Criteria) this;
-        }
-
         public Criteria andMinStockCountIsNull() {
             addCriterion("MIN_STOCK_COUNT is null");
             return (Criteria) this;

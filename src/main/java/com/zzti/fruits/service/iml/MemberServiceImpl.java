@@ -73,7 +73,7 @@ public class MemberServiceImpl implements MemberService {
          member.setSavetime(DateUtils.DT_DAY()+" "+DateUtils.times());
         member.setLoginerronum(0);
         member.setLockstatus("n");
-        RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2);
+        member.setUserpassword("123456");
         member.setDelstatus("0");
         memberMapper.insert(member);
     }
@@ -102,7 +102,7 @@ public class MemberServiceImpl implements MemberService {
     public String resetPd(String id) {
         Member member = new Member();
         member.setId(id);
-        member.setUserpassword(RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2));
+        member.setUserpassword("123456");
         memberMapper.updateByPrimaryKeySelective(member);
         return  member.getUserpassword();
     }

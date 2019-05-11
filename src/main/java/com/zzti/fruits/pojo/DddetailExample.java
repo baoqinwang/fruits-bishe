@@ -513,6 +513,76 @@ public class DddetailExample {
             addCriterion("fkstatus not between", value1, value2, "fkstatus");
             return (Criteria) this;
         }
+
+        public Criteria andSavetimeIsNull() {
+            addCriterion("savetime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeIsNotNull() {
+            addCriterion("savetime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeEqualTo(String value) {
+            addCriterion("savetime =", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeNotEqualTo(String value) {
+            addCriterion("savetime <>", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeGreaterThan(String value) {
+            addCriterion("savetime >", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeGreaterThanOrEqualTo(String value) {
+            addCriterion("savetime >=", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeLessThan(String value) {
+            addCriterion("savetime <", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeLessThanOrEqualTo(String value) {
+            addCriterion("savetime <=", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeLike(String value) {
+            addCriterion("savetime like", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeNotLike(String value) {
+            addCriterion("savetime not like", value, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeIn(List<String> values) {
+            addCriterion("savetime in", values, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeNotIn(List<String> values) {
+            addCriterion("savetime not in", values, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeBetween(String value1, String value2) {
+            addCriterion("savetime between", value1, value2, "savetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSavetimeNotBetween(String value1, String value2) {
+            addCriterion("savetime not between", value1, value2, "savetime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
