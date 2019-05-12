@@ -160,6 +160,84 @@
     ORDER BY a.savetime
   </select>
 
+  <select id="searchReport" resultMap="ResultMapWithBLOBs" >
+  SELECT
+  a.id id,
+  a.ddno ddno,
+  a.newadd newadd,
+  a.ddtotal ddtotal,
+  (
+  SELECT
+  b.realname
+  FROM member b
+  WHERE b.id=a.memberid
+  ) memberid,
+  (
+  SELECT
+  CONCAT(c.addr," ",c.name," ",c.tel)
+  FROM address c
+  WHERE c.id=a.lxfs
+  ) lxfs,
+  a.fhstatus,
+  a.wlinfo,
+  a.wltype,
+  a.savetime,
+  a.remark,
+  a.ddstate
+  FROM ddinfo a
+  WHERE 1=1
+  <if test="ddstate!=null and ddstate!=''">
+    AND a.ddstate=#{ddstate}
+  </if>
+  <if test="beginTime!=null and beginTime!=''">
+    AND a.savetime &gt;=#{beginTime}
+  </if>
+  <if test="endTime!=null and endTime!=''">
+    AND a.savetime &lt;=#{endTime}
+  </if>
+  </select>
+
+
+  <!--缺货订单报表统计-->
+  <select id="shortageoOrderReport" resultType="java.util.HashMap" >
+    SELECT
+    a.ddno,
+    a.savetime,
+    (
+    SELECT
+    d.realname
+    FROM member d
+    WHERE a.memberid=d.id
+    ) memberid,
+    (
+    SELECT
+    e.goodname
+    FROM goods e
+    WHERE e.id=a.goodsid
+    ) goodname,
+    (
+    SELECT
+    g.price
+    FROM goods g
+    WHERE g.id=a.goodsid
+    ) price,
+    a.num,
+    (
+    SELECT
+    CONCAT(f.addr," ",f.name," ",f.tel)
+    FROM address f
+    WHERE f.id=b.lxfs
+    ) lxfs,
+    b.newadd,
+    b.remark,
+    b.ddstate
+    FROM dddetail a,ddinfo b,stockinfo c
+    WHERE a.ddno=b.ddno
+    AND b.ddstate='02'
+    AND a.goodsid=c.GOODS_ID
+    AND c.STOCK_COUNT &lt;c.MIN_STOCK_COUNT
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

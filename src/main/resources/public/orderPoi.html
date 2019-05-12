@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单统计</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <!-- 分页组件开始 -->
+    <script src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script src="../plugins/laydate/laydate.js"></script> <!-- 改成你的路径 -->
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <!-- 分页组件结束 -->
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/service/orderPoiService.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/orderPoiController.js"></script>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="fruits" ng-controller="orderPoiController" >
+<!-- .box-body -->
+<div class="box-header with-border">
+    <h3 class="box-title">订单统计</h3>
+</div>
+
+<div class="box-body">
+
+    <!-- 数据表格 -->
+    <div class="table-box">
+
+        <!--工具栏-->
+        <div class="pull-left">
+            <div class="form-group form-inline">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="../ddinfo/shortageoOrderReport.do" title="低库存订单">低库存订单</a>
+                    <!--<button type="button" class="btn btn-default" title="时间统计"  ><i class="fa fa-file-o"></i>时间统计</button>-->
+
+                </div>
+            </div>
+        </div>
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+         <div style="float:left">
+                订单时间：</div> <div style="float:left"><input type='text'  id="beginTime" class="form-control" ng-model="searchEntity.beginTime" />
+            </div><div style="float:left">  至</div><div style="float:left">
+                <input type='text' id="endTime"  class="form-control" ng-model="searchEntity.endTime" /></div><div style="float:left">
+                订单状态：<select  ng-model="searchEntity.ddstate" id="ddstate">
+                <option value="">-- 请选择 --</option>
+                <option value="00">交易成功</option>
+                <option value="01">待付款</option>
+                <option value="02">已付款</option>
+                <option value="03">运输中</option>
+                <option value="04">退货申请中</option>
+                <option value="05">退货中</option>
+                <option value="06">退货成功</option>
+            </select>
+            </div><div style="float:left">
+                <button class="btn btn-default" ng-click="reloadList()">查询</button>
+                <button class="btn btn-default" ng-click="searchEntity={};reloadList()" onclick="reset()">重置</button>
+                <a id="exdDown" onclick="document.getElementById('exdDown').href='../ddinfo/excelPoiSearch.do?beginTime='+document.getElementById('beginTime').value+'&endTime='+document.getElementById('endTime').value+'&ddstate='+document.getElementById('ddstate').value"  href="#"  class="btn btn-default" >导出</a>
+            </div>
+            </div>
+
+        </div>
+        <!--工具栏/-->
+
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+            <thead>
+            <tr>
+
+                <th class="sorting_uname">订单编号</th>
+                <th class="sorting_tname">用户</th>
+                <th class="sorting">交易金额</th>
+                <th class="sorting">订单地址</th>
+                <th class="sorting">修改地址</th>
+                <th class="sorting">发货状态</th>
+                <th class="sorting">物流编号</th>
+                <th class="sorting">订单状态</th>
+                <th class="sorting">订单时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entity in list">
+                <td>{{entity.ddno}}</td>
+                <td>{{entity.memberid}}</td>
+                <td>{{entity.ddtotal}}</td>
+                <td>{{entity.lxfs}}</td>
+                <td>{{entity.newadd}}</td>
+                <td>{{entity.fhstatus}}</td>
+                <td>{{entity.wlinfo}}</td>
+                <td> <span ng-if="entity.ddstate=='00'">交易成功</span>
+                    <span ng-if="entity.ddstate=='01'">待付款</span>
+                    <span ng-if="entity.ddstate=='02'">已付款</span>
+                    <span ng-if="entity.ddstate=='03'">运输中</span>
+                    <span ng-if="entity.ddstate=='04'">退货申请中</span>
+                    <span ng-if="entity.ddstate=='05'">退货中</span>
+                    <span ng-if="entity.ddstate=='06'">退货成功</span></td>
+                <td>{{entity.savetime}}</td>
+                <!--<td>{{entity.isgjhy}}</td>-->
+            </tr>
+
+            </tbody>
+        </table>
+        <!--数据列表/-->
+        <tm-pagination conf="paginationConf"></tm-pagination>
+
+    </div>
+    <!-- 数据表格 /-->
+
+
+
+
+</div>
+
+<script type="text/javascript">
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#beginTime' //指定元素
+        ,type: 'datetime'
+    });
+    laydate.render({
+        elem: '#endTime' //指定元素
+        ,type: 'datetime'
+    });
+    function reset(){
+        document.getElementById('beginTime').value=null;
+        document.getElementById('endTime').value=null;
+    }
+</script>
+
+</body>
+</html>

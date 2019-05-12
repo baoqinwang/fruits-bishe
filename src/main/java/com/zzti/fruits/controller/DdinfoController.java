@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.entity.Result;
 import com.zzti.fruits.pojo.Ddinfo;
+import com.zzti.fruits.pojogroup.OrderPoiParam;
 import com.zzti.fruits.util.ApiKdwlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zzti.fruits.service.DdinfoService;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -151,5 +154,40 @@ public class DdinfoController {
 			e.printStackTrace();
 			return new Result(false, "修改失败");
 		}
+	}
+	/**
+	 * 查询报表+分页
+	 * @param orderPoiParam
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	@RequestMapping("/findPoiPage")
+	public PageResult findPoiPage(@RequestBody OrderPoiParam orderPoiParam, int page, int rows  ){
+		return ddinfoService.findPoiPage(orderPoiParam, page, rows);
+//        return null;
+	}
+
+	/**
+	 *
+	 *订单汇总报表下载
+	 * @param beginTime
+	 * @param endTime
+	 * @param ddstate
+	 * @param response
+	 */
+	@RequestMapping("/excelPoiSearch")
+	public void excelPoiSearch(String beginTime,String endTime,String ddstate,HttpServletResponse response){
+
+		ddinfoService.excelPoiSearch(new OrderPoiParam(beginTime,endTime,ddstate),response);
+//        return null;
+	}
+	/**
+	 * 缺货订单报表统计
+	 * @param response
+	 */
+	@RequestMapping("/shortageoOrderReport")
+	public void shortageoOrderReport(HttpServletResponse response){
+		ddinfoService.shortageoOrderReport(response);
 	}
 }

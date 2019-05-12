@@ -3,6 +3,9 @@ import java.util.List;
 
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.pojo.Ddinfo;
+import com.zzti.fruits.pojogroup.OrderPoiParam;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 服务层接口
@@ -64,4 +67,10 @@ public interface DdinfoService {
 	 * @param ddinfo
 	 */
     void updateState(Ddinfo ddinfo);
+
+    PageResult findPoiPage(OrderPoiParam orderPoiParam, int page, int rows);
+
+    void excelPoiSearch(OrderPoiParam orderPoiParam, HttpServletResponse response);
+
+    void shortageoOrderReport(HttpServletResponse response);
 }

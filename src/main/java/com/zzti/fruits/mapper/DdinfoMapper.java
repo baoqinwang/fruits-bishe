@@ -2,8 +2,10 @@ package com.zzti.fruits.mapper;
 
 import com.zzti.fruits.pojo.Ddinfo;
 import com.zzti.fruits.pojo.DdinfoExample;
+import com.zzti.fruits.pojogroup.OrderPoiParam;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface DdinfoMapper {
@@ -36,4 +38,6 @@ public interface DdinfoMapper {
     int updateByPrimaryKey(Ddinfo record);
     //按照条件查询
     List<Ddinfo> Search(@Param("ddno")String ddno, @Param("memberid")String memberid, @Param("fhstatus")String fhstatus, @Param("ddstate")String ddstate);
+    List<Ddinfo> searchReport(OrderPoiParam orderPoiParam);
+    List<HashMap<String,Object>> shortageoOrderReport();
 }
