@@ -286,8 +286,13 @@
     var sellMsgEditor;
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
-            uploadJson : '/upload_json.jsp',
-            allowFileManager : true
+            // uploadJson : '/upload_json.jsp',
+            allowFileManager : true,
+            uploadJson : '../uploadOk.do',
+            //自定义高度和宽度
+
+            resizeType : 1,
+            height:"300%",
         });
         sellMsgEditor = K.create('textarea[name="sellerMsg"]', {
             allowFileManager : true
@@ -303,6 +308,15 @@
         elem: '#test2' //指定元素
         ,type: 'datetime'
     });
+    function fixedKeToolbar(){
+        var keContainer = $(".ke-container"),keToolbar = $(".ke-toolbar");
+        var winScollTop = $(window).scrollTop();
+        if(winScollTop-keContainer.offset().top>0)
+            keToolbar.css({"position":"fixed","top":0,"width":keToolbar.closest("div").width()});
+        else
+            keToolbar.removeAttr("style");
+    }
+    window.onscroll = fixedKeToolbar;
 </script>
 
 </body>
