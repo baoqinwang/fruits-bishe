@@ -75,6 +75,7 @@ public class GoodsServiceImpl implements GoodsService {
 			if(!(dataJson == null || dataJson.isEmpty()  || "null".equals(dataJson)))
 			goods.setFilename1(((JSONObject)dataJson.get(0)).getString("url"));
 		}
+
 		goods.setId(goodsMapper.queryMaxId()+1);
        goodsMapper.insert(goods);
        //像库存插入记录
@@ -98,6 +99,8 @@ public class GoodsServiceImpl implements GoodsService {
 			goods.setShelfbegin(DateUtils.DT_DAY()+" "+DateUtils.times());
 		if("01".equals(goods.getIsshelf())&&(goods.getShelfend()==null||"".equals(goods.getShelfend())))
 			goods.setShelfend(DateUtils.DT_DAY()+" "+DateUtils.times());
+		if(StringUtils.isBlank(goods.getIsshelf()))
+			goods.setIsshelf("02");
 	}
 
 	

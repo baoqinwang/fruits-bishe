@@ -144,10 +144,10 @@ public class MenberController {
     public Result back()
     {
        logger.info("开始数据备份");
-        String dbName = "fruitsshop_db";
+        String dbName = "fruitdb";
         try {
             Process process = Runtime.getRuntime().exec(
-                    "cmd  /c mysqldump -h127.0.0.1 -P3306 -u root -proot " + dbName + " member > "
+                    "cmd  /c mysqldump -h47.101.63.178 -P3306 -u root -proot " + dbName + " member > "
                             + backPath + "/" + "user" + DateUtils.getCurTimestampStryyyyMMddHHmmss()
                             + ".sql");
             //备份的数据库名字为teacher，数据库连接和密码均为root
@@ -178,7 +178,7 @@ public class MenberController {
     public Result reduction(String fileName)
     {
         logger.info("开始用户信息还原");
-        String command="mysql -h127.0.0.1 -uroot -proot fruitsshop_db <D:\\fruitsshop_db\\"+fileName+".sql";
+        String command="mysql -h47.101.63.178 -uroot -proot fruitdb <D:\\fruitsshop_db\\"+fileName+".sql";
         Runtime runtime = Runtime.getRuntime();
         try {
             Process process = runtime.exec("cmd /c"+command);

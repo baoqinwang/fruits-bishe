@@ -58,5 +58,6 @@ public interface SysuserService {
 	 * @return
 	 */
 	public PageResult findPage(Sysuser sysuser, int pageNum, int pageSize);
-	
+
+    Sysuser check(String userName, String passWord);
 }

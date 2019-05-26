@@ -131,5 +131,18 @@ public class SysuserServiceImpl implements SysuserService {
 		Page<Sysuser> page= (Page<Sysuser>)sysuserMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	@Override
+	public Sysuser check(String userName, String passWord) {
+		SysuserExample example=new SysuserExample();
+		SysuserExample.Criteria criteria = example.createCriteria();
+		criteria.andUnameEqualTo(userName);
+		criteria.andUpassEqualTo(passWord);
+		List<Sysuser> sysusers = sysuserMapper.selectByExample(example);
+		if(sysusers!=null&&sysusers.size()>0)
+			return  sysusers.get(0);
+		else
+		    return null;
+	}
+
 }

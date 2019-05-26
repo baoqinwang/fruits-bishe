@@ -40,8 +40,7 @@
                 <div class="x-avtar">
                     <img src="../img/user2-160x160.jpg" alt="">
                 </div>
-
-                <p style="color: red" th:text="${msg}" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+                <p style="color: red" th:text="${msg}" align="center" th:if="${not #strings.isEmpty(msg)}"></p>
                 <div class="input">
                     <form class="layui-form" id="loginForm" action="/login/check" method="post">
                         <div class="layui-form-item x-login-box">

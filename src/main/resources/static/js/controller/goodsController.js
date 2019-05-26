@@ -69,7 +69,10 @@ app.controller('goodsController' ,function($scope,$controller ,$location  ,goods
 				editor.html($scope.entity.content );//商品介绍
                 sellMsgEditor.html($scope.entity.sellmsg); //商家留言
 				//商品图片
+                if($scope.entity.imgurl!=null&&""!=$scope.entity.imgurl)
 				$scope.entity.imgurl=JSON.parse($scope.entity.imgurl);
+                else
+                    $scope.entity.imgurl=[];
 				// //扩展属性
 				// $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.entity.goodsDesc.customAttributeItems);
 				// //规格选择
@@ -90,7 +93,7 @@ app.controller('goodsController' ,function($scope,$controller ,$location  ,goods
         $scope.entity.shelfend=$("#test2").val();
 		$scope.entity.content=editor.html();
         $scope.entity.sellmsg=sellMsgEditor.html();
-		  if($scope.entity.imgurl!=null)
+        if($scope.entity.imgurl!=null)
         $scope.entity.imgurl=JSON.stringify($scope.entity.imgurl);
 		var serviceObject;//服务层对象  				
 		if($scope.entity.id!=null){//如果有ID

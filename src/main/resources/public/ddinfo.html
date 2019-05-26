@@ -326,7 +326,13 @@
                               </tr>
                               <tr>
                                   <td>订单状态</td>
-                                  <td>{{entity.ddstate}}</td>
+                                  <td><span ng-if="entity.ddstate=='00'">交易成功</span>
+                                      <span ng-if="entity.ddstate=='01'">待付款</span>
+                                      <span ng-if="entity.ddstate=='02'">已付款</span>
+                                      <span ng-if="entity.ddstate=='03'">运输中</span>
+                                      <span ng-if="entity.ddstate=='04'">退货申请中</span>
+                                      <span ng-if="entity.ddstate=='05'">退货中</span>
+                                      <span ng-if="entity.ddstate=='06'">退货成功</span></td>
                               </tr>
                               <tr>
                                   <td>收货地址</td>
@@ -335,13 +341,7 @@
                               <tr>
                                   <td>修改地址</td>
                                   <td>
-                                      <span ng-if="entity.ddstate=='00'">交易成功</span>
-                                      <span ng-if="entity.ddstate=='01'">待付款</span>
-                                      <span ng-if="entity.ddstate=='02'">已付款</span>
-                                      <span ng-if="entity.ddstate=='03'">运输中</span>
-                                      <span ng-if="entity.ddstate=='04'">退货申请中</span>
-                                      <span ng-if="entity.ddstate=='05'">退货中</span>
-                                      <span ng-if="entity.ddstate=='06'">退货成功</span>
+                                      {{entity.newadd}}
                                   </td>
                               </tr>
                               <tr>
