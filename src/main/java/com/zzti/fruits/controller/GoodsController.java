@@ -4,6 +4,7 @@ package com.zzti.fruits.controller;
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.entity.Result;
 import com.zzti.fruits.pojo.Goods;
+import com.zzti.fruits.pojo.Sysuser;
 import com.zzti.fruits.service.GoodsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -50,8 +52,10 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody Goods goods){
+	public Result add(@RequestBody Goods goods,HttpSession session){
 		try {
+			Sysuser loginUser = (Sysuser) session.getAttribute("loginUser");
+			goods.setCrtTlr(loginUser.getUname());
 			goodsService.add(goods);
 			return new Result(true, "增加成功");
 		} catch (Exception e) {

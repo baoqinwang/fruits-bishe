@@ -39,15 +39,16 @@
       <div class="box-tools pull-right">
           <div class="has-feedback">
 
-              订单编号：<input type="text" ng-model="searchEntity.ddno">
+              订单编号：<input type="text" id="ddno" ng-model="searchEntity.ddno">
               用户姓名：
-              <input type="text" ng-model="searchEntity.memberid">
-              发货状态：<select  ng-model="searchEntity.fhstatus" >
+              <input type="text" id="memberid" ng-model="searchEntity.memberid">
+              发货状态：<select id="fhstatus" ng-model="searchEntity.fhstatus" >
               <option value="">-- 请选择 --</option>
               <option >已发货</option>
               <option >待发货</option>
           </select>
-              订单状态：<select  ng-model="searchEntity.ddstate" >
+              订单状态：
+              <select id="ddstate" ng-model="searchEntity.ddstate" >
               <option value="">-- 请选择 --</option>
               <option value="00">交易成功</option>
               <option value="01">待付款</option>
@@ -55,10 +56,19 @@
               <option value="03">运输中</option>
               <option value="04">退货申请中</option>
               <option value="05">退货中</option>
-              <option value="06">退货成功</option>
+              <option value="06">拒绝退货</option>
+              <option value="07">换货申请中</option>
+              <option value="08">换货中</option>
+              <option value="09">拒绝换货</option>
+              <option value="10">退货成功</option>
+              <option value="11">换货成功</option>
+
           </select>
+
+
               <button class="btn btn-default" ng-click="reloadList()">查询</button>
               <button class="btn btn-default" ng-click="searchEntity={};reloadList()">重置</button>
+              <a id="exdDown" onclick="document.getElementById('exdDown').href='../ddinfo/exportList.do?ddno='+document.getElementById('ddno').value+'&memberid='+document.getElementById('memberid').value+'&fhstatus='+document.getElementById('fhstatus').value+'&ddstate='+document.getElementById('ddstate').value"  href="#"  class="btn btn-default" >导出</a>
           </div>
 
       </div>
@@ -100,13 +110,23 @@
                                  <span ng-if="entity.ddstate=='03'">运输中</span>
                                  <span ng-if="entity.ddstate=='04'">退货申请中</span>
                                  <span ng-if="entity.ddstate=='05'">退货中</span>
-                                 <span ng-if="entity.ddstate=='06'">退货成功</span>
+                                  <span ng-if="entity.ddstate=='06'">拒绝退货</span>
+                                  <span ng-if="entity.ddstate=='07'">换货申请中</span>
+                                    <span ng-if="entity.ddstate=='08'">换货中</span>
+                                   <span ng-if="entity.ddstate=='09'">拒绝换货</span>
+                                 <span ng-if="entity.ddstate=='10'">退货成功</span>
+                                          <span ng-if="entity.ddstate=='11'">换货成功</span>
                                  </td>
 		                                 
 		                                  <td class="text-center">                                           
 		                                 	  <button ng-if="entity.ddstate=='02'&&entity.wlinfo==''" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#editModal2" ng-click="openEdit(entity.id,entity.ddno,entity.memberid,entity.lxfs,entity.newadd)" >填写物流单号</button>
                                               <button ng-if="entity.ddstate=='04'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'同意退货','05')" >同意退款</button>
-                                              <button ng-if="entity.ddstate=='05'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'确认退货','06')" >确认退货</button>
+                                              <button ng-if="entity.ddstate=='04'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'拒绝退货','06')" >拒绝退货</button>
+                                              <button ng-if="entity.ddstate=='07'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'同意换货','08')" >同意换货</button>
+                                              <button ng-if="entity.ddstate=='07'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'拒绝换货','09')" >拒绝换货</button>
+                                              <button ng-if="entity.ddstate=='08'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'确认退货','11')" >拒绝退货</button>
+
+                                              <button ng-if="entity.ddstate=='05'" type="button" class="btn btn-danger btn-xs" data-toggle="modal"  ng-click="updateDdState(entity.id,'确认退货','10')" >确认退货</button>
                                               <button  type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#editModal4" ng-click="findOne(entity.id,entity.memberid,entity.lxfs);searchDet(entity.ddno)" >订单详情</button>
 		                                  </td>
 			                          </tr>									 
@@ -326,13 +346,20 @@
                               </tr>
                               <tr>
                                   <td>订单状态</td>
-                                  <td><span ng-if="entity.ddstate=='00'">交易成功</span>
+                                  <td>
+                                      <span ng-if="entity.ddstate=='00'">交易成功</span>
                                       <span ng-if="entity.ddstate=='01'">待付款</span>
                                       <span ng-if="entity.ddstate=='02'">已付款</span>
                                       <span ng-if="entity.ddstate=='03'">运输中</span>
                                       <span ng-if="entity.ddstate=='04'">退货申请中</span>
                                       <span ng-if="entity.ddstate=='05'">退货中</span>
-                                      <span ng-if="entity.ddstate=='06'">退货成功</span></td>
+                                      <span ng-if="entity.ddstate=='06'">拒绝退货</span>
+                                      <span ng-if="entity.ddstate=='07'">换货申请中</span>
+                                      <span ng-if="entity.ddstate=='08'">换货中</span>
+                                      <span ng-if="entity.ddstate=='09'">拒绝换货</span>
+                                      <span ng-if="entity.ddstate=='10'">退货成功</span>
+                                      <span ng-if="entity.ddstate=='11'">换货成功</span>
+
                               </tr>
                               <tr>
                                   <td>收货地址</td>
@@ -435,7 +462,7 @@
                   是否{{msg}}？
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" ng-click="updateState()" data-dismiss="modal">是</button>
+                  <button type="button" class="btn btn-danger" ng-click="updateState()" data-dismiss="modal">是</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
               </div>
           </div>

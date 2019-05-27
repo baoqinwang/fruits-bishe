@@ -74,7 +74,6 @@ public class MenberController {
     @RequestMapping("/add")
     public Result add(@RequestBody Member member){
         try {
-            member.setUserpassword(RandomCharacterAndNumber.getRandomCharacterAndNumber(6,2));
             memberService.add(member);
             return new Result(true, "增加成功,初始密码为："+member.getUserpassword());
         } catch (Exception e) {
@@ -178,7 +177,7 @@ public class MenberController {
     public Result reduction(String fileName)
     {
         logger.info("开始用户信息还原");
-        String command="mysql -h47.101.63.178 -uroot -proot fruitdb <D:\\fruitsshop_db\\"+fileName+".sql";
+        String command="mysql -h47.101.63.178 -uroot -proot fruitdb <"+backPath+fileName+".sql";
         Runtime runtime = Runtime.getRuntime();
         try {
             Process process = runtime.exec("cmd /c"+command);

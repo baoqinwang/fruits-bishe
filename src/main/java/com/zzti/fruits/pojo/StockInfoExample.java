@@ -185,52 +185,52 @@ public class StockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andStockCountEqualTo(Integer value) {
+        public Criteria andStockCountEqualTo(Double value) {
             addCriterion("STOCK_COUNT =", value, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountNotEqualTo(Integer value) {
+        public Criteria andStockCountNotEqualTo(Double value) {
             addCriterion("STOCK_COUNT <>", value, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountGreaterThan(Integer value) {
+        public Criteria andStockCountGreaterThan(Double value) {
             addCriterion("STOCK_COUNT >", value, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountGreaterThanOrEqualTo(Integer value) {
+        public Criteria andStockCountGreaterThanOrEqualTo(Double value) {
             addCriterion("STOCK_COUNT >=", value, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountLessThan(Integer value) {
+        public Criteria andStockCountLessThan(Double value) {
             addCriterion("STOCK_COUNT <", value, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountLessThanOrEqualTo(Integer value) {
+        public Criteria andStockCountLessThanOrEqualTo(Double value) {
             addCriterion("STOCK_COUNT <=", value, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountIn(List<Integer> values) {
+        public Criteria andStockCountIn(List<Double> values) {
             addCriterion("STOCK_COUNT in", values, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountNotIn(List<Integer> values) {
+        public Criteria andStockCountNotIn(List<Double> values) {
             addCriterion("STOCK_COUNT not in", values, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountBetween(Integer value1, Integer value2) {
+        public Criteria andStockCountBetween(Double value1, Double value2) {
             addCriterion("STOCK_COUNT between", value1, value2, "stockCount");
             return (Criteria) this;
         }
 
-        public Criteria andStockCountNotBetween(Integer value1, Integer value2) {
+        public Criteria andStockCountNotBetween(Double value1, Double value2) {
             addCriterion("STOCK_COUNT not between", value1, value2, "stockCount");
             return (Criteria) this;
         }
@@ -245,52 +245,52 @@ public class StockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountEqualTo(Integer value) {
+        public Criteria andMinStockCountEqualTo(Double value) {
             addCriterion("MIN_STOCK_COUNT =", value, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountNotEqualTo(Integer value) {
+        public Criteria andMinStockCountNotEqualTo(Double value) {
             addCriterion("MIN_STOCK_COUNT <>", value, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountGreaterThan(Integer value) {
+        public Criteria andMinStockCountGreaterThan(Double value) {
             addCriterion("MIN_STOCK_COUNT >", value, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountGreaterThanOrEqualTo(Integer value) {
+        public Criteria andMinStockCountGreaterThanOrEqualTo(Double value) {
             addCriterion("MIN_STOCK_COUNT >=", value, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountLessThan(Integer value) {
+        public Criteria andMinStockCountLessThan(Double value) {
             addCriterion("MIN_STOCK_COUNT <", value, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountLessThanOrEqualTo(Integer value) {
+        public Criteria andMinStockCountLessThanOrEqualTo(Double value) {
             addCriterion("MIN_STOCK_COUNT <=", value, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountIn(List<Integer> values) {
+        public Criteria andMinStockCountIn(List<Double> values) {
             addCriterion("MIN_STOCK_COUNT in", values, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountNotIn(List<Integer> values) {
+        public Criteria andMinStockCountNotIn(List<Double> values) {
             addCriterion("MIN_STOCK_COUNT not in", values, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountBetween(Integer value1, Integer value2) {
+        public Criteria andMinStockCountBetween(Double value1, Double value2) {
             addCriterion("MIN_STOCK_COUNT between", value1, value2, "minStockCount");
             return (Criteria) this;
         }
 
-        public Criteria andMinStockCountNotBetween(Integer value1, Integer value2) {
+        public Criteria andMinStockCountNotBetween(Double value1, Double value2) {
             addCriterion("MIN_STOCK_COUNT not between", value1, value2, "minStockCount");
             return (Criteria) this;
         }

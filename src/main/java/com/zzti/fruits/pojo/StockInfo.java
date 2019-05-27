@@ -5,9 +5,9 @@ import java.util.Date;
 public class StockInfo {
     private String goodsId;
 
-    private Integer stockCount;
+    private Double stockCount;
 
-    private Integer minStockCount;
+    private Double minStockCount;
 
     private String storageLocation;
 
@@ -27,19 +27,19 @@ public class StockInfo {
         this.goodsId = goodsId == null ? null : goodsId.trim();
     }
 
-    public Integer getStockCount() {
+    public Double getStockCount() {
         return stockCount;
     }
 
-    public void setStockCount(Integer stockCount) {
+    public void setStockCount(Double stockCount) {
         this.stockCount = stockCount;
     }
 
-    public Integer getMinStockCount() {
+    public Double getMinStockCount() {
         return minStockCount;
     }
 
-    public void setMinStockCount(Integer minStockCount) {
+    public void setMinStockCount(Double minStockCount) {
         this.minStockCount = minStockCount;
     }
 

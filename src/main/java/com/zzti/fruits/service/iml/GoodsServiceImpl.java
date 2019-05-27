@@ -76,13 +76,13 @@ public class GoodsServiceImpl implements GoodsService {
 			goods.setFilename1(((JSONObject)dataJson.get(0)).getString("url"));
 		}
 
-		goods.setId(goodsMapper.queryMaxId()+1);
+//		goods.setId(goodsMapper.queryMaxId()+1);
        goodsMapper.insert(goods);
        //像库存插入记录
 		StockInfo stockInfo=new StockInfo();
 		stockInfo.setGoodsId(goods.getId().toString());
-		stockInfo.setStockCount(0);
-		stockInfo.setMinStockCount(0);
+		stockInfo.setStockCount(0.00);
+		stockInfo.setMinStockCount(0.00);
 		stockInfo.setCrtTlr("admin");
 		stockInfo.setCrtTm(new Date());
 		stockInfoMapper.insert(stockInfo);

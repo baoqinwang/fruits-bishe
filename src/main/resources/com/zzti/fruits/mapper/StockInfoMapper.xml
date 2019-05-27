@@ -3,8 +3,8 @@
 <mapper namespace="com.zzti.fruits.mapper.StockInfoMapper" >
   <resultMap id="BaseResultMap" type="com.zzti.fruits.pojo.StockInfo" >
     <id column="GOODS_ID" property="goodsId" jdbcType="VARCHAR" />
-    <result column="STOCK_COUNT" property="stockCount" jdbcType="INTEGER" />
-    <result column="MIN_STOCK_COUNT" property="minStockCount" jdbcType="INTEGER" />
+    <result column="STOCK_COUNT" property="stockCount" jdbcType="DOUBLE" />
+    <result column="MIN_STOCK_COUNT" property="minStockCount" jdbcType="DOUBLE" />
     <result column="STORAGE_LOCATION" property="storageLocation" jdbcType="VARCHAR" />
     <result column="CRT_TLR" property="crtTlr" jdbcType="VARCHAR" />
     <result column="CRT_TM" property="crtTm" jdbcType="TIMESTAMP" />
@@ -182,7 +182,7 @@
     insert into stockinfo (GOODS_ID, STOCK_COUNT, MIN_STOCK_COUNT, 
       STORAGE_LOCATION, CRT_TLR, CRT_TM, 
       UP_TLR, UP_TM)
-    values (#{goodsId,jdbcType=VARCHAR}, #{stockCount,jdbcType=INTEGER}, #{minStockCount,jdbcType=INTEGER}, 
+    values (#{goodsId,jdbcType=VARCHAR}, #{stockCount,jdbcType=DOUBLE}, #{minStockCount,jdbcType=DOUBLE}, 
       #{storageLocation,jdbcType=VARCHAR}, #{crtTlr,jdbcType=VARCHAR}, #{crtTm,jdbcType=TIMESTAMP}, 
       #{upTlr,jdbcType=VARCHAR}, #{upTm,jdbcType=TIMESTAMP})
   </insert>
@@ -219,10 +219,10 @@
         #{goodsId,jdbcType=VARCHAR},
       </if>
       <if test="stockCount != null" >
-        #{stockCount,jdbcType=INTEGER},
+        #{stockCount,jdbcType=DOUBLE},
       </if>
       <if test="minStockCount != null" >
-        #{minStockCount,jdbcType=INTEGER},
+        #{minStockCount,jdbcType=DOUBLE},
       </if>
       <if test="storageLocation != null" >
         #{storageLocation,jdbcType=VARCHAR},
@@ -254,10 +254,10 @@
         GOODS_ID = #{record.goodsId,jdbcType=VARCHAR},
       </if>
       <if test="record.stockCount != null" >
-        STOCK_COUNT = #{record.stockCount,jdbcType=INTEGER},
+        STOCK_COUNT = #{record.stockCount,jdbcType=DOUBLE},
       </if>
       <if test="record.minStockCount != null" >
-        MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=INTEGER},
+        MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=DOUBLE},
       </if>
       <if test="record.storageLocation != null" >
         STORAGE_LOCATION = #{record.storageLocation,jdbcType=VARCHAR},
@@ -282,8 +282,8 @@
   <update id="updateByExample" parameterType="map" >
     update stockinfo
     set GOODS_ID = #{record.goodsId,jdbcType=VARCHAR},
-      STOCK_COUNT = #{record.stockCount,jdbcType=INTEGER},
-      MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=INTEGER},
+      STOCK_COUNT = #{record.stockCount,jdbcType=DOUBLE},
+      MIN_STOCK_COUNT = #{record.minStockCount,jdbcType=DOUBLE},
       STORAGE_LOCATION = #{record.storageLocation,jdbcType=VARCHAR},
       CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
       CRT_TM = #{record.crtTm,jdbcType=TIMESTAMP},
@@ -297,10 +297,10 @@
     update stockinfo
     <set >
       <if test="stockCount != null" >
-        STOCK_COUNT = #{stockCount,jdbcType=INTEGER},
+        STOCK_COUNT = #{stockCount,jdbcType=DOUBLE},
       </if>
       <if test="minStockCount != null" >
-        MIN_STOCK_COUNT = #{minStockCount,jdbcType=INTEGER},
+        MIN_STOCK_COUNT = #{minStockCount,jdbcType=DOUBLE},
       </if>
       <if test="storageLocation != null" >
         STORAGE_LOCATION = #{storageLocation,jdbcType=VARCHAR},
@@ -322,8 +322,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zzti.fruits.pojo.StockInfo" >
     update stockinfo
-    set STOCK_COUNT = #{stockCount,jdbcType=INTEGER},
-      MIN_STOCK_COUNT = #{minStockCount,jdbcType=INTEGER},
+    set STOCK_COUNT = #{stockCount,jdbcType=DOUBLE},
+      MIN_STOCK_COUNT = #{minStockCount,jdbcType=DOUBLE},
       STORAGE_LOCATION = #{storageLocation,jdbcType=VARCHAR},
       CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
       CRT_TM = #{crtTm,jdbcType=TIMESTAMP},

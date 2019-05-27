@@ -1,14 +1,12 @@
 package com.zzti.fruits.service.iml;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.mapper.StockInfoMapper;
 import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.StockInfo;
-import com.zzti.fruits.pojo.StockInfoExample;
 import com.zzti.fruits.pojogroup.GroupStockInfo;
 import com.zzti.fruits.util.ExcelUtils;
 import org.apache.commons.lang3.StringUtils;

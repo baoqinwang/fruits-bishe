@@ -40,14 +40,7 @@ public class DdinfoController {
 	}
 	
 	
-	/**
-	 * 返回全部列表
-	 * @return
-	 */
-	@RequestMapping("/findPage")
-	public PageResult findPage(int page, int rows){
-		return ddinfoService.findPage(page, rows);
-	}
+
 	
 	/**
 	 * 增加
@@ -181,6 +174,24 @@ public class DdinfoController {
 
 		ddinfoService.excelPoiSearch(new OrderPoiParam(beginTime,endTime,ddstate),response);
 //        return null;
+	}
+
+	/**
+	 * 订单查询导出
+	 * @param ddno
+	 * @param memberid
+	 * @param fhstatus
+	 * @param ddstate
+	 * @param response
+	 */
+	@RequestMapping("exportList")
+	public void exportList(String ddno,String memberid,String fhstatus,String ddstate,HttpServletResponse response){
+		Ddinfo ddinfo=new Ddinfo();
+		ddinfo.setDdno(ddno);
+		ddinfo.setMemberid(memberid);
+		ddinfo.setFhstatus(fhstatus);
+		ddinfo.setDdstate(ddstate);
+		ddinfoService.exportList(ddinfo,response);
 	}
 	/**
 	 * 缺货订单报表统计

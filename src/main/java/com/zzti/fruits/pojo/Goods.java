@@ -39,7 +39,9 @@ public class Goods {
 
     private String imgurl;
 
-    private String sellmsg;
+    private Double stockcount;
+
+    private String crtTlr;
 
     private String content;
 
@@ -195,12 +197,20 @@ public class Goods {
         this.imgurl = imgurl == null ? null : imgurl.trim();
     }
 
-    public String getSellmsg() {
-        return sellmsg;
+    public Double getStockcount() {
+        return stockcount;
     }
 
-    public void setSellmsg(String sellmsg) {
-        this.sellmsg = sellmsg == null ? null : sellmsg.trim();
+    public void setStockcount(Double stockcount) {
+        this.stockcount = stockcount;
+    }
+
+    public String getCrtTlr() {
+        return crtTlr;
+    }
+
+    public void setCrtTlr(String crtTlr) {
+        this.crtTlr = crtTlr == null ? null : crtTlr.trim();
     }
 
     public String getContent() {

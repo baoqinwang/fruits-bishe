@@ -5,7 +5,6 @@ import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.entity.Result;
 import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.StockInfo;
-import com.zzti.fruits.pojogroup.GroupStockInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

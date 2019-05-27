@@ -21,7 +21,8 @@
     <result column="shelfbegin" property="shelfbegin" jdbcType="VARCHAR" />
     <result column="shelfend" property="shelfend" jdbcType="VARCHAR" />
     <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
-    <result column="sellmsg" property="sellmsg" jdbcType="VARCHAR" />
+    <result column="stockcount" property="stockcount" jdbcType="DOUBLE" />
+    <result column="CRT_TLR" property="crtTlr" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.zzti.fruits.pojo.Goods" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -87,20 +88,11 @@
   <sql id="Base_Column_List" >
     id, goodno, goodname, fid, sid, goodpp, price, tprice, istj, delstatus, savetime, 
     filename1, filename2, filename3, filename4, isshelf, shelfbegin, shelfend, imgurl, 
-    sellmsg
+    stockcount, CRT_TLR
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
-
-
-  <select id="queryMaxId" resultType="Integer">
-
-select Max(id) as id from goods
-
-</select>
-
-
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zzti.fruits.pojo.GoodsExample" >
     select
     <if test="distinct" >
@@ -150,27 +142,32 @@ select Max(id) as id from goods
     </if>
   </delete>
   <insert id="insert" parameterType="com.zzti.fruits.pojo.Goods" >
-    insert into goods (id, goodno, goodname, 
-      fid, sid, goodpp, price, 
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods (goodno, goodname, fid, 
+      sid, goodpp, price, 
       tprice, istj, delstatus, 
       savetime, filename1, filename2, 
       filename3, filename4, isshelf, 
       shelfbegin, shelfend, imgurl, 
-      sellmsg, content)
-    values (#{id,jdbcType=INTEGER}, #{goodno,jdbcType=VARCHAR}, #{goodname,jdbcType=VARCHAR}, 
-      #{fid,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR}, #{goodpp,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      stockcount, CRT_TLR, content
+      )
+    values (#{goodno,jdbcType=VARCHAR}, #{goodname,jdbcType=VARCHAR}, #{fid,jdbcType=VARCHAR}, 
+      #{sid,jdbcType=VARCHAR}, #{goodpp,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
       #{tprice,jdbcType=VARCHAR}, #{istj,jdbcType=VARCHAR}, #{delstatus,jdbcType=VARCHAR}, 
       #{savetime,jdbcType=VARCHAR}, #{filename1,jdbcType=VARCHAR}, #{filename2,jdbcType=VARCHAR}, 
       #{filename3,jdbcType=VARCHAR}, #{filename4,jdbcType=VARCHAR}, #{isshelf,jdbcType=VARCHAR}, 
       #{shelfbegin,jdbcType=VARCHAR}, #{shelfend,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
-      #{sellmsg,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+      #{stockcount,jdbcType=DOUBLE}, #{crtTlr,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zzti.fruits.pojo.Goods" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="goodno != null" >
         goodno,
       </if>
@@ -225,17 +222,17 @@ select Max(id) as id from goods
       <if test="imgurl != null" >
         imgurl,
       </if>
-      <if test="sellmsg != null" >
-        sellmsg,
+      <if test="stockcount != null" >
+        stockcount,
+      </if>
+      <if test="crtTlr != null" >
+        CRT_TLR,
       </if>
       <if test="content != null" >
         content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="goodno != null" >
         #{goodno,jdbcType=VARCHAR},
       </if>
@@ -290,8 +287,11 @@ select Max(id) as id from goods
       <if test="imgurl != null" >
         #{imgurl,jdbcType=VARCHAR},
       </if>
-      <if test="sellmsg != null" >
-        #{sellmsg,jdbcType=VARCHAR},
+      <if test="stockcount != null" >
+        #{stockcount,jdbcType=DOUBLE},
+      </if>
+      <if test="crtTlr != null" >
+        #{crtTlr,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -364,8 +364,11 @@ select Max(id) as id from goods
       <if test="record.imgurl != null" >
         imgurl = #{record.imgurl,jdbcType=VARCHAR},
       </if>
-      <if test="record.sellmsg != null" >
-        sellmsg = #{record.sellmsg,jdbcType=VARCHAR},
+      <if test="record.stockcount != null" >
+        stockcount = #{record.stockcount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.crtTlr != null" >
+        CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -396,7 +399,8 @@ select Max(id) as id from goods
       shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
       shelfend = #{record.shelfend,jdbcType=VARCHAR},
       imgurl = #{record.imgurl,jdbcType=VARCHAR},
-      sellmsg = #{record.sellmsg,jdbcType=VARCHAR},
+      stockcount = #{record.stockcount,jdbcType=DOUBLE},
+      CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -423,7 +427,8 @@ select Max(id) as id from goods
       shelfbegin = #{record.shelfbegin,jdbcType=VARCHAR},
       shelfend = #{record.shelfend,jdbcType=VARCHAR},
       imgurl = #{record.imgurl,jdbcType=VARCHAR},
-      sellmsg = #{record.sellmsg,jdbcType=VARCHAR}
+      stockcount = #{record.stockcount,jdbcType=DOUBLE},
+      CRT_TLR = #{record.crtTlr,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -485,8 +490,11 @@ select Max(id) as id from goods
       <if test="imgurl != null" >
         imgurl = #{imgurl,jdbcType=VARCHAR},
       </if>
-      <if test="sellmsg != null" >
-        sellmsg = #{sellmsg,jdbcType=VARCHAR},
+      <if test="stockcount != null" >
+        stockcount = #{stockcount,jdbcType=DOUBLE},
+      </if>
+      <if test="crtTlr != null" >
+        CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
@@ -514,7 +522,8 @@ select Max(id) as id from goods
       shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
       shelfend = #{shelfend,jdbcType=VARCHAR},
       imgurl = #{imgurl,jdbcType=VARCHAR},
-      sellmsg = #{sellmsg,jdbcType=VARCHAR},
+      stockcount = #{stockcount,jdbcType=DOUBLE},
+      CRT_TLR = #{crtTlr,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -538,7 +547,8 @@ select Max(id) as id from goods
       shelfbegin = #{shelfbegin,jdbcType=VARCHAR},
       shelfend = #{shelfend,jdbcType=VARCHAR},
       imgurl = #{imgurl,jdbcType=VARCHAR},
-      sellmsg = #{sellmsg,jdbcType=VARCHAR}
+      stockcount = #{stockcount,jdbcType=DOUBLE},
+      CRT_TLR = #{crtTlr,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

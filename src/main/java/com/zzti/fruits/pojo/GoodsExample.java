@@ -1424,73 +1424,133 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgIsNull() {
-            addCriterion("sellmsg is null");
+        public Criteria andStockcountIsNull() {
+            addCriterion("stockcount is null");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgIsNotNull() {
-            addCriterion("sellmsg is not null");
+        public Criteria andStockcountIsNotNull() {
+            addCriterion("stockcount is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgEqualTo(String value) {
-            addCriterion("sellmsg =", value, "sellmsg");
+        public Criteria andStockcountEqualTo(Double value) {
+            addCriterion("stockcount =", value, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgNotEqualTo(String value) {
-            addCriterion("sellmsg <>", value, "sellmsg");
+        public Criteria andStockcountNotEqualTo(Double value) {
+            addCriterion("stockcount <>", value, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgGreaterThan(String value) {
-            addCriterion("sellmsg >", value, "sellmsg");
+        public Criteria andStockcountGreaterThan(Double value) {
+            addCriterion("stockcount >", value, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgGreaterThanOrEqualTo(String value) {
-            addCriterion("sellmsg >=", value, "sellmsg");
+        public Criteria andStockcountGreaterThanOrEqualTo(Double value) {
+            addCriterion("stockcount >=", value, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgLessThan(String value) {
-            addCriterion("sellmsg <", value, "sellmsg");
+        public Criteria andStockcountLessThan(Double value) {
+            addCriterion("stockcount <", value, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgLessThanOrEqualTo(String value) {
-            addCriterion("sellmsg <=", value, "sellmsg");
+        public Criteria andStockcountLessThanOrEqualTo(Double value) {
+            addCriterion("stockcount <=", value, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgLike(String value) {
-            addCriterion("sellmsg like", value, "sellmsg");
+        public Criteria andStockcountIn(List<Double> values) {
+            addCriterion("stockcount in", values, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgNotLike(String value) {
-            addCriterion("sellmsg not like", value, "sellmsg");
+        public Criteria andStockcountNotIn(List<Double> values) {
+            addCriterion("stockcount not in", values, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgIn(List<String> values) {
-            addCriterion("sellmsg in", values, "sellmsg");
+        public Criteria andStockcountBetween(Double value1, Double value2) {
+            addCriterion("stockcount between", value1, value2, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgNotIn(List<String> values) {
-            addCriterion("sellmsg not in", values, "sellmsg");
+        public Criteria andStockcountNotBetween(Double value1, Double value2) {
+            addCriterion("stockcount not between", value1, value2, "stockcount");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgBetween(String value1, String value2) {
-            addCriterion("sellmsg between", value1, value2, "sellmsg");
+        public Criteria andCrtTlrIsNull() {
+            addCriterion("CRT_TLR is null");
             return (Criteria) this;
         }
 
-        public Criteria andSellmsgNotBetween(String value1, String value2) {
-            addCriterion("sellmsg not between", value1, value2, "sellmsg");
+        public Criteria andCrtTlrIsNotNull() {
+            addCriterion("CRT_TLR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrEqualTo(String value) {
+            addCriterion("CRT_TLR =", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrNotEqualTo(String value) {
+            addCriterion("CRT_TLR <>", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrGreaterThan(String value) {
+            addCriterion("CRT_TLR >", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrGreaterThanOrEqualTo(String value) {
+            addCriterion("CRT_TLR >=", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrLessThan(String value) {
+            addCriterion("CRT_TLR <", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrLessThanOrEqualTo(String value) {
+            addCriterion("CRT_TLR <=", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrLike(String value) {
+            addCriterion("CRT_TLR like", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrNotLike(String value) {
+            addCriterion("CRT_TLR not like", value, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrIn(List<String> values) {
+            addCriterion("CRT_TLR in", values, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrNotIn(List<String> values) {
+            addCriterion("CRT_TLR not in", values, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrBetween(String value1, String value2) {
+            addCriterion("CRT_TLR between", value1, value2, "crtTlr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCrtTlrNotBetween(String value1, String value2) {
+            addCriterion("CRT_TLR not between", value1, value2, "crtTlr");
             return (Criteria) this;
         }
     }

@@ -19,6 +19,9 @@ version: 1.0
 @NoArgsConstructor
 @AllArgsConstructor
 public enum ExceptionEnum {
+    CHILD_PROTYE_NOT_NULL(300,"存在下级分类，不可直接删除"),
+    PROTYE_GOODS_NOT_NULL(301,"分类下存在商品，不可直接删除"),
+
     PRICE_CANNOT_BE_NULL(400, "价格不能为空"),
     CATEGORY_NOT_FOUND(404, "商品分类没有找到"),
     SPEC_GROUP_NOT_FOUND(404, "商品规格组没有查到"),
@@ -31,7 +34,6 @@ public enum ExceptionEnum {
     GOODS_NOT_FOUND(404, "商品不存在"),
     SPU_DETAIL_NOT_FOUND(404, "商品详情不存在"),
     GOODS_SKU_NOT_FOUND(404, "sku没有找到");
-
 
     private int code;
     private String msg;

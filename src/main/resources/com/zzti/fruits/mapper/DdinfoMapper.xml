@@ -138,7 +138,9 @@
     a.fhstatus,
     a.wlinfo,
     a.wltype,
-    a.ddstate
+    a.ddstate,
+    a.remark,
+    a.savetime
     FROM ddinfo a
     WHERE 1=1
     <if test="ddno!=null and ddno!=''">

@@ -77,6 +77,7 @@
                 用户名：<input type="text" ng-model="searchEntity.username">
                 姓名：<input type="text" ng-model="searchEntity.realname">
                 <button class="btn btn-default" ng-click="reloadList()">查询</button>
+                <button class="btn btn-default" ng-click="searchEntity={};reloadList()" onclick="reset()">重置</button>
             </div>
         </div>
         <!--工具栏/-->
@@ -151,6 +152,7 @@
                     <tr><td>是否会员</td>
                         <td>
                             <select class="form-control" ng-model="entity.isgjhy">
+                                <option value="">-- 请选择 --</option>
                                 <option value="y">是</option>
                                 <option value="n">否</option>
                             </select>
@@ -159,6 +161,7 @@
                     <tr><td>性别</td>
                         <td>
                             <select class="form-control" ng-model="entity.sex">
+                                <option value="">-- 请选择 --</option>
                                 <option >男</option>
                                 <option >女</option>
                             </select>
@@ -182,9 +185,9 @@
                             <div data-toggle="distpicker" id="distpicker1" >
 
 
-                                    <select class="form-control" ng-model="entity.sheng"   name="sheng" id="province2" data-province="---- 选择省 ----"></select>
+                                    <select class="form-control sheng" ng-model="entity.sheng"   name="sheng" id="province2" data-province="---- 选择省 ----"></select>
 
-                                    <select class="form-control" ng-model="entity.shi" id="city2" name="shi"  data-city="---- 选择市 ----"></select>
+                                    <select class="form-control sheng" ng-model="entity.shi" id="city2" name="shi"  data-city="---- 选择市 ----"></select>
 
                             </div>
                         </td>
@@ -248,7 +251,7 @@
                 是否重置密码？
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="resetPd()" data-dismiss="modal">是</button>
+                <button type="button" class="btn btn-danger" ng-click="resetPd()" data-dismiss="modal">是</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
             </div>
         </div>

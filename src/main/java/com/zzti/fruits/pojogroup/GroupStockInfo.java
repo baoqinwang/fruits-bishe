@@ -20,7 +20,7 @@ public class GroupStockInfo implements Serializable
     private String goodName;
     private String fname;
     private String sname;
-    private Integer stockCount;
+    private Double stockCount;
 
 
 
@@ -60,11 +60,11 @@ public class GroupStockInfo implements Serializable
         this.sname = sname;
     }
 
-    public Integer getStockCount() {
+    public Double getStockCount() {
         return stockCount;
     }
 
-    public void setStockCount(Integer stockCount) {
+    public void setStockCount(Double stockCount) {
         this.stockCount = stockCount;
     }
 

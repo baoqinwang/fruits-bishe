@@ -4,7 +4,6 @@ import java.util.List;
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.StockInfo;
-import com.zzti.fruits.pojogroup.GroupStockInfo;
 
 import javax.servlet.http.HttpServletResponse;
 

@@ -1,6 +1,8 @@
 package com.zzti.fruits.controller;
 
+import com.zzti.fruits.Exception.FruitsException;
 import com.zzti.fruits.entity.Result;
+import com.zzti.fruits.enums.ExceptionEnum;
 import com.zzti.fruits.pojo.Protype;
 import com.zzti.fruits.service.ProTypeService;
 
@@ -87,7 +89,10 @@ public class ProTypeController {
         try {
             proTypeService.delete(ids);
             return new Result(true, "删除成功");
-        } catch (Exception e) {
+        }catch (FruitsException e){
+            return new Result(false, e.getExceptionEnum().getMsg());
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return new Result(false, "删除失败");
         }

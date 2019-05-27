@@ -21,12 +21,7 @@ public interface DdinfoService {
 	public List<Ddinfo> findAll();
 	
 	
-	/**
-	 * 返回分页列表
-	 * @return
-	 */
-	public PageResult findPage(int pageNum, int pageSize);
-	
+
 	
 	/**
 	 * 增加
@@ -73,4 +68,6 @@ public interface DdinfoService {
     void excelPoiSearch(OrderPoiParam orderPoiParam, HttpServletResponse response);
 
     void shortageoOrderReport(HttpServletResponse response);
+
+    void exportList(Ddinfo ddinfo,HttpServletResponse response);
 }

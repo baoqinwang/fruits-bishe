@@ -63,9 +63,7 @@
 				<li >
 					<a href="#spec" data-toggle="tab" >上架设置</a>
 				</li>
-				<li >
-					<a href="#sellerMsg" data-toggle="tab" >商家留言</a>
-				</li>
+
 			</ul>
 			<!--tab头/-->
 
@@ -83,11 +81,13 @@
 									<td>
 										<!--ng-options="item.id as item.typename for item in proType1List"-->
 										<select class="form-control" ng-model="entity.fid"  >
+											<option value="">-- 请选择 --</option>
 											<option ng-repeat="item in proType1List" ng-selected="item.id == entity.fid" value="{{item.id}}" >{{item.typename}}</option>
 										</select>
 									</td>
 									<td>
 										<select class="form-control select-sm"  ng-model="entity.sid">
+											<option value="">-- 请选择 --</option>
 											<option ng-repeat="item in proType2List" ng-selected="item.id == entity.sid" value="{{item.id}}" >{{item.typename}}</option>
 										</select>
 									</td>
@@ -103,24 +103,28 @@
 						</div>
 
 
-
-						<div class="col-md-2 title">价格</div>
+						<div class="col-md-2 title">出库(公斤)</div>
+						<div class="col-md-10 data">
+								<input type="text" ng-model="entity.stockcount"   class="form-control"  placeholder="出库斤数" value="">
+						</div>
+						<div class="col-md-2 title">价格(元)</div>
 						<div class="col-md-10 data">
 							<div class="input-group">
 								<span class="input-group-addon">¥</span>
 								<input type="text"ng-model="entity.price"   class="form-control"  placeholder="价格" value="">
 							</div>
 						</div>
-						<div class="col-md-2 title">会员价格</div>
+						<div class="col-md-2 title">会员价格(元)</div>
 						<div class="col-md-10 data">
 							<div class="input-group">
 								<span class="input-group-addon">¥</span>
-								<input type="text"ng-model="entity.goodpp"   class="form-control"  placeholder="价格" value="">
+								<input type="text"ng-model="entity.goodpp"   class="form-control"  placeholder="会员价格" value="">
 							</div>
 						</div>
 						<div class="col-md-2 title">推荐商品</div>
 						<div class="col-md-10 data">
 							<select class="form-control" ng-model="entity.istj">
+								<option value="">-- 请选择 --</option>
 								<option value="yes">是</option>
 								<option value="no">否</option>
 							</select>
@@ -129,6 +133,7 @@
 							<div class="col-md-2 title">上架/下架</div>
 							<div class="col-md-10 data">
 								<select class="form-control"  ng-model="entity.isshelf">
+									<option value="">-- 请选择 --</option>
 									<option value="02">待上架</option>
 									<option value="00">上架</option>
 									<option value="01">下架</option>
@@ -207,19 +212,19 @@
 
 
 
-				<!--规格-->
-				<div class="tab-pane" id="sellerMsg">
-					<div class="row data-type">
-						<div class="col-md-2 title editer">商家留言</div>
-						<div class="col-md-10 data editer">
-							<textarea name="sellerMsg" style="width:800px;height:400px;visibility:hidden;" ></textarea>
-						</div>
+				<!--&lt;!&ndash;规格&ndash;&gt;-->
+				<!--<div class="tab-pane" id="sellerMsg">-->
+					<!--<div class="row data-type">-->
+						<!--<div class="col-md-2 title editer">商家留言</div>-->
+						<!--<div class="col-md-10 data editer">-->
+							<!--<textarea name="sellerMsg" style="width:800px;height:400px;visibility:hidden;" ></textarea>-->
+						<!--</div>-->
 
-					</div>
-					<!--tab内容/-->
-					<!--表单内容/-->
+					<!--</div>-->
+					<!--&lt;!&ndash;tab内容/&ndash;&gt;-->
+					<!--&lt;!&ndash;表单内容/&ndash;&gt;-->
 
-				</div>
+				<!--</div>-->
 
 
 

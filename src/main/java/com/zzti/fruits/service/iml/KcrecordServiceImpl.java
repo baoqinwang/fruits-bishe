@@ -2,11 +2,9 @@ package com.zzti.fruits.service.iml;
 import java.util.List;
 
 import com.github.pagehelper.Page;
-import com.sun.org.apache.xpath.internal.operations.String;
 import com.zzti.fruits.entity.PageResult;
 import com.zzti.fruits.mapper.KcrecordMapper;
 import com.zzti.fruits.mapper.StockInfoMapper;
-import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.Kcrecord;
 import com.zzti.fruits.pojo.KcrecordExample;
 import com.zzti.fruits.pojo.StockInfo;
@@ -65,9 +63,9 @@ public class KcrecordServiceImpl
 		{
 			StockInfo stockInfo = stockInfoMapper.selectByPrimaryKey(kcrecord.getGid());
 			if("in".equals(kcrecord.getType()))
-				stockInfo.setStockCount(stockInfo.getStockCount().intValue()+ Integer.parseInt(kcrecord.getHappennum()));
+				stockInfo.setStockCount(stockInfo.getStockCount().doubleValue()+ Double.parseDouble(kcrecord.getHappennum()));
 			else
-				stockInfo.setStockCount(stockInfo.getStockCount().intValue()- Integer.parseInt(kcrecord.getHappennum()));
+				stockInfo.setStockCount(stockInfo.getStockCount().doubleValue()-Double.parseDouble(kcrecord.getHappennum()));
               stockInfoMapper.updateByPrimaryKeySelective(stockInfo);
 		}
 	}

@@ -1,8 +1,11 @@
 package com.zzti.fruits.service.iml;
 
 
+import com.zzti.fruits.Exception.FruitsException;
+import com.zzti.fruits.enums.ExceptionEnum;
 import com.zzti.fruits.mapper.GoodsMapper;
 import com.zzti.fruits.mapper.ProtypeMapper;
+import com.zzti.fruits.pojo.Goods;
 import com.zzti.fruits.pojo.GoodsExample;
 import com.zzti.fruits.pojo.Protype;
 import com.zzti.fruits.pojo.ProtypeExample;
@@ -64,8 +67,20 @@ public class ProTypeServiceImpl implements ProTypeService {
             ProtypeExample protypeExample=new ProtypeExample();
             protypeExample.createCriteria().andFatheridEqualTo(id);
             List<Protype> protypes = protypeMapper.selectByExample(protypeExample);
-            //判断值改分类下是否有商品，若有抛出异常
-            protypeMapper.deleteByExample(protypeExample);
+            //判断是否有下级分类
+            if(protypes!=null&&protypes.size()>0)
+                throw  new FruitsException(ExceptionEnum.CHILD_PROTYE_NOT_NULL);
+            //判断分类下是否还有商品
+            GoodsExample goodsExample=new GoodsExample();
+            GoodsExample.Criteria criteria = goodsExample.createCriteria();
+            criteria.andSidEqualTo(id);
+            GoodsExample.Criteria criteria1 = goodsExample.createCriteria();
+            criteria1.andFidEqualTo(id);
+            goodsExample.or(criteria1);
+            List<Goods> goods = goodsMapper.selectByExample(goodsExample);
+            if(goods!=null&&goods.size()>0)
+                throw  new FruitsException(ExceptionEnum.PROTYE_GOODS_NOT_NULL);
+            //删除分类
             protypeMapper.deleteByPrimaryKey(new Integer(id));
         }
     }

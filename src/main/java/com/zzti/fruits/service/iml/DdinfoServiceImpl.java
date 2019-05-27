@@ -32,7 +32,6 @@ public class DdinfoServiceImpl implements DdinfoService {
 
 	@Autowired
 	private DdinfoMapper ddinfoMapper;
-	
 	/**
 	 * 查询全部
 	 */
@@ -41,15 +40,8 @@ public class DdinfoServiceImpl implements DdinfoService {
 		return ddinfoMapper.selectByExample(null);
 	}
 
-	/**
-	 * 按分页查询
-	 */
-	@Override
-	public PageResult findPage(int pageNum, int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);		
-		Page<Ddinfo> page=   (Page<Ddinfo>) ddinfoMapper.selectByExample(null);
-		return new PageResult(page.getTotal(), page.getResult());
-	}
+
+
 
 	/**
 	 * 增加
@@ -109,7 +101,52 @@ public class DdinfoServiceImpl implements DdinfoService {
 		return new PageResult(page.getTotal(), page.getResult());
 
 	}
+	String getkdName(String type){
+		if("SFEXPRESS".equals(type))
+			 return  "顺丰快递";
+		else  if("YTO".equals(type))
+			return  "圆通快递";
+		else  if("STO".equals(type))
+			return  "申通快递";
+		else  if("YUNDA".equals(type))
+			return  "韵达快递";
+		else  if("HTKY".equals(type))
+			return  "百事快递";
+		else  if("CHINAPOST".equals(type))
+			return  "中国邮政";
+		else  if("others".equals(type))
+			return  "其他";
+		else
+			return  null;
+	}
+	String getDdstate(String code){
+		if("00".equals(code))
+			return  "交易成功";
+		else  if("01".equals(code))
+			return  "待付款";
+		else  if("02".equals(code))
+			return  "已付款";
+		else  if("03".equals(code))
+			return  "运输中";
+		else  if("04".equals(code))
+			return  "退货申请中";
+		else  if("05".equals(code))
+			return  "退货中";
+		else  if("06".equals(code))
+			return  "拒绝退货";
+		else  if("07".equals(code))
+			return  "换货申请中";
+		else  if("08".equals(code))
+			return  "换货中";
+		else  if("09".equals(code))
+			return  "拒绝换货";
+		else  if("10".equals(code))
+			return  "退货成功";
+		else  if("11".equals(code))
+			return  "换货成功";
+		else return  code;
 
+	}
 	@Override
 	public void excelPoiSearch(OrderPoiParam orderPoiParam, HttpServletResponse response) {
 		List<Ddinfo> ddinfos = ddinfoMapper.searchReport(orderPoiParam);
@@ -140,40 +177,9 @@ public class DdinfoServiceImpl implements DdinfoService {
             bodyValue.add(ddinfo.getNewadd());
             bodyValue.add(ddinfo.getFhstatus());
             bodyValue.add(ddinfo.getRemark());
-            	if("SFEXPRESS".equals(ddinfo.getWltype()))
-            		bodyValue.add("顺丰快递");
-            	else  if("YTO".equals(ddinfo.getWltype()))
-            		bodyValue.add("圆通快递");
-            	else  if("STO".equals(ddinfo.getWltype()))
-            		bodyValue.add("申通快递");
-            	else  if("YUNDA".equals(ddinfo.getWltype()))
-					bodyValue.add("韵达快递");
-				else  if("HTKY".equals(ddinfo.getWltype()))
-					bodyValue.add("百事快递");
-				else  if("CHINAPOST".equals(ddinfo.getWltype()))
-					bodyValue.add("中国邮政");
-				else  if("others".equals(ddinfo.getWltype()))
-					bodyValue.add("其他");
-				else
-					bodyValue.add("");
+            bodyValue.add(getkdName(ddinfo.getWltype()));
 			bodyValue.add(ddinfo.getWlinfo());
-		     if("00".equals(ddinfo.getDdstate()))
-		     	bodyValue.add("交易成功");
-		     else  if("01".equals(ddinfo.getDdstate()))
-		     	bodyValue.add("待付款");
-			 else  if("01".equals(ddinfo.getDdstate()))
-				 bodyValue.add("待付款");
-			 else  if("02".equals(ddinfo.getDdstate()))
-				 bodyValue.add("已付款");
-			 else  if("03".equals(ddinfo.getDdstate()))
-				 bodyValue.add("运输中");
-			 else  if("04".equals(ddinfo.getDdstate()))
-				 bodyValue.add("退货申请中");
-			 else  if("05".equals(ddinfo.getDdstate()))
-				 bodyValue.add("退货中");
-			 else  if("06".equals(ddinfo.getDdstate()))
-				 bodyValue.add("退货成功");
-			 else bodyValue.add(ddinfo.getDdstate());
+			bodyValue.add(getDdstate(ddinfo.getDdstate()));
 			 bodyValue.add(ddinfo.getSavetime());
 			//将数据添加到报表体中
 			body.add(bodyValue);
@@ -216,30 +222,56 @@ public class DdinfoServiceImpl implements DdinfoService {
 			bodyValue.add((String)map.get("lxfs"));
 			bodyValue.add((String)map.get("newadd"));
 			bodyValue.add((String)map.get("remark"));
-
-
-			if("00".equals((String)map.get("ddstate")))
-				bodyValue.add("交易成功");
-			else  if("01".equals((String)map.get("ddstate")))
-				bodyValue.add("待付款");
-			else  if("01".equals((String)map.get("ddstate")))
-				bodyValue.add("待付款");
-			else  if("02".equals((String)map.get("ddstate")))
-				bodyValue.add("已付款");
-			else  if("03".equals((String)map.get("ddstate")))
-				bodyValue.add("运输中");
-			else  if("04".equals((String)map.get("ddstate")))
-				bodyValue.add("退货申请中");
-			else  if("05".equals((String)map.get("ddstate")))
-				bodyValue.add("退货中");
-			else  if("06".equals((String)map.get("ddstate")))
-				bodyValue.add("退货成功");
-			else bodyValue.add((String)map.get("ddstate"));
+			bodyValue.add(getDdstate((String)map.get("ddstate")));
 			//将数据添加到报表体中
 			body.add(bodyValue);
 		}
 
 		String fileName = "缺货订单统计.xls";
+		HSSFWorkbook excel = ExcelUtils.expExcel(head,body);
+		ExcelUtils.outFile(excel,"./"+fileName,response);
+	}
+
+	@Override
+	public void exportList(Ddinfo ddinfo,HttpServletResponse response) {
+		List<Ddinfo> ddinfos = ddinfoMapper.Search(ddinfo.getDdno(),ddinfo.getMemberid(),ddinfo.getFhstatus(),ddinfo.getDdstate());
+		List<String> head = new ArrayList<>();
+		head.add("序号");
+		head.add("订单编号");
+		head.add("交易金额");
+		head.add("用户名");
+		head.add("订单地址");
+		head.add("发货状态");
+		head.add("用户备注");
+		head.add("物流类型");
+		head.add("物流编号");
+		head.add("订单状态");
+		head.add("订单时间");
+		List<List<String>> body = new ArrayList<>();
+		int i=0;
+		for (Ddinfo entity:
+				ddinfos) {
+			i++;
+			List<String> bodyValue = new ArrayList<>();
+			bodyValue.add(String.valueOf(i+""));
+			bodyValue.add(entity.getDdno());
+			bodyValue.add(entity.getDdtotal());
+			bodyValue.add(entity.getMemberid());
+			if(StringUtils.isNotBlank(entity.getNewadd()))
+				bodyValue.add(entity.getNewadd());
+			else
+				bodyValue.add(entity.getLxfs());
+			bodyValue.add(entity.getFhstatus());
+			bodyValue.add(entity.getRemark());
+			bodyValue.add(getkdName(entity.getWltype()));
+			bodyValue.add(entity.getWlinfo());
+			bodyValue.add(getDdstate(entity.getDdstate()));
+			bodyValue.add(entity.getSavetime());
+			//将数据添加到报表体中
+			body.add(bodyValue);
+		}
+
+		String fileName = "订单导出.xls";
 		HSSFWorkbook excel = ExcelUtils.expExcel(head,body);
 		ExcelUtils.outFile(excel,"./"+fileName,response);
 	}

@@ -64,7 +64,8 @@
                                               二级分类：<select  ng-model="searchEntity.sid" >
                                     <option ng-repeat="a in proTypeList4"  value="{{a.id}}" >{{a.typename}}</option>
                                 </select>
-									<button class="btn btn-default" ng-click="reloadList()">查询</button>                                    
+									<button class="btn btn-default" ng-click="reloadList()">查询</button>
+                                    <button class="btn btn-default" ng-click="searchEntity={};reloadList()" >重置</button>
                                 </div>
                             </div>
                             <!--工具栏/-->
@@ -115,7 +116,7 @@
                                           </td>
 		                                  <td class="text-center">
 		                                  	  <a class="btn bg-olive btn-success btn-xs" href="goods_edit.html#?id={{entity.id}}">修改</a>
-                                              <button type="button" class="btn bg-olive btn-success btn-xs" data-toggle="modal" data-target="#editModal" ng-click="shelfcheck(entity.id,entity.isshelf)" ><span ng-if="entity.isshelf=='00'">下架</span><span ng-if="entity.isshelf=='02'||entity.isshelf=='01'">上架</span></button>
+                                              <button type="button" class="btn bg-olive btn-success btn-xs" data-toggle="modal" data-target="#editModal"  ng-click="checkShelf(entity.id,entity.isshelf)" ><span ng-if="entity.isshelf=='00'">下架</span><span ng-if="entity.isshelf=='02'||entity.isshelf=='01'">上架</span></button>
                                           </td>
 			                          </tr>
 			                      </tbody>
@@ -166,7 +167,20 @@
       </div>
   </div>
 
+  <div class="modal fade" id="editModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-body">
+                  <p>{{msg}}</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-danger" ng-click="shelfchange()" data-dismiss="modal">确定</button>
 
+              </div>
+          </div>
+      </div>
+  </div>
 
   <!--&lt;!&ndash; 编辑窗口 &ndash;&gt;-->
   <!--<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
